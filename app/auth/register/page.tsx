@@ -17,7 +17,9 @@ export default function RegisterPage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [profileImage, setProfileImage] = useState<string | null>(
+    "https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320",
+  )
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",
@@ -45,7 +47,7 @@ export default function RegisterPage() {
   }
 
   const handleRemoveImage = () => {
-    setProfileImage(null)
+    setProfileImage("https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320")
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
@@ -78,12 +80,8 @@ export default function RegisterPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
-        <div className="flex flex-col space-y-2 text-center">
-          <div className="mx-auto mb-4">
-            <Image src="/logo.png" alt="Acroeduvos Logo" width={80} height={80} />
-          </div>
-          <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
-          <p className="text-sm text-muted-foreground">Enter your details to create your Acroeduvos account</p>
+        <div className="mx-auto w-24 h-24 relative mb-6">
+          <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" priority />
         </div>
 
         <Card>

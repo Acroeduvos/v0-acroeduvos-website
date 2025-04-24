@@ -1,258 +1,234 @@
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code, Trophy, BookOpen, Users } from "lucide-react"
+import { CheckCircle, Code, Award, BookOpen, Users, ArrowRight } from "lucide-react"
 
-export default function HomePage() {
+export default function Home() {
+  // Featured courses
+  const featuredCourses = [
+    {
+      id: 1,
+      title: "C Programming Fundamentals",
+      image: "/placeholder.svg?height=200&width=400&text=C+Programming",
+      category: "Programming",
+      students: 3450,
+    },
+    {
+      id: 2,
+      title: "C++ Advanced Concepts",
+      image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
+      category: "Programming",
+      students: 2890,
+    },
+    {
+      id: 3,
+      title: "Java Development",
+      image: "/placeholder.svg?height=200&width=400&text=Java+Development",
+      category: "Programming",
+      students: 3120,
+    },
+    {
+      id: 5,
+      title: "Cyber Security Essentials",
+      image: "/placeholder.svg?height=200&width=400&text=Cyber+Security",
+      category: "Security",
+      students: 2450,
+    },
+  ]
+
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="bg-[#f5f2ee] py-16 md:py-24">
+      <section className="bg-purple-700 py-20 text-white">
         <div className="container mx-auto px-4">
-          <div className="grid gap-8 md:grid-cols-2 md:gap-12 items-center">
+          <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-                Enhance Your Coding Skills with AcroEduVos
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+                Learn to Code, Get Certified
               </h1>
-              <p className="mt-4 text-lg text-gray-600 md:text-xl">
-                Practice coding, participate in contests, and learn from a community of programmers.
+              <p className="mt-6 text-lg text-purple-100 md:text-xl">
+                Master programming languages, web development, cybersecurity, and more with our comprehensive courses
+                and earn industry-recognized certifications.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/problems">
-                  <Button className="bg-black text-white hover:bg-gray-800">Start Coding</Button>
-                </Link>
-                <Link href="/learn">
-                  <Button variant="outline" className="border-black text-black hover:bg-black/5">
-                    Explore Courses
-                  </Button>
-                </Link>
+                <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
+                  <Link href="/courses">Explore Courses</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
+                  <Link href="/auth/register">Sign Up Free</Link>
+                </Button>
               </div>
             </div>
-            <div className="flex justify-center">
-              <div className="relative h-64 w-64 md:h-80 md:w-80">
-                <Image
-                  src="/placeholder.svg?height=320&width=320"
-                  alt="Coding illustration"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+            <div className="hidden md:block">
+              <Image
+                src="/placeholder.svg?height=400&width=600&text=Coding+Education"
+                alt="Coding Education"
+                width={600}
+                height={400}
+                className="rounded-lg"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Featured Courses */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-center text-3xl font-bold tracking-tight md:text-4xl">Why Choose AcroEduVos?</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-gray-600">
-            Our platform offers everything you need to become a better programmer.
-          </p>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <Card>
-              <CardHeader>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f2ee]">
-                  <Code className="h-6 w-6" />
-                </div>
-                <CardTitle>Practice Problems</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Solve over 1,000 coding problems across various difficulty levels and domains.
-                </p>
-                <Link href="/problems" className="mt-4 inline-flex items-center text-black hover:underline">
-                  Browse Problems <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f2ee]">
-                  <Trophy className="h-6 w-6" />
-                </div>
-                <CardTitle>Coding Contests</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Participate in regular coding contests to test your skills and compete with others.
-                </p>
-                <Link href="/contests" className="mt-4 inline-flex items-center text-black hover:underline">
-                  View Contests <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f2ee]">
-                  <BookOpen className="h-6 w-6" />
-                </div>
-                <CardTitle>Learning Resources</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Access comprehensive courses and tutorials to master algorithms and data structures.
-                </p>
-                <Link href="/learn" className="mt-4 inline-flex items-center text-black hover:underline">
-                  Explore Courses <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Contests Section */}
-      <section className="bg-[#f5f2ee] py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">Upcoming Contests</h2>
-              <p className="mt-2 text-gray-600">Test your skills in our upcoming coding competitions.</p>
-            </div>
-            <Link href="/contests">
-              <Button variant="outline" className="mt-4 md:mt-0 border-black text-black hover:bg-black/5">
-                View All Contests
-              </Button>
-            </Link>
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold">Featured Courses</h2>
+            <p className="mt-4 text-gray-600">
+              Start your journey with our most popular programming and technology courses
+            </p>
           </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Weekly Challenge #42",
-                date: "Apr 15, 2025",
-                time: "8:00 PM - 11:00 PM",
-                participants: 1240,
-              },
-              {
-                title: "Data Structures Marathon",
-                date: "Apr 20, 2025",
-                time: "9:00 AM - 9:00 PM",
-                participants: 856,
-              },
-              {
-                title: "Beginner's Coding Contest",
-                date: "Apr 25, 2025",
-                time: "6:00 PM - 8:00 PM",
-                participants: 2150,
-              },
-            ].map((contest, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex justify-between">
-                    <Badge className="bg-white">{contest.date}</Badge>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Users className="mr-1 h-4 w-4" />
-                      {contest.participants}
-                    </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredCourses.map((course) => (
+              <Link
+                key={course.id}
+                href={`/courses/${course.id}`}
+                className="group overflow-hidden rounded-lg bg-white shadow-md transition-all hover:shadow-lg"
+              >
+                <div className="relative h-48">
+                  <Image src={course.image || "/placeholder.svg"} alt={course.title} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                </div>
+                <div className="p-6">
+                  <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-800">
+                    {course.category}
+                  </span>
+                  <h3 className="mt-2 text-xl font-bold group-hover:text-purple-600">{course.title}</h3>
+                  <div className="mt-4 flex items-center text-sm text-gray-500">
+                    <Users className="mr-1 h-4 w-4" />
+                    {course.students} students
                   </div>
-                  <CardTitle className="mt-2">{contest.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-500">{contest.time}</p>
-                  <Link href={`/contests/${index + 1}`}>
-                    <Button className="mt-4 w-full bg-black text-white hover:bg-gray-800">Register Now</Button>
-                  </Link>
-                </CardContent>
-              </Card>
+                </div>
+              </Link>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/courses" className="flex items-center">
+                View All Courses
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Popular Problems Section */}
+      {/* Why Choose Us */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold">Why Choose Acroeduvos</h2>
+            <p className="mt-4 text-gray-600">
+              We provide comprehensive programming education with industry-recognized certifications
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="rounded-lg bg-white p-8 shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
+                <Code className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="mb-4 text-xl font-bold">Comprehensive Curriculum</h3>
+              <p className="text-gray-600">
+                Our courses cover everything from programming basics to advanced concepts with hands-on projects and
+                exercises.
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-white p-8 shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
+                <Award className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="mb-4 text-xl font-bold">Industry Certifications</h3>
+              <p className="text-gray-600">
+                Earn recognized certifications that validate your skills and boost your career prospects.
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-white p-8 shadow-md">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
+                <BookOpen className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="mb-4 text-xl font-bold">Expert Instructors</h3>
+              <p className="text-gray-600">
+                Learn from experienced professionals who bring real-world expertise to their teaching.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certification */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Popular Problems</h2>
-              <p className="mt-2 text-gray-600">Challenge yourself with these frequently solved problems.</p>
-            </div>
-            <Link href="/problems">
-              <Button variant="outline" className="mt-4 md:mt-0 border-black text-black hover:bg-black/5">
-                View All Problems
-              </Button>
-            </Link>
-          </div>
+              <h2 className="text-3xl font-bold">Get Certified in Programming Languages</h2>
+              <p className="mt-4 text-gray-600">
+                Our certification program validates your skills in various programming languages and technologies,
+                helping you stand out in the job market.
+              </p>
 
-          <div className="mt-8 overflow-hidden rounded-lg border border-gray-200">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-[#f5f2ee]">
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Problem</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Difficulty</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Acceptance</th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
+              <ul className="mt-6 space-y-4">
                 {[
-                  { title: "Two Sum", difficulty: "Easy", acceptance: "45.2%" },
-                  { title: "Valid Parentheses", difficulty: "Easy", acceptance: "40.1%" },
-                  {
-                    title: "Longest Substring Without Repeating Characters",
-                    difficulty: "Medium",
-                    acceptance: "32.4%",
-                  },
-                  { title: "Merge K Sorted Lists", difficulty: "Hard", acceptance: "24.5%" },
-                  { title: "LRU Cache", difficulty: "Medium", acceptance: "28.7%" },
-                ].map((problem, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <Link href={`/problems/${index + 1}`} className="font-medium text-gray-900 hover:underline">
-                        {problem.title}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4">
-                      <Badge
-                        variant="outline"
-                        className={
-                          problem.difficulty === "Easy"
-                            ? "border-green-500 text-green-600"
-                            : problem.difficulty === "Medium"
-                              ? "border-yellow-500 text-yellow-600"
-                              : "border-red-500 text-red-600"
-                        }
-                      >
-                        {problem.difficulty}
-                      </Badge>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">{problem.acceptance}</td>
-                    <td className="px-6 py-4">
-                      <Link href={`/problems/${index + 1}/solve`}>
-                        <Button size="sm">Solve</Button>
-                      </Link>
-                    </td>
-                  </tr>
+                  "C Programming",
+                  "C++ Programming",
+                  "Java Development",
+                  "Web Development",
+                  "Cyber Security",
+                  "Mobile App Development",
+                  "AI & Machine Learning",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle className="mr-2 mt-1 h-5 w-5 text-green-500" />
+                    <span>{item} Certification</span>
+                  </li>
                 ))}
-              </tbody>
-            </table>
+              </ul>
+
+              <div className="mt-8">
+                <Button asChild className="bg-black">
+                  <Link href="/courses">Start Your Certification Journey</Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="relative mx-auto max-w-md">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg border-8 border-[#e8e3dc] shadow-lg">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Learn%2C%20Code%2C%20Create%20%2CCertify.jpg-ggjBnEMFM6CjCzItqWxjurgwbTTUoT.jpeg"
+                  alt="Certificate Sample"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 h-24 w-24">
+                <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-black py-16 text-white">
+      {/* CTA */}
+      <section className="bg-purple-700 py-16 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Ready to Start Coding?</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-gray-300">
-            Join thousands of programmers who are improving their skills on AcroEduVos.
+          <h2 className="text-3xl font-bold">Ready to Start Learning?</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-purple-100">
+            Join thousands of students who are already learning programming and earning certifications with Acroeduvos.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href="/auth/register">
-              <Button className="bg-white text-black hover:bg-gray-100">Create Account</Button>
-            </Link>
-            <Link href="/problems">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10">
-                Browse Problems
-              </Button>
-            </Link>
+            <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
+              <Link href="/courses">Browse Courses</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
+              <Link href="/auth/register">Create Account</Link>
+            </Button>
           </div>
         </div>
       </section>

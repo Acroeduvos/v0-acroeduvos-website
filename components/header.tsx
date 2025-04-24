@@ -46,10 +46,10 @@ export function Header() {
     <header className="border-b border-gray-200 bg-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-10 mr-2">
+          <div className="relative h-12 w-12 mr-2">
             <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
           </div>
-          <span className="text-xl font-bold">Acroeduvos</span>
+          <span className="text-xl font-bold hidden sm:inline-block">Acroeduvos</span>
         </Link>
 
         {/* Search bar */}
@@ -96,14 +96,17 @@ export function Header() {
                     <div className="relative h-8 w-8 overflow-hidden rounded-full bg-gray-200">
                       {user?.profileImage ? (
                         <Image
-                          src={user.profileImage || "/placeholder.svg"}
+                          src={
+                            user.profileImage ||
+                            "https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320"
+                          }
                           alt={user.name || "User"}
                           fill
                           className="object-cover"
                         />
                       ) : (
                         <Image
-                          src="/placeholder.svg?height=32&width=32"
+                          src="https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320"
                           alt={user?.name || "User"}
                           width={32}
                           height={32}

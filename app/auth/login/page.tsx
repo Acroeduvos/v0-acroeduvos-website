@@ -41,10 +41,8 @@ export default function LoginPage() {
       setIsLoading(false)
 
       // In a real app, you would fetch the user profile including their image
-      // For this demo, we'll use a mock profile image
-      const profileImage = formData.username.includes("@")
-        ? `/placeholder.svg?height=200&width=200&text=${formData.username.split("@")[0]}`
-        : `/placeholder.svg?height=200&width=200&text=${formData.username}`
+      // For this demo, we'll use the provided placeholder URL
+      const profileImage = "https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320"
 
       // Store authentication state in localStorage
       localStorage.setItem("isLoggedIn", "true")
@@ -67,12 +65,8 @@ export default function LoginPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-        <div className="flex flex-col space-y-2 text-center">
-          <div className="mx-auto mb-4">
-            <Image src="/logo.png" alt="Acroeduvos Logo" width={80} height={80} />
-          </div>
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">Enter your credentials to access your account</p>
+        <div className="mx-auto w-24 h-24 relative mb-6">
+          <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" priority />
         </div>
 
         <Card>

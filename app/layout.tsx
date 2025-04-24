@@ -9,9 +9,13 @@ import { Footer } from "@/components/footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
+// Update the metadata to match the new branding
 export const metadata: Metadata = {
   title: "Acroeduvos - Competitive Programming Platform",
   description: "Enhance your coding skills with challenges, contests, and learning resources.",
+  icons: {
+    icon: "/logo.png",
+  },
     generator: 'v0.dev'
 }
 

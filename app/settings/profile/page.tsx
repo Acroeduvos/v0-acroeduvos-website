@@ -34,7 +34,9 @@ export default function ProfileSettingsPage() {
         email: user.username.includes("@") ? user.username : `${user.username}@example.com`,
         bio: user.bio || "",
       })
-      setProfileImage(user.profileImage || null)
+      setProfileImage(
+        user.profileImage || "https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320",
+      )
     } else {
       // Redirect to login if not logged in
       router.push("/auth/login")
@@ -60,7 +62,7 @@ export default function ProfileSettingsPage() {
   }
 
   const handleRemoveImage = () => {
-    setProfileImage(null)
+    setProfileImage("https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320")
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
