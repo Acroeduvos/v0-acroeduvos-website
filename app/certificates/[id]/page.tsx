@@ -94,7 +94,7 @@ export default function CertificatePage({ params }: { params: { id: string } }) 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 flex flex-col items-center justify-between gap-4 md:flex-row">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Certificate of Completion</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Certificate of Appreciation</h1>
         <div className="flex gap-4">
           <Button onClick={handleDownload} className="flex items-center gap-2 bg-black">
             <Download className="h-4 w-4" />

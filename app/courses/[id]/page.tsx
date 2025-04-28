@@ -7,35 +7,20 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  ChevronLeft,
-  BookOpen,
-  CheckCircle2,
-  Clock,
-  Users,
-  Star,
-  PlayCircle,
-  FileText,
-  Code,
-  Award,
-} from "lucide-react"
+import { ChevronLeft, BookOpen, CheckCircle2, Clock, Star, PlayCircle, FileText, Code, Award } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { isAuthenticated } from "@/lib/auth-utils"
 
-// Mock course data
+// Mock course data - this would be fetched from an API in a real application
 const coursesData = [
   {
     id: "1",
     title: "C Programming Fundamentals",
     description: "Master the fundamentals of C programming language with hands-on projects and exercises.",
-    level: "Beginner",
+    level: "Basic",
+    difficulty: "Easy",
     duration: "20 hours",
-    students: 3450,
-    rating: 4.8,
     instructor: "Dr. Robert Chen",
-    progress: 0,
-    completedLessons: 0,
-    totalLessons: 15,
-    lastAccessed: "Not started",
     overview: `This comprehensive course covers all the fundamental concepts of C programming. You'll learn how to write efficient C code, understand memory management, and implement various algorithms and data structures.
 
 The course includes hands-on coding exercises, quizzes, and programming assignments to reinforce your learning. By the end of this course, you'll have a solid understanding of C programming and be able to develop applications using this powerful language.`,
@@ -56,6 +41,7 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
     modules: [
       {
         title: "Introduction to C Programming",
+        difficulty: "Easy",
         lessons: [
           { title: "Course Overview", duration: "10 min", type: "video", completed: false },
           { title: "Setting Up Your Development Environment", duration: "15 min", type: "video", completed: false },
@@ -65,6 +51,7 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
       },
       {
         title: "Variables and Data Types",
+        difficulty: "Easy",
         lessons: [
           { title: "Understanding Variables", duration: "25 min", type: "video", completed: false },
           { title: "Data Types in C", duration: "20 min", type: "video", completed: false },
@@ -75,6 +62,7 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
       },
       {
         title: "Control Structures",
+        difficulty: "Medium",
         lessons: [
           { title: "Conditional Statements", duration: "20 min", type: "video", completed: false },
           { title: "Loops in C", duration: "20 min", type: "video", completed: false },
@@ -85,6 +73,7 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
       },
       {
         title: "Functions and Arrays",
+        difficulty: "Medium",
         lessons: [
           { title: "Creating Functions", duration: "25 min", type: "video", completed: false },
           { title: "Arrays and Strings", duration: "30 min", type: "video", completed: false },
@@ -95,6 +84,7 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
       },
       {
         title: "Certification Project",
+        difficulty: "Hard",
         lessons: [
           { title: "Final Project Overview", duration: "15 min", type: "video", completed: false },
           { title: "Project Requirements", duration: "10 min", type: "video", completed: false },
@@ -110,13 +100,19 @@ The course includes hands-on coding exercises, quizzes, and programming assignme
       "Pass the final certification exam with a score of at least 75%",
     ],
   },
-  // Add more courses as needed
+  // Additional courses would be defined here
 ]
 
 export default function CourseDetailPage({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState("overview")
   const [course, setCourse] = useState<any>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userProgress, setUserProgress] = useState({
+    completedLessons: 0,
+    totalLessons: 0,
+    progress: 0,
+    lastAccessed: "Not started",
+  })
   const router = useRouter()
 
   useEffect(() => {
@@ -125,8 +121,37 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
     setCourse(foundCourse)
 
     // Check if user is logged in
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true"
+    const loggedIn = isAuthenticated()
     setIsLoggedIn(loggedIn)
+
+    // Calculate total lessons
+    if (foundCourse) {
+      const totalLessons = foundCourse.modules.reduce((total, module) => total + module.lessons.length, 0)
+
+      // If logged in, try to get user progress from localStorage
+      if (loggedIn) {
+        const storedProgress = localStorage.getItem(`course_progress_${params.id}`)
+        if (storedProgress) {
+          setUserProgress(JSON.parse(storedProgress))
+        } else {
+          // Initialize progress
+          setUserProgress({
+            completedLessons: 0,
+            totalLessons,
+            progress: 0,
+            lastAccessed: "Not started",
+          })
+        }
+      } else {
+        // Default progress for non-logged in users
+        setUserProgress({
+          completedLessons: 0,
+          totalLessons,
+          progress: 0,
+          lastAccessed: "Not started",
+        })
+      }
+    }
   }, [params.id])
 
   const handleEnroll = () => {
@@ -136,8 +161,73 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
       return
     }
 
-    // Handle enrollment logic
+    // Initialize progress tracking in localStorage
+    const totalLessons = course.modules.reduce((total: number, module: any) => total + module.lessons.length, 0)
+    const newProgress = {
+      completedLessons: 0,
+      totalLessons,
+      progress: 0,
+      lastAccessed: new Date().toLocaleString(),
+    }
+
+    localStorage.setItem(`course_progress_${params.id}`, JSON.stringify(newProgress))
+    setUserProgress(newProgress)
+
+    // Show enrollment confirmation
     alert("You have successfully enrolled in this course!")
+  }
+
+  const handleStartLesson = (moduleIndex: number, lessonIndex: number) => {
+    if (!isLoggedIn) {
+      router.push(`/auth/login?returnUrl=/courses/${params.id}`)
+      return
+    }
+
+    // Mark the lesson as started/accessed
+    const now = new Date().toLocaleString()
+
+    // Update last accessed time
+    const updatedProgress = {
+      ...userProgress,
+      lastAccessed: now,
+    }
+
+    localStorage.setItem(`course_progress_${params.id}`, JSON.stringify(updatedProgress))
+    setUserProgress(updatedProgress)
+
+    // In a real app, you would navigate to the lesson page
+    alert(`Starting lesson: ${course.modules[moduleIndex].lessons[lessonIndex].title}`)
+  }
+
+  const handleCompleteLesson = (moduleIndex: number, lessonIndex: number) => {
+    if (!isLoggedIn) return
+
+    // Create a deep copy of the course to mark the lesson as completed
+    const updatedCourse = JSON.parse(JSON.stringify(course))
+    updatedCourse.modules[moduleIndex].lessons[lessonIndex].completed = true
+    setCourse(updatedCourse)
+
+    // Count completed lessons
+    let completedCount = 0
+    updatedCourse.modules.forEach((module: any) => {
+      module.lessons.forEach((lesson: any) => {
+        if (lesson.completed) completedCount++
+      })
+    })
+
+    // Update progress
+    const progress = Math.round((completedCount / userProgress.totalLessons) * 100)
+    const updatedProgress = {
+      ...userProgress,
+      completedLessons: completedCount,
+      progress,
+      lastAccessed: new Date().toLocaleString(),
+    }
+
+    localStorage.setItem(`course_progress_${params.id}`, JSON.stringify(updatedProgress))
+    setUserProgress(updatedProgress)
+
+    alert(`Lesson completed: ${course.modules[moduleIndex].lessons[lessonIndex].title}`)
   }
 
   if (!course) {
@@ -162,19 +252,23 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
             <div className="mt-4 flex flex-wrap gap-4">
               <div className="flex items-center text-sm text-gray-500">
                 <BookOpen className="mr-1 h-4 w-4" />
-                {course.level}
+                Level: {course.level}
               </div>
               <div className="flex items-center text-sm text-gray-500">
                 <Clock className="mr-1 h-4 w-4" />
-                {course.duration}
+                Duration: {course.duration}
               </div>
-              <div className="flex items-center text-sm text-gray-500">
-                <Users className="mr-1 h-4 w-4" />
-                {course.students} students
-              </div>
-              <div className="flex items-center text-sm text-gray-500">
-                <Star className="mr-1 h-4 w-4 text-yellow-400" />
-                {course.rating} rating
+              <div
+                className={`flex items-center text-sm ${
+                  course.difficulty === "Easy"
+                    ? "text-green-600"
+                    : course.difficulty === "Medium"
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                }`}
+              >
+                <Star className="mr-1 h-4 w-4" />
+                Difficulty: {course.difficulty}
               </div>
             </div>
           </div>
@@ -240,9 +334,9 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                 <div className="mb-4 flex items-center justify-between">
                   <div>
                     <span className="font-medium">
-                      {course.completedLessons}/{course.totalLessons} lessons completed
+                      {userProgress.completedLessons}/{userProgress.totalLessons} lessons completed
                     </span>
-                    <Progress value={(course.completedLessons / course.totalLessons) * 100} className="mt-2 h-2 w-64" />
+                    <Progress value={userProgress.progress} className="mt-2 h-2 w-64" />
                   </div>
                   <div className="text-sm text-gray-500">Total: {course.duration}</div>
                 </div>
@@ -251,9 +345,22 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                   {course.modules.map((module: any, moduleIndex: number) => (
                     <div key={moduleIndex} className="rounded-lg border border-gray-200">
                       <div className="flex items-center justify-between bg-[#f5f2ee] px-6 py-4">
-                        <h3 className="font-semibold">
-                          Module {moduleIndex + 1}: {module.title}
-                        </h3>
+                        <div className="flex items-center">
+                          <h3 className="font-semibold">
+                            Module {moduleIndex + 1}: {module.title}
+                          </h3>
+                          <span
+                            className={`ml-2 rounded-full px-2 py-1 text-xs ${
+                              module.difficulty === "Easy"
+                                ? "bg-green-100 text-green-800"
+                                : module.difficulty === "Medium"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
+                            }`}
+                          >
+                            {module.difficulty}
+                          </span>
+                        </div>
                         <span className="text-sm text-gray-500">
                           {module.lessons.filter((lesson: any) => lesson.completed).length}/{module.lessons.length}{" "}
                           completed
@@ -290,14 +397,30 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                             <div>
                               {!isLoggedIn ? (
                                 <Button variant="link" className="h-auto p-0 text-black" onClick={handleEnroll}>
-                                  Enroll to Start
+                                  Login to Start
                                 </Button>
                               ) : lesson.completed ? (
-                                <Button variant="link" className="h-auto p-0 text-black">
+                                <Button
+                                  variant="link"
+                                  className="h-auto p-0 text-black"
+                                  onClick={() => handleStartLesson(moduleIndex, lessonIndex)}
+                                >
                                   Review
                                 </Button>
                               ) : (
-                                <Button variant="link" className="h-auto p-0 text-black">
+                                <Button
+                                  variant="link"
+                                  className="h-auto p-0 text-black"
+                                  onClick={() => {
+                                    handleStartLesson(moduleIndex, lessonIndex)
+                                    // For demo purposes, let's also provide a way to complete the lesson
+                                    setTimeout(() => {
+                                      if (confirm("Mark this lesson as completed?")) {
+                                        handleCompleteLesson(moduleIndex, lessonIndex)
+                                      }
+                                    }, 1000)
+                                  }}
+                                >
                                   Start
                                 </Button>
                               )}
@@ -320,7 +443,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                       <Award className="mr-4 h-12 w-12 text-purple-600" />
                       <div>
                         <h3 className="text-lg font-medium">{course.title} Certification</h3>
-                        <p className="text-sm text-gray-500">Earn an industry-recognized certificate upon completion</p>
+                        <p className="text-sm text-gray-500">Earn a certificate upon completion</p>
                       </div>
                     </div>
 
@@ -358,55 +481,8 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
             <TabsContent value="reviews" className="mt-6">
               <div>
                 <h2 className="mb-4 text-xl font-semibold">Student Reviews</h2>
-                <div className="mb-6 flex items-center">
-                  <div className="mr-4 text-5xl font-bold">{course.rating}</div>
-                  <div>
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-sm text-gray-500">Based on 245 reviews</p>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  {[
-                    {
-                      name: "Alex Johnson",
-                      rating: 5,
-                      date: "March 15, 2025",
-                      comment:
-                        "This course is excellent! The explanations are clear and the exercises really help reinforce the concepts. I feel much more confident about C programming now.",
-                    },
-                    {
-                      name: "Sarah Williams",
-                      rating: 4,
-                      date: "March 10, 2025",
-                      comment:
-                        "Very good course with detailed explanations. The only reason I'm giving 4 stars instead of 5 is that I wish there were more coding exercises.",
-                    },
-                    {
-                      name: "Michael Brown",
-                      rating: 5,
-                      date: "March 5, 2025",
-                      comment:
-                        "The instructor is an amazing teacher! The way they explain complex concepts makes them easy to understand. Highly recommended for anyone wanting to learn C programming.",
-                    },
-                  ].map((review, index) => (
-                    <div key={index} className="rounded-lg border border-gray-200 p-6">
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="font-medium">{review.name}</div>
-                        <div className="text-sm text-gray-500">{review.date}</div>
-                      </div>
-                      <div className="mb-4 flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`h-4 w-4 ${i < review.rating ? "fill-current" : "text-gray-300"}`} />
-                        ))}
-                      </div>
-                      <p className="text-gray-700">{review.comment}</p>
-                    </div>
-                  ))}
+                <div className="text-center py-10">
+                  <p className="text-gray-500">No reviews yet. Be the first to review this course!</p>
                 </div>
               </div>
             </TabsContent>
@@ -422,20 +498,24 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                 </div>
               </div>
               <div className="p-6">
-                {isLoggedIn && course.progress > 0 ? (
+                {isLoggedIn && userProgress.progress > 0 ? (
                   <div className="mb-6">
                     <div className="mb-2 flex items-center justify-between">
                       <span className="font-medium">Your Progress</span>
-                      <span className="text-sm font-medium">{course.progress}%</span>
+                      <span className="text-sm font-medium">{userProgress.progress}%</span>
                     </div>
-                    <Progress value={course.progress} className="h-2" />
-                    <p className="mt-2 text-sm text-gray-500">Last accessed {course.lastAccessed}</p>
+                    <Progress value={userProgress.progress} className="h-2" />
+                    <p className="mt-2 text-sm text-gray-500">Last accessed: {userProgress.lastAccessed}</p>
                   </div>
                 ) : null}
 
                 <div className="space-y-4">
                   <Button className="w-full bg-black" onClick={handleEnroll}>
-                    {isLoggedIn ? "Enroll Now" : "Login to Enroll"}
+                    {isLoggedIn
+                      ? userProgress.progress > 0
+                        ? "Continue Learning"
+                        : "Start Learning"
+                      : "Login to Start"}
                   </Button>
                   <Button variant="outline" className="w-full">
                     Preview Course
