@@ -7,18 +7,18 @@ import { Button } from "@/components/ui/button"
 export default function ProblemsPage({
   searchParams,
 }: {
-  searchParams: { difficulty?: string; tag?: string }
+  searchParams: { difficulty?: string; tag?: string; company?: string }
 }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Problems</h1>
-          <p className="text-gray-600 mt-2">Solve algorithmic problems to improve your coding skills</p>
+          <h1 className="text-3xl font-bold">MNC Interview Questions</h1>
+          <p className="text-gray-600 mt-2">Practice real interview questions asked in top multinational companies</p>
         </div>
         <div className="mt-4 md:mt-0">
           <Link href="/problems/random">
-            <Button>Random Problem</Button>
+            <Button>Random Question</Button>
           </Link>
         </div>
       </div>
@@ -29,7 +29,7 @@ export default function ProblemsPage({
         </div>
         <div className="md:col-span-9">
           <Suspense fallback={<ProblemListSkeleton />}>
-            <ProblemList difficulty={searchParams.difficulty} tag={searchParams.tag} />
+            <ProblemList difficulty={searchParams.difficulty} tag={searchParams.tag} company={searchParams.company} />
           </Suspense>
         </div>
       </div>
@@ -57,8 +57,32 @@ function ProblemFilters() {
         </div>
       </div>
 
+      <div className="mb-6">
+        <h3 className="text-sm font-medium mb-2">Companies</h3>
+        <div className="space-y-2">
+          <Link href="/problems?company=amazon" className="block text-sm hover:text-black">
+            Amazon
+          </Link>
+          <Link href="/problems?company=google" className="block text-sm hover:text-black">
+            Google
+          </Link>
+          <Link href="/problems?company=microsoft" className="block text-sm hover:text-black">
+            Microsoft
+          </Link>
+          <Link href="/problems?company=meta" className="block text-sm hover:text-black">
+            Meta (Facebook)
+          </Link>
+          <Link href="/problems?company=apple" className="block text-sm hover:text-black">
+            Apple
+          </Link>
+          <Link href="/problems?company=netflix" className="block text-sm hover:text-black">
+            Netflix
+          </Link>
+        </div>
+      </div>
+
       <div>
-        <h3 className="text-sm font-medium mb-2">Tags</h3>
+        <h3 className="text-sm font-medium mb-2">Topics</h3>
         <div className="space-y-2">
           <Link href="/problems?tag=arrays" className="block text-sm hover:text-black">
             Arrays
@@ -72,8 +96,8 @@ function ProblemFilters() {
           <Link href="/problems?tag=graphs" className="block text-sm hover:text-black">
             Graphs
           </Link>
-          <Link href="/problems?tag=trees" className="block text-sm hover:text-black">
-            Trees
+          <Link href="/problems?tag=system-design" className="block text-sm hover:text-black">
+            System Design
           </Link>
         </div>
       </div>
@@ -81,54 +105,58 @@ function ProblemFilters() {
   )
 }
 
-function ProblemList({ difficulty, tag }: { difficulty?: string; tag?: string }) {
-  // Mock problems data
+function ProblemList({ difficulty, tag, company }: { difficulty?: string; tag?: string; company?: string }) {
+  // Mock problems data - MNC interview questions
   const problems = [
     {
       id: "1",
       title: "Two Sum",
       difficulty: "Easy",
+      companies: ["Amazon", "Google", "Microsoft"],
       tags: ["Arrays", "Hash Table"],
-      solvedCount: 12500,
-      submissionCount: 15000,
+      description: "Find two numbers in an array that add up to a target value.",
     },
     {
       id: "2",
-      title: "Add Two Numbers",
+      title: "LRU Cache Implementation",
       difficulty: "Medium",
-      tags: ["Linked List", "Math"],
-      solvedCount: 8900,
-      submissionCount: 12000,
+      companies: ["Amazon", "Microsoft", "Meta"],
+      tags: ["Design", "Hash Table", "Linked List"],
+      description: "Design and implement a data structure for Least Recently Used (LRU) cache.",
     },
     {
       id: "3",
-      title: "Longest Substring Without Repeating Characters",
-      difficulty: "Medium",
-      tags: ["String", "Sliding Window"],
-      solvedCount: 7800,
-      submissionCount: 11000,
+      title: "Merge K Sorted Lists",
+      difficulty: "Hard",
+      companies: ["Amazon", "Google", "Microsoft", "Meta"],
+      tags: ["Linked List", "Divide and Conquer", "Heap"],
+      description: "Merge k sorted linked lists into one sorted linked list.",
     },
     {
       id: "4",
-      title: "Median of Two Sorted Arrays",
-      difficulty: "Hard",
-      tags: ["Arrays", "Binary Search"],
-      solvedCount: 4500,
-      submissionCount: 9000,
+      title: "Design a URL Shortener",
+      difficulty: "Medium",
+      companies: ["Microsoft", "Google", "Meta"],
+      tags: ["System Design", "Database"],
+      description: "Design a URL shortening service like bit.ly.",
     },
     {
       id: "5",
-      title: "Longest Palindromic Substring",
-      difficulty: "Medium",
-      tags: ["String", "Dynamic Programming"],
-      solvedCount: 6700,
-      submissionCount: 10000,
+      title: "Trapping Rain Water",
+      difficulty: "Hard",
+      companies: ["Amazon", "Google", "Apple"],
+      tags: ["Arrays", "Two Pointers", "Dynamic Programming"],
+      description:
+        "Given n non-negative integers representing an elevation map, compute how much water it can trap after raining.",
     },
   ].filter((problem) => {
     if (difficulty && problem.difficulty.toLowerCase() !== difficulty.toLowerCase()) {
       return false
     }
     if (tag && !problem.tags.some((t) => t.toLowerCase().replace(/\s+/g, "-") === tag.toLowerCase())) {
+      return false
+    }
+    if (company && !problem.companies.some((c) => c.toLowerCase() === company.toLowerCase())) {
       return false
     }
     return true
@@ -168,6 +196,7 @@ function ProblemList({ difficulty, tag }: { difficulty?: string; tag?: string })
             </div>
           </CardHeader>
           <CardContent className="pb-2">
+            <p className="text-gray-600 mb-2">{problem.description}</p>
             <div className="flex flex-wrap gap-2">
               {problem.tags.map((tag) => (
                 <Link
@@ -182,8 +211,16 @@ function ProblemList({ difficulty, tag }: { difficulty?: string; tag?: string })
           </CardContent>
           <CardFooter className="pt-0">
             <div className="flex justify-between items-center w-full">
-              <div className="text-xs text-gray-500">
-                {((problem.solvedCount / problem.submissionCount) * 100).toFixed(1)}% success rate
+              <div className="flex flex-wrap gap-1">
+                {problem.companies.map((company) => (
+                  <Link
+                    key={company}
+                    href={`/problems?company=${company.toLowerCase()}`}
+                    className="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full hover:bg-purple-200"
+                  >
+                    {company}
+                  </Link>
+                ))}
               </div>
               <Link href={`/problems/${problem.id}/solve`}>
                 <Button variant="outline" size="sm">
@@ -210,6 +247,7 @@ function ProblemListSkeleton() {
             </div>
           </CardHeader>
           <CardContent className="pb-2">
+            <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
             <div className="flex gap-2">
               <div className="h-6 w-16 bg-gray-200 rounded"></div>
               <div className="h-6 w-16 bg-gray-200 rounded"></div>
@@ -217,7 +255,10 @@ function ProblemListSkeleton() {
           </CardContent>
           <CardFooter className="pt-0">
             <div className="flex justify-between items-center w-full">
-              <div className="h-4 w-24 bg-gray-200 rounded"></div>
+              <div className="flex gap-1">
+                <div className="h-6 w-16 bg-gray-200 rounded"></div>
+                <div className="h-6 w-16 bg-gray-200 rounded"></div>
+              </div>
               <div className="h-8 w-16 bg-gray-200 rounded"></div>
             </div>
           </CardFooter>
