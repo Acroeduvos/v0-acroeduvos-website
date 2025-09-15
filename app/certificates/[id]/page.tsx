@@ -122,9 +122,7 @@ export default function CertificatePage({ params }: { params: { id: string } }) 
 
           <div className="relative z-10 p-4 text-center">
             <div className="mb-6 flex justify-center">
-              <div className="relative h-24 w-24">
-                <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
-              </div>
+              <Image src="/logo.png" alt="Acroeduvos Logo" width={96} height={96} />
             </div>
 
             <div className="mt-32 mb-8">
