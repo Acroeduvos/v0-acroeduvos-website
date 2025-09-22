@@ -9,26 +9,30 @@ export default function Home() {
     {
       id: 1,
       title: "C Programming Fundamentals",
-      image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
+      image: "/placeholder.svg?height=200&width=400&text=C+Programming",
       category: "Programming",
+      students: 3450,
     },
     {
       id: 2,
       title: "C++ Advanced Concepts",
-      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=200&fit=crop",
+      image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
       category: "Programming",
+      students: 2890,
     },
     {
       id: 3,
       title: "Java Development",
-      image: "https://images.unsplash.com/photo-1526379095098-e40fd0b8f26e?w=400&h=200&fit=crop",
+      image: "/placeholder.svg?height=200&width=400&text=Java+Development",
       category: "Programming",
+      students: 3120,
     },
     {
       id: 5,
       title: "Cyber Security Essentials",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop",
+      image: "/placeholder.svg?height=200&width=400&text=Cyber+Security",
       category: "Security",
+      students: 2450,
     },
   ]
 
@@ -39,10 +43,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <div>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-yellow-300">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                 Learn to Code, Get Certified
               </h1>
-              <p className="mt-6 text-lg text-blue-100 md:text-xl">
+              <p className="mt-6 text-lg text-purple-100 md:text-xl">
                 Master programming languages, web development, cybersecurity, and more with our comprehensive FREE courses
                 and earn industry-recognized certifications.
               </p>
@@ -50,59 +54,19 @@ export default function Home() {
                 <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
                   <Link href="/courses">Explore Courses</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white text-yellow-300 hover:bg-purple-600">
+                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
                   <Link href="/courses">Start Learning Free</Link>
                 </Button>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg p-8 text-white">
-              <div className="text-center mb-6">
-                <div className="mb-4">
-                  <Image
-                    src="/logo.png"
-                    alt="Acroeduvos Logo"
-                    width={120}
-                    height={80}
-                    className="rounded-lg object-contain mx-auto"
-                  />
-                </div>
-                <h3 className="text-2xl font-bold mb-2">Why Choose Acroeduvos?</h3>
-                <p className="text-purple-100">Your path to programming mastery</p>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="text-center bg-white/10 rounded-lg p-4">
-                  <div className="text-3xl font-bold text-yellow-300">8+</div>
-                  <div className="text-sm">Languages</div>
-                </div>
-                <div className="text-center bg-white/10 rounded-lg p-4">
-                  <div className="text-3xl font-bold text-green-300">100%</div>
-                  <div className="text-sm">Free</div>
-                </div>
-                <div className="text-center bg-white/10 rounded-lg p-4">
-                  <div className="text-3xl font-bold text-blue-300">24/7</div>
-                  <div className="text-sm">Access</div>
-                </div>
-                <div className="text-center bg-white/10 rounded-lg p-4">
-                  <div className="text-3xl font-bold text-purple-300">∞</div>
-                  <div className="text-sm">Paths</div>
-                </div>
-              </div>
-              
-              <div className="text-center mb-6">
-                <div className="text-lg font-semibold mb-2">Start Learning Today! 🚀</div>
-                <div className="text-sm text-purple-100">Join our community of developers</div>
-              </div>
-              
-              <div className="bg-white/10 rounded-lg p-4 text-center">
-                <div className="text-sm font-medium mb-2">🎯 What You'll Get:</div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div>✅ Free Courses</div>
-                  <div>✅ Certificates</div>
-                  <div>✅ Code Practice</div>
-                  <div>✅ 24/7 Support</div>
-                </div>
-              </div>
+            <div className="hidden md:block">
+              <Image
+                src="/placeholder.svg?height=400&width=600&text=Coding+Education"
+                alt="Coding Education"
+                width={600}
+                height={400}
+                className="rounded-lg"
+              />
             </div>
           </div>
         </div>
@@ -135,9 +99,8 @@ export default function Home() {
                   </span>
                   <h3 className="mt-2 text-xl font-bold group-hover:text-purple-600">{course.title}</h3>
                   <div className="mt-4 flex items-center text-sm text-gray-500">
-                    <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                      FREE
-                    </span>
+                    <Users className="mr-1 h-4 w-4" />
+                    {course.students} students
                   </div>
                 </div>
               </Link>

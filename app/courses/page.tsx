@@ -11,7 +11,8 @@ export default function CoursesPage() {
       category: "Programming",
       level: "Beginner",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=200&fit=crop",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=C+Programming",
       description: "Master the fundamentals of C programming language with hands-on projects and exercises.",
     },
     {
@@ -20,7 +21,8 @@ export default function CoursesPage() {
       category: "Programming",
       level: "Intermediate",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=200&fit=crop",
+      rating: 4.7,
+      image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
       description: "Take your C++ skills to the next level with object-oriented programming and STL.",
     },
     {
@@ -29,7 +31,8 @@ export default function CoursesPage() {
       category: "Programming",
       level: "Beginner",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1526379095098-e40fd0b8f26e?w=400&h=200&fit=crop",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=Java+Development",
       description: "Learn Java programming from scratch and build cross-platform applications.",
     },
     {
@@ -38,7 +41,8 @@ export default function CoursesPage() {
       category: "Web",
       level: "Beginner",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=Web+Development",
       description: "Comprehensive course covering HTML, CSS, JavaScript, and modern frameworks.",
     },
     {
@@ -47,7 +51,8 @@ export default function CoursesPage() {
       category: "Security",
       level: "Intermediate",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=Cyber+Security",
       description: "Learn essential cybersecurity concepts, tools, and best practices.",
     },
     {
@@ -56,7 +61,8 @@ export default function CoursesPage() {
       category: "Development",
       level: "Intermediate",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=200&fit=crop",
+      rating: 4.7,
+      image: "/placeholder.svg?height=200&width=400&text=App+Development",
       description: "Build native mobile applications for iOS and Android platforms.",
     },
     {
@@ -65,7 +71,8 @@ export default function CoursesPage() {
       category: "AI",
       level: "Advanced",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&fit=crop",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=AI+Development",
       description: "Dive into artificial intelligence and machine learning algorithms and applications.",
     },
     {
@@ -74,53 +81,9 @@ export default function CoursesPage() {
       category: "Data Science",
       level: "Intermediate",
       price: "FREE",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=Python+Data+Science",
       description: "Learn Python programming for data analysis, visualization, and machine learning.",
-    },
-    {
-      id: 9,
-      title: "Ethical Hacking & Penetration Testing",
-      category: "Security",
-      level: "Advanced",
-      price: "FREE",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop",
-      description: "Master ethical hacking techniques and penetration testing methodologies.",
-    },
-    {
-      id: 10,
-      title: "Full Stack Development",
-      category: "Web",
-      level: "Intermediate",
-      price: "FREE",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop",
-      description: "Complete full-stack development with frontend, backend, and database technologies.",
-    },
-    {
-      id: 11,
-      title: "Software Testing & QA",
-      category: "Testing",
-      level: "Intermediate",
-      price: "FREE",
-      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=200&fit=crop",
-      description: "Learn comprehensive software testing strategies and quality assurance practices.",
-    },
-    {
-      id: 12,
-      title: "Red Hat Linux Administration",
-      category: "System Administration",
-      level: "Intermediate",
-      price: "FREE",
-      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=200&fit=crop",
-      description: "Master Red Hat Linux system administration and enterprise solutions.",
-    },
-    {
-      id: 13,
-      title: "Bug Bounty Hunting",
-      category: "Security",
-      level: "Advanced",
-      price: "FREE",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop",
-      description: "Learn bug bounty hunting techniques and vulnerability discovery methods.",
     },
   ]
 
@@ -157,9 +120,6 @@ export default function CoursesPage() {
                 <option value="security">Cyber Security</option>
                 <option value="ai">AI & ML</option>
                 <option value="mobile">Mobile Development</option>
-                <option value="testing">Testing & QA</option>
-                <option value="system">System Administration</option>
-                <option value="data">Data Science</option>
               </select>
 
               <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
@@ -194,9 +154,7 @@ export default function CoursesPage() {
                     <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-800">
                       {course.category}
                     </span>
-                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                      {course.level}
-                    </span>
+                    <span className="text-sm font-medium text-gray-600">{course.rating} ★★★★★</span>
                   </div>
                   <h3 className="mb-2 text-xl font-bold">{course.title}</h3>
                   <p className="mb-4 text-gray-600">{course.description}</p>

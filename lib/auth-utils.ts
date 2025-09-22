@@ -5,14 +5,15 @@ export function isAuthenticated(): boolean {
   return localStorage.getItem("isLoggedIn") === "true"
 }
 
-export function getUser(): { username: string; name: string } | null {
+export function getUser(): { username: string; name: string; role?: "teacher" | "student" } | null {
   if (typeof window === "undefined") return null
 
   const userData = localStorage.getItem("user")
   if (!userData) return null
 
   try {
-    return JSON.parse(userData)
+    const parsed = JSON.parse(userData)
+    return { ...parsed, role: parsed.role || "student" }
   } catch (e) {
     return null
   }
