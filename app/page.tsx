@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,10 +11,23 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-700 to-indigo-800 py-20 text-white">
         <div className="container mx-auto px-4 text-center">
+          <div className="mx-auto mb-6 flex justify-center">
+            <div className="relative h-16 w-16 sm:h-20 sm:w-20">
+              <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
+            </div>
+          </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Learn, Code, Create, Certify</h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-purple-100 md:text-xl">
             Free programming courses and MNC interview preparation resources to help you advance your career in tech
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
+              24/7 love
+            </span>
+            <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
+              Total free
+            </span>
+          </div>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link href="/courses">
               <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
