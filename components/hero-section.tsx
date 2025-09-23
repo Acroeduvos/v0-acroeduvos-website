@@ -25,12 +25,14 @@ export function HeroSection() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="text-lg px-8 py-6">
-              Start Learning Free
+            <Button size="lg" className="text-lg px-8 py-6" asChild>
+              <a href="/courses">Start Learning Free</a>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent">
-              <Play className="mr-2 h-5 w-5" />
-              Watch Demo
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent" asChild>
+              <a href="/compiler">
+                <Play className="mr-2 h-5 w-5" />
+                Try Compiler
+              </a>
             </Button>
           </div>
 

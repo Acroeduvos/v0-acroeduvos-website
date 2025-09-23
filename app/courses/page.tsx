@@ -283,12 +283,20 @@ export default function CoursesPage() {
         <div className="container">
           <div className="text-center space-y-4 mb-12">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Master Programming with <span className="text-primary">Expert Courses</span>
+              Master Programming with <span className="text-primary">Free Expert Courses</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Comprehensive programming education with 20+ courses covering all major technologies. Each course includes
-              hands-on coding practice and real MNC interview questions.
+              Start learning immediately with 20+ completely free courses covering all major technologies. No
+              registration required - just click and start coding with real MNC interview questions.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+              <Button size="lg" className="text-lg px-8 py-6" asChild>
+                <a href="/practice">Start Practicing Now</a>
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent" asChild>
+                <a href="/compiler">Try Free Compiler</a>
+              </Button>
+            </div>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

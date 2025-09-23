@@ -238,10 +238,17 @@ export default function CoursePage({ params }: CoursePageProps) {
                     <div className="font-medium">{course.instructor}</div>
                     <div className="text-sm text-muted-foreground">{course.instructorBio}</div>
                   </div>
-                  <Button className="w-full">
-                    <Play className="mr-2 h-4 w-4" />
-                    Continue Learning
+                  <Button className="w-full" asChild>
+                    <a href={`/practice/${course.modules[0]?.topics[0]?.problems[0]?.id || "two-sum"}`}>
+                      <Play className="mr-2 h-4 w-4" />
+                      Start Learning Free
+                    </a>
                   </Button>
+                  <div className="text-center">
+                    <Badge variant="secondary" className="text-xs">
+                      ✨ Completely Free - No Registration Required
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
             </div>

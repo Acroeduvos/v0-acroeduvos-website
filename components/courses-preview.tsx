@@ -110,9 +110,11 @@ export function CoursesPreview() {
                   <Progress value={course.progress} className="h-2" />
                 </div>
 
-                <Button className="w-full">
-                  <BookOpen className="mr-2 h-4 w-4" />
-                  Start Course
+                <Button className="w-full" asChild>
+                  <a href={`/courses/${course.title.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}>
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Start Learning Free
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -120,8 +122,8 @@ export function CoursesPreview() {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg">
-            View All Courses
+          <Button variant="outline" size="lg" asChild>
+            <a href="/courses">Browse All Free Courses</a>
           </Button>
         </div>
       </div>

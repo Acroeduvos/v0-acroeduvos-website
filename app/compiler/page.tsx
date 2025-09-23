@@ -439,7 +439,9 @@ export default function CompilerPage() {
     if (newLanguage) {
       setCode(newLanguage.example)
       setInput(newLanguage.sampleInput)
-      setOutput(newLanguage.sampleOutput)
+      setOutput("")
+      setExecutionTime(null)
+      setMemoryUsage(null)
     }
     setStatus("idle")
   }
@@ -451,38 +453,11 @@ export default function CompilerPage() {
 
     // Simulate code execution
     setTimeout(() => {
-      if (currentLanguage && input.trim()) {
+      if (currentLanguage) {
         setOutput(currentLanguage.sampleOutput)
         setExecutionTime(Math.random() * 500 + 100)
         setMemoryUsage(Math.random() * 30 + 10)
         setStatus("success")
-      } else {
-        const mockResults = [
-          {
-            output: currentLanguage?.sampleOutput || "Hello, World!",
-            time: Math.random() * 1000 + 100,
-            memory: Math.random() * 50 + 10,
-            status: "success" as const,
-          },
-          {
-            output: `Error: SyntaxError: invalid syntax\n  File "main${currentLanguage?.extension}", line 5\n    print(Hello World)\n          ^\nSyntaxError: invalid syntax`,
-            time: 0,
-            memory: 0,
-            status: "error" as const,
-          },
-          {
-            output: "Time Limit Exceeded\nYour code took too long to execute (>5 seconds)",
-            time: 5000,
-            memory: 0,
-            status: "timeout" as const,
-          },
-        ]
-
-        const result = mockResults[Math.floor(Math.random() * mockResults.length)]
-        setOutput(result.output)
-        setExecutionTime(result.time)
-        setMemoryUsage(result.memory)
-        setStatus(result.status)
       }
       setIsRunning(false)
     }, 2000)
@@ -512,7 +487,7 @@ export default function CompilerPage() {
       setInput(defaultLang.sampleInput)
       setOutput("")
     }
-  }, [])
+  }, [selectedLanguage])
 
   return (
     <div className="min-h-screen">
@@ -675,7 +650,9 @@ export default function CompilerPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">Input</CardTitle>
-                    <CardDescription>Input for {currentLanguage?.label} program</CardDescription>
+                    <CardDescription>
+                      Provide input for your {currentLanguage?.label} program (if needed)
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Textarea
