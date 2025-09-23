@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Code2, BookOpen, Trophy, Users, Menu, Terminal } from "lucide-react"
+import { Code2, BookOpen, Trophy, Users, Menu, Terminal, BarChart3 } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
 
@@ -104,6 +104,16 @@ export function Header() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
+                  href="/dashboard"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Dashboard
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
                   href="/resources"
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
@@ -145,6 +155,12 @@ export function Header() {
                   <Button variant="ghost" className="justify-start w-full">
                     <Terminal className="mr-2 h-4 w-4" />
                     Compiler
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <BarChart3 className="mr-2 h-4 w-4" />
+                    Dashboard
                   </Button>
                 </Link>
                 <Link href="/resources">

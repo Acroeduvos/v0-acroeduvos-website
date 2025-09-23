@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -42,6 +42,15 @@ if __name__ == "__main__":
     a = int(input("Enter first number: "))
     b = int(input("Enter second number: "))
     print(f"Sum: {a + b}")`,
+    sampleInput: `John
+5
+3`,
+    sampleOutput: `Enter your name: John
+Hello, John!
+Enter first number: 5
+Enter second number: 3
+Sum: 8`,
+    inputPlaceholder: "Enter input values (one per line):\nJohn\n5\n3",
   },
   {
     value: "javascript",
@@ -70,6 +79,15 @@ rl.question('Enter your name: ', (name) => {
         });
     });
 });`,
+    sampleInput: `Alice
+10
+20`,
+    sampleOutput: `Enter your name: Alice
+Hello, Alice!
+Enter first number: 10
+Enter second number: 20
+Sum: 30`,
+    inputPlaceholder: "Enter input values (one per line):\nAlice\n10\n20",
   },
   {
     value: "java",
@@ -100,6 +118,15 @@ public class Main {
         scanner.close();
     }
 }`,
+    sampleInput: `Bob
+15
+25`,
+    sampleOutput: `Enter your name: Bob
+Hello, Bob!
+Enter first number: 15
+Enter second number: 25
+Sum: 40`,
+    inputPlaceholder: "Enter input values (one per line):\nBob\n15\n25",
   },
   {
     value: "cpp",
@@ -130,6 +157,15 @@ int main() {
     
     return 0;
 }`,
+    sampleInput: `Charlie
+7
+13`,
+    sampleOutput: `Enter your name: Charlie
+Hello, Charlie!
+Enter first number: 7
+Enter second number: 13
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nCharlie\n7\n13",
   },
   {
     value: "c",
@@ -163,6 +199,15 @@ int main() {
     
     return 0;
 }`,
+    sampleInput: `David
+9
+11`,
+    sampleOutput: `Enter your name: David
+Hello, David!
+Enter first number: 9
+Enter second number: 11
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nDavid\n9\n11",
   },
   {
     value: "go",
@@ -202,6 +247,15 @@ func main() {
     
     fmt.Printf("Sum: %d\\n", a+b)
 }`,
+    sampleInput: `Eve
+12
+8`,
+    sampleOutput: `Enter your name: Eve
+Hello, Eve!
+Enter first number: 12
+Enter second number: 8
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nEve\n12\n8",
   },
   {
     value: "rust",
@@ -234,6 +288,15 @@ fn main() {
     
     println!("Sum: {}", a + b);
 }`,
+    sampleInput: `Frank
+6
+14`,
+    sampleOutput: `Enter your name: Frank
+Hello, Frank!
+Enter first number: 6
+Enter second number: 14
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nFrank\n6\n14",
   },
   {
     value: "typescript",
@@ -263,6 +326,15 @@ rl.question('Enter your name: ', (name: string) => {
         });
     });
 });`,
+    sampleInput: `Grace
+4
+16`,
+    sampleOutput: `Enter your name: Grace
+Hello, Grace!
+Enter first number: 4
+Enter second number: 16
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nGrace\n4\n16",
   },
   {
     value: "php",
@@ -285,6 +357,15 @@ echo "Enter second number: ";
 $b = (int)trim(fgets(STDIN));
 echo "Sum: " . ($a + $b) . "\\n";
 ?>`,
+    sampleInput: `Henry
+3
+17`,
+    sampleOutput: `Enter your name: Henry
+Hello, Henry!
+Enter first number: 3
+Enter second number: 17
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nHenry\n3\n17",
   },
   {
     value: "ruby",
@@ -305,6 +386,15 @@ a = gets.chomp.to_i
 print "Enter second number: "
 b = gets.chomp.to_i
 puts "Sum: #{a + b}"`,
+    sampleInput: `Ivy
+2
+18`,
+    sampleOutput: `Enter your name: Ivy
+Hello, Ivy!
+Enter first number: 2
+Enter second number: 18
+Sum: 20`,
+    inputPlaceholder: "Enter input values (one per line):\nIvy\n2\n18",
   },
 ]
 
@@ -348,8 +438,9 @@ export default function CompilerPage() {
     const newLanguage = languages.find((lang) => lang.value === value)
     if (newLanguage) {
       setCode(newLanguage.example)
+      setInput(newLanguage.sampleInput)
+      setOutput(newLanguage.sampleOutput)
     }
-    setOutput("")
     setStatus("idle")
   }
 
@@ -360,33 +451,39 @@ export default function CompilerPage() {
 
     // Simulate code execution
     setTimeout(() => {
-      const mockResults = [
-        {
-          output: "Enter your name: John\nHello, John!\nEnter first number: 5\nEnter second number: 3\nSum: 8",
-          time: Math.random() * 1000 + 100,
-          memory: Math.random() * 50 + 10,
-          status: "success" as const,
-        },
-        {
-          output:
-            'Error: SyntaxError: invalid syntax\n  File "main.py", line 5\n    print(Hello World)\n          ^\nSyntaxError: invalid syntax',
-          time: 0,
-          memory: 0,
-          status: "error" as const,
-        },
-        {
-          output: "Time Limit Exceeded\nYour code took too long to execute (>5 seconds)",
-          time: 5000,
-          memory: 0,
-          status: "timeout" as const,
-        },
-      ]
+      if (currentLanguage && input.trim()) {
+        setOutput(currentLanguage.sampleOutput)
+        setExecutionTime(Math.random() * 500 + 100)
+        setMemoryUsage(Math.random() * 30 + 10)
+        setStatus("success")
+      } else {
+        const mockResults = [
+          {
+            output: currentLanguage?.sampleOutput || "Hello, World!",
+            time: Math.random() * 1000 + 100,
+            memory: Math.random() * 50 + 10,
+            status: "success" as const,
+          },
+          {
+            output: `Error: SyntaxError: invalid syntax\n  File "main${currentLanguage?.extension}", line 5\n    print(Hello World)\n          ^\nSyntaxError: invalid syntax`,
+            time: 0,
+            memory: 0,
+            status: "error" as const,
+          },
+          {
+            output: "Time Limit Exceeded\nYour code took too long to execute (>5 seconds)",
+            time: 5000,
+            memory: 0,
+            status: "timeout" as const,
+          },
+        ]
 
-      const result = mockResults[Math.floor(Math.random() * mockResults.length)]
-      setOutput(result.output)
-      setExecutionTime(result.time)
-      setMemoryUsage(result.memory)
-      setStatus(result.status)
+        const result = mockResults[Math.floor(Math.random() * mockResults.length)]
+        setOutput(result.output)
+        setExecutionTime(result.time)
+        setMemoryUsage(result.memory)
+        setStatus(result.status)
+      }
       setIsRunning(false)
     }, 2000)
   }
@@ -398,15 +495,24 @@ export default function CompilerPage() {
   const handleResetCode = () => {
     if (currentLanguage) {
       setCode(currentLanguage.example)
+      setInput(currentLanguage.sampleInput)
       setOutput("")
       setStatus("idle")
     }
   }
 
   const handleLoadSample = (problem: (typeof sampleProblems)[0]) => {
-    // This would load sample code for the selected problem
     setCode(`// ${problem.title}\n// ${problem.description}\n\n${currentLanguage?.example || ""}`)
   }
+
+  useEffect(() => {
+    const defaultLang = languages.find((lang) => lang.value === selectedLanguage)
+    if (defaultLang) {
+      setCode(defaultLang.example)
+      setInput(defaultLang.sampleInput)
+      setOutput("")
+    }
+  }, [])
 
   return (
     <div className="min-h-screen">
@@ -569,14 +675,14 @@ export default function CompilerPage() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">Input</CardTitle>
-                    <CardDescription>Provide input for your program (if needed)</CardDescription>
+                    <CardDescription>Input for {currentLanguage?.label} program</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Textarea
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       className="min-h-[150px] font-mono text-sm"
-                      placeholder="Enter input here..."
+                      placeholder={currentLanguage?.inputPlaceholder || "Enter input here..."}
                     />
                   </CardContent>
                 </Card>
@@ -604,7 +710,7 @@ export default function CompilerPage() {
                           status === "error" ? "text-red-600" : status === "timeout" ? "text-yellow-600" : ""
                         }`}
                       >
-                        {output || "Output will appear here..."}
+                        {output || `Expected output for ${currentLanguage?.label} will appear here...`}
                       </pre>
                     </ScrollArea>
                   </CardContent>
