@@ -46,9 +46,7 @@ export function Header() {
     <header className="border-b border-gray-200 bg-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center">
-          <div className="relative h-12 w-12 mr-2">
-            <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
-          </div>
+          <Image src="/logo.png" alt="Acroeduvos Logo" width={48} height={48} className="mr-2" priority />
           <span className="text-xl font-bold hidden sm:inline-block">Acroeduvos</span>
         </Link>
 

@@ -8,9 +8,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center">
-              <div className="relative h-10 w-10 mr-2">
-                <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
-              </div>
+              <Image src="/logo.png" alt="Acroeduvos Logo" width={40} height={40} className="mr-2" />
               <span className="text-xl font-bold">Acroeduvos</span>
             </Link>
             <p className="mt-2 text-gray-600">
