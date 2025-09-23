@@ -1,292 +1,103 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BookOpen, Code, Award, Briefcase } from "lucide-react"
 
 export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-700 to-indigo-800 py-20 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <div className="mx-auto mb-6 flex justify-center">
-            <div className="relative h-16 w-16 sm:h-20 sm:w-20">
-              <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
-            </div>
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Learn, Code, Create, Certify</h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-purple-100 md:text-xl">
-            Free programming courses and MNC interview preparation resources to help you advance your career in tech
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
-              24/7 love
-            </span>
-            <span className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
-              Total free
-            </span>
-          </div>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="/courses">
-              <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
-                Explore Courses
-              </Button>
-            </Link>
-            <Link href="/problems">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
-                Practice MNC Questions
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16">
+      {/* Hero Section - matches screenshot */}
+      <section className="bg-gradient-to-br from-purple-700 via-purple-700 to-purple-800 py-20 text-white">
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-3xl font-bold">Why Choose Acroeduvos?</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 rounded-full bg-purple-100 p-4">
-                <BookOpen className="h-8 w-8 text-purple-600" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Free Learning Resources</h3>
-              <p className="text-gray-600">
-                Access all our courses and learning materials completely free of charge, with no hidden fees.
+          <div className="grid gap-10 md:grid-cols-2 items-center">
+            {/* Left: Headline and CTAs */}
+            <div>
+              <h1 className="text-left text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+                Learn to Code, Get
+                <br />
+                Certified
+              </h1>
+              <p className="mt-6 max-w-xl text-left text-purple-100 text-lg md:text-xl">
+                Master programming languages, web development, cybersecurity, and more with our comprehensive FREE
+                courses and earn industry-recognized certifications.
               </p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 rounded-full bg-purple-100 p-4">
-                <Code className="h-8 w-8 text-purple-600" />
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link href="/courses">
+                  <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
+                    Explore Courses
+                  </Button>
+                </Link>
+                <Link href="/auth/register">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white text-white hover:bg-white/10 hover:text-white"
+                  >
+                    Start Learning Free
+                  </Button>
+                </Link>
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Hands-on Practice</h3>
-              <p className="text-gray-600">
-                Apply your knowledge with coding exercises, projects, and real-world problem-solving.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 rounded-full bg-purple-100 p-4">
-                <Award className="h-8 w-8 text-purple-600" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Free Certification</h3>
-              <p className="text-gray-600">
-                Earn certificates upon course completion to showcase your skills to potential employers.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Courses Preview Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold">Featured Learning Paths</h2>
-            <p className="mt-4 text-gray-600">
-              Choose from our wide range of free programming courses and MNC interview preparation resources
-            </p>
-          </div>
-
-          <Tabs defaultValue="courses" className="w-full">
-            <TabsList className="mb-8 grid w-full max-w-md mx-auto grid-cols-2">
-              <TabsTrigger value="courses">Programming Courses</TabsTrigger>
-              <TabsTrigger value="mnc">MNC Interview Prep</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="courses">
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Code className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                        Basic & Advanced
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">C/C++ Programming</h3>
-                    <p className="mb-4 text-gray-600">
-                      Master C and C++ programming from basics to advanced concepts with hands-on projects.
-                    </p>
-                    <Link href="/courses?category=programming">
-                      <Button className="w-full">View Courses</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Code className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                        Basic & Advanced
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">Web Development</h3>
-                    <p className="mb-4 text-gray-600">
-                      Learn modern web development with HTML, CSS, JavaScript, and popular frameworks.
-                    </p>
-                    <Link href="/courses?category=web">
-                      <Button className="w-full">View Courses</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Code className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
-                        Basic & Advanced
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">AI & Machine Learning</h3>
-                    <p className="mb-4 text-gray-600">
-                      Explore artificial intelligence and machine learning concepts and applications.
-                    </p>
-                    <Link href="/courses?category=ai">
-                      <Button className="w-full">View Courses</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="mnc">
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Briefcase className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                        FAANG
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">Amazon Interview Prep</h3>
-                    <p className="mb-4 text-gray-600">
-                      Practice real interview questions asked at Amazon technical interviews.
-                    </p>
-                    <Link href="/problems?company=amazon">
-                      <Button className="w-full">View Questions</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Briefcase className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                        FAANG
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">Google Interview Prep</h3>
-                    <p className="mb-4 text-gray-600">
-                      Master the coding and system design questions asked at Google interviews.
-                    </p>
-                    <Link href="/problems?company=google">
-                      <Button className="w-full">View Questions</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center justify-between">
-                      <div className="rounded-full bg-purple-100 p-3">
-                        <Briefcase className="h-6 w-6 text-purple-600" />
-                      </div>
-                      <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
-                        Tech Giants
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">Microsoft Interview Prep</h3>
-                    <p className="mb-4 text-gray-600">
-                      Practice technical questions commonly asked in Microsoft interviews.
-                    </p>
-                    <Link href="/problems?company=microsoft">
-                      <Button className="w-full">View Questions</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-12 text-center">
-            <Link href="/courses">
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
-                View All Courses
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* MNC Interview Prep Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold">Prepare for MNC Technical Interviews</h2>
-            <p className="mt-4 text-gray-600">
-              Practice with real interview questions asked at top multinational companies
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2">
-            <div className="rounded-lg bg-gray-50 p-8">
-              <h3 className="mb-4 text-2xl font-bold">Company-Specific Questions</h3>
-              <p className="mb-6 text-gray-600">
-                Our platform offers a comprehensive collection of technical interview questions from top companies like
-                Amazon, Google, Microsoft, Meta, and more. Practice with questions tailored to specific company
-                interview patterns.
-              </p>
-              <Link href="/problems">
-                <Button className="bg-purple-600 hover:bg-purple-700">Explore Questions</Button>
-              </Link>
             </div>
 
-            <div className="rounded-lg bg-gray-50 p-8">
-              <h3 className="mb-4 text-2xl font-bold">Topic-Based Practice</h3>
-              <p className="mb-6 text-gray-600">
-                Master key topics frequently tested in technical interviews, including data structures, algorithms,
-                system design, and more. Build your skills systematically with our structured approach.
-              </p>
-              <Link href="/problems?tag=algorithms">
-                <Button className="bg-purple-600 hover:bg-purple-700">Practice by Topic</Button>
-              </Link>
+            {/* Right: Stats card */}
+            <div>
+              <Card className="bg-white/5 border-white/10 shadow-2xl">
+                <CardContent className="p-6">
+                  <div className="mx-auto mb-6 flex justify-center">
+                    <div className="relative h-20 w-14 rounded-md overflow-hidden bg-white text-purple-700 grid place-items-center font-semibold">
+                      <span>AE</span>
+                    </div>
+                  </div>
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-semibold">Why Choose Acroeduvos?</h3>
+                    <p className="text-sm text-purple-100">Your path to programming mastery</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-md bg-white/5 px-4 py-5 text-center">
+                      <div className="text-2xl font-bold">8+</div>
+                      <div className="text-xs text-purple-100 mt-1">Languages</div>
+                    </div>
+                    <div className="rounded-md bg-white/5 px-4 py-5 text-center">
+                      <div className="text-2xl font-bold">100%</div>
+                      <div className="text-xs text-purple-100 mt-1">Free</div>
+                    </div>
+                    <div className="rounded-md bg-white/5 px-4 py-5 text-center">
+                      <div className="text-2xl font-bold">24/7</div>
+                      <div className="text-xs text-purple-100 mt-1">Access</div>
+                    </div>
+                    <div className="rounded-md bg-white/5 px-4 py-5 text-center">
+                      <div className="text-2xl font-bold">∞</div>
+                      <div className="text-xs text-purple-100 mt-1">Paths</div>
+                    </div>
+                  </div>
+                  <div className="mt-8 rounded-md bg-white/5 p-4">
+                    <div className="mb-3 font-semibold">Start Learning Today!</div>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+                        <span>Free Courses</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+                        <span>Certificates</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+                        <span>Code Practice</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+                        <span>24/7 Support</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-purple-700 py-16 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold">Start Your Learning Journey Today</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-purple-100">
-            Join thousands of learners who are advancing their careers with our free courses and resources
-          </p>
-          <div className="mt-8">
-            <Link href="/auth/register">
-              <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
-                Create Free Account
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Below sections removed to match the exact hero-only front page */}
     </div>
   )
 }
