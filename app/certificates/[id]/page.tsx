@@ -157,7 +157,7 @@ export default function CertificatePage({ params }: { params: { id: string } }) 
                 Certificate ID: {certificate.credentialID} • Issue Date: {certificate.issueDate}
               </p>
               <p className="text-sm text-gray-600">
-                Verify this certificate at acroeduvos.acroeduvos.in/verify/{certificate.credentialID}
+                Verify this certificate at https://acroeduvos.in/verify/{certificate.credentialID}
               </p>
             </div>
           </div>
