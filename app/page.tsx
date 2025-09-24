@@ -52,14 +52,14 @@ export default function Home() {
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
-                  <Link href="/courses">Explore Courses</Link>
+                  <Link href="/courses#courses-list">Explore Courses</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
-                  <Link href="/courses">Start Learning Free</Link>
+                  <Link href="/courses#courses-list">Start Learning Free</Link>
                 </Button>
               </div>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden md:block relative">
               <Image
                 src="/placeholder.svg?height=400&width=600&text=Coding+Education"
                 alt="Coding Education"
@@ -67,6 +67,9 @@ export default function Home() {
                 height={400}
                 className="rounded-lg"
               />
+              <div className="absolute bottom-2 right-2 h-12 w-12">
+                <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
+              </div>
             </div>
           </div>
         </div>

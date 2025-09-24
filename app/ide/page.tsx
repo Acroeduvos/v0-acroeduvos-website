@@ -10,7 +10,33 @@ export default function IDEPage() {
 
   // Mock onRun that echoes input for demo; integrate with backend runner later
   const onRun = async (code: string, language: string, input: string) => {
-    return `Language: ${language}\nCode length: ${code.length}\nInput echo:\n${input || "(no input)"}`
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+          language,
+          input,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+      
+      if (result.error) {
+        return `Error: ${result.error}${result.message ? ` - ${result.message}` : ''}`
+      } else {
+        return result.output
+      }
+    } catch (error) {
+      return error instanceof Error ? error.message : "An error occurred while executing code"
+    }
   }
 
   return (

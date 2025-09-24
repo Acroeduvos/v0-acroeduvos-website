@@ -234,21 +234,39 @@ process.stdin.on('end', function() {
       .padStart(2, "0")}`
   }
 
-  const handleRun = () => {
+  const handleRun = async () => {
     setStatus("running")
-    // Simulate code execution (CodeChef style)
-    setTimeout(() => {
-      if (customInput.trim() === problem.examples[0].input.trim()) {
-        setOutput(problem.examples[0].output)
-        setStatus("success")
-      } else if (customInput.trim() === problem.examples[1].input.trim()) {
-        setOutput(problem.examples[1].output)
-        setStatus("success")
-      } else {
-        setOutput("Input doesn't match any test case. Please check your input format.")
-        setStatus("error")
+
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+          language,
+          input: customInput,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
-    }, 1500)
+
+      const result = await response.json()
+      
+      if (result.error) {
+        setOutput(`Error: ${result.error}${result.message ? ` - ${result.message}` : ''}`)
+        setStatus("error")
+      } else {
+        setOutput(result.output)
+        setStatus(result.status)
+      }
+    } catch (error) {
+      setOutput(error instanceof Error ? error.message : "An error occurred while executing code")
+      setStatus("error")
+    }
   }
 
   const handleSubmit = () => {

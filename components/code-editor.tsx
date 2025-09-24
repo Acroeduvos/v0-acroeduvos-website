@@ -93,21 +93,35 @@ rl.on('line', (line) => {
   const handleRun = async () => {
     setStatus("running")
 
-    if (onRun) {
-      try {
-        const result = await onRun(code, language, customInput)
-        setOutput(result)
-        setStatus("success")
-      } catch (error) {
-        setOutput(error instanceof Error ? error.message : "An error occurred")
-        setStatus("error")
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+          language,
+          input: customInput,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
-    } else {
-      // Mock execution
-      setTimeout(() => {
-        setOutput("Program executed successfully.\nOutput will appear here.")
-        setStatus("success")
-      }, 1500)
+
+      const result = await response.json()
+      
+      if (result.error) {
+        setOutput(`Error: ${result.error}${result.message ? ` - ${result.message}` : ''}`)
+        setStatus("error")
+      } else {
+        setOutput(result.output)
+        setStatus(result.status)
+      }
+    } catch (error) {
+      setOutput(error instanceof Error ? error.message : "An error occurred while executing code")
+      setStatus("error")
     }
   }
 

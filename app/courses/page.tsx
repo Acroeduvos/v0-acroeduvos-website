@@ -85,6 +85,86 @@ export default function CoursesPage() {
       image: "/placeholder.svg?height=200&width=400&text=Python+Data+Science",
       description: "Learn Python programming for data analysis, visualization, and machine learning.",
     },
+    {
+      id: 9,
+      title: "JavaScript Mastery",
+      category: "Web",
+      level: "Beginner",
+      price: "FREE",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=JavaScript",
+      description: "Learn JavaScript from basics to advanced concepts including ES6+ features and modern frameworks.",
+    },
+    {
+      id: 10,
+      title: "React.js Development",
+      category: "Web",
+      level: "Intermediate",
+      price: "FREE",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=React.js",
+      description: "Build modern web applications with React.js, hooks, context API, and state management.",
+    },
+    {
+      id: 11,
+      title: "Node.js Backend Development",
+      category: "Backend",
+      level: "Intermediate",
+      price: "FREE",
+      rating: 4.7,
+      image: "/placeholder.svg?height=200&width=400&text=Node.js",
+      description: "Create scalable server-side applications with Node.js, Express, and MongoDB.",
+    },
+    {
+      id: 12,
+      title: "Python Programming",
+      category: "Programming",
+      level: "Beginner",
+      price: "FREE",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=Python",
+      description: "Learn Python programming fundamentals, data structures, and practical applications.",
+    },
+    {
+      id: 13,
+      title: "SQL Database Management",
+      category: "Database",
+      level: "Beginner",
+      price: "FREE",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=SQL",
+      description: "Master SQL queries, database design, and management with hands-on projects.",
+    },
+    {
+      id: 14,
+      title: "Git & GitHub Essentials",
+      category: "Development",
+      level: "Beginner",
+      price: "FREE",
+      rating: 4.9,
+      image: "/placeholder.svg?height=200&width=400&text=Git+GitHub",
+      description: "Learn version control with Git and collaborate effectively using GitHub.",
+    },
+    {
+      id: 15,
+      title: "Docker & Containerization",
+      category: "DevOps",
+      level: "Intermediate",
+      price: "FREE",
+      rating: 4.7,
+      image: "/placeholder.svg?height=200&width=400&text=Docker",
+      description: "Containerize your applications with Docker and learn container orchestration basics.",
+    },
+    {
+      id: 16,
+      title: "AWS Cloud Fundamentals",
+      category: "Cloud",
+      level: "Intermediate",
+      price: "FREE",
+      rating: 4.8,
+      image: "/placeholder.svg?height=200&width=400&text=AWS",
+      description: "Introduction to Amazon Web Services and cloud computing concepts.",
+    },
   ]
 
   return (
@@ -141,7 +221,7 @@ export default function CoursesPage() {
       </section>
 
       {/* Courses Grid */}
-      <section className="py-16">
+      <section id="courses-list" className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {courses.map((course, index) => (
