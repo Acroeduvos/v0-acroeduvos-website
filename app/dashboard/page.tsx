@@ -1,558 +1,380 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Header } from "@/components/header"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
-import { BookOpen, Code, Trophy, Award, Calendar, Clock, ArrowRight, CheckCircle2 } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Trophy, Target, CheckCircle, XCircle, TrendingUp, Code, Flame, Zap, Brain } from "lucide-react"
+
+const userStats = {
+  totalProblems: 150,
+  solvedProblems: 47,
+  easyProblems: { solved: 25, total: 60 },
+  mediumProblems: { solved: 18, total: 70 },
+  hardProblems: { solved: 4, total: 20 },
+  currentStreak: 7,
+  maxStreak: 15,
+  totalSubmissions: 89,
+  acceptedSubmissions: 47,
+  rank: 1247,
+  points: 2850,
+  badges: [
+    { name: "First Solve", icon: Trophy, color: "text-yellow-500" },
+    { name: "Week Warrior", icon: Flame, color: "text-orange-500" },
+    { name: "Problem Solver", icon: Brain, color: "text-purple-500" },
+    { name: "Code Master", icon: Code, color: "text-blue-500" },
+  ],
+}
+
+const recentActivity = [
+  { problem: "Two Sum", status: "accepted", time: "2 hours ago", difficulty: "Easy" },
+  { problem: "Valid Parentheses", status: "accepted", time: "5 hours ago", difficulty: "Easy" },
+  { problem: "Merge Two Sorted Lists", status: "wrong-answer", time: "1 day ago", difficulty: "Easy" },
+  { problem: "Longest Substring", status: "accepted", time: "2 days ago", difficulty: "Medium" },
+  { problem: "Container With Most Water", status: "accepted", time: "3 days ago", difficulty: "Medium" },
+]
+
+const weeklyProgress = [
+  { day: "Mon", problems: 3 },
+  { day: "Tue", problems: 2 },
+  { day: "Wed", problems: 4 },
+  { day: "Thu", problems: 1 },
+  { day: "Fri", problems: 5 },
+  { day: "Sat", problems: 2 },
+  { day: "Sun", problems: 3 },
+]
+
+const achievements = [
+  {
+    title: "First Blood",
+    description: "Solve your first problem",
+    progress: 100,
+    unlocked: true,
+    icon: Trophy,
+    color: "text-yellow-500",
+  },
+  {
+    title: "Speed Demon",
+    description: "Solve 5 problems in one day",
+    progress: 100,
+    unlocked: true,
+    icon: Zap,
+    color: "text-blue-500",
+  },
+  {
+    title: "Consistency King",
+    description: "Maintain a 30-day streak",
+    progress: 23,
+    unlocked: false,
+    icon: Flame,
+    color: "text-orange-500",
+  },
+  {
+    title: "Algorithm Master",
+    description: "Solve 100 problems",
+    progress: 47,
+    unlocked: false,
+    icon: Brain,
+    color: "text-purple-500",
+  },
+]
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [selectedTab, setSelectedTab] = useState("overview")
 
-  // Mock user data
-  const user = {
-    name: "John Doe",
-    username: "johndoe",
-    rank: 1245,
-    rating: 1842,
-    problemsSolved: 127,
-    contestsParticipated: 15,
-    streak: 7,
-  }
+  const acceptanceRate = Math.round((userStats.acceptedSubmissions / userStats.totalSubmissions) * 100)
+  const overallProgress = Math.round((userStats.solvedProblems / userStats.totalProblems) * 100)
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-          <p className="mt-1 text-gray-600">Welcome back, {user.name}</p>
-        </div>
-      </div>
+    <div className="min-h-screen">
+      <Header />
+      <main className="py-6">
+        <div className="container">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <p className="text-muted-foreground mt-2">Track your coding progress and achievements</p>
+          </div>
 
-      <div className="grid gap-6 md:grid-cols-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Rank</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">#{user.rank}</div>
-            <p className="text-xs text-gray-500">Global ranking</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Rating</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{user.rating}</div>
-            <p className="text-xs text-gray-500">Expert level</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Problems Solved</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{user.problemsSolved}</div>
-            <p className="text-xs text-gray-500">Across all categories</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">Current Streak</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{user.streak} days</div>
-            <p className="text-xs text-gray-500">Keep it going!</p>
-          </CardContent>
-        </Card>
-      </div>
+          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="progress">Progress</TabsTrigger>
+              <TabsTrigger value="achievements">Achievements</TabsTrigger>
+              <TabsTrigger value="activity">Activity</TabsTrigger>
+            </TabsList>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
-        <TabsList className="grid w-full grid-cols-4 md:w-auto">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="courses">My Courses</TabsTrigger>
-          <TabsTrigger value="contests">Contests</TabsTrigger>
-          <TabsTrigger value="certificates">Certificates</TabsTrigger>
-        </TabsList>
+            <TabsContent value="overview" className="space-y-6">
+              {/* Stats Cards */}
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Problems Solved</CardTitle>
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userStats.solvedProblems}</div>
+                    <p className="text-xs text-muted-foreground">{overallProgress}% of total problems</p>
+                  </CardContent>
+                </Card>
 
-        <TabsContent value="overview" className="mt-6 space-y-8">
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Recent Activity</h2>
-            <div className="space-y-4">
-              {[
-                { action: "Solved", item: "Two Sum", time: "2 hours ago", type: "problem" },
-                { action: "Completed", item: "Data Structures Fundamentals", time: "1 day ago", type: "course" },
-                { action: "Participated", item: "Weekly Challenge #41", time: "3 days ago", type: "contest" },
-                { action: "Earned", item: "Algorithm Specialist Certificate", time: "1 week ago", type: "certificate" },
-              ].map((activity, index) => (
-                <div key={index} className="flex items-start rounded-lg border border-gray-200 p-4">
-                  <div className="mr-4 rounded-full bg-[#f5f2ee] p-2">
-                    {activity.type === "problem" ? (
-                      <Code className="h-5 w-5 text-gray-700" />
-                    ) : activity.type === "course" ? (
-                      <BookOpen className="h-5 w-5 text-gray-700" />
-                    ) : activity.type === "contest" ? (
-                      <Trophy className="h-5 w-5 text-gray-700" />
-                    ) : (
-                      <Award className="h-5 w-5 text-gray-700" />
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-medium">
-                      {activity.action} <span className="text-black">{activity.item}</span>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
+                    <Flame className="h-4 w-4 text-orange-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{userStats.currentStreak}</div>
+                    <p className="text-xs text-muted-foreground">Max streak: {userStats.maxStreak} days</p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Acceptance Rate</CardTitle>
+                    <Target className="h-4 w-4 text-blue-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{acceptanceRate}%</div>
+                    <p className="text-xs text-muted-foreground">
+                      {userStats.acceptedSubmissions}/{userStats.totalSubmissions} submissions
                     </p>
-                    <p className="text-sm text-gray-500">{activity.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  </CardContent>
+                </Card>
 
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Progress Overview</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Problem Solving</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Easy (45/100)</span>
-                        <span className="text-gray-500">45%</span>
-                      </div>
-                      <Progress value={45} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Medium (30/150)</span>
-                        <span className="text-gray-500">20%</span>
-                      </div>
-                      <Progress value={20} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Hard (12/100)</span>
-                        <span className="text-gray-500">12%</span>
-                      </div>
-                      <Progress value={12} className="h-2" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Topic Coverage</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Arrays & Strings</span>
-                        <span className="text-gray-500">75%</span>
-                      </div>
-                      <Progress value={75} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Dynamic Programming</span>
-                        <span className="text-gray-500">40%</span>
-                      </div>
-                      <Progress value={40} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="mb-1 flex justify-between text-sm">
-                        <span>Graph Algorithms</span>
-                        <span className="text-gray-500">30%</span>
-                      </div>
-                      <Progress value={30} className="h-2" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-xl font-semibold">Recommended for You</h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <Badge className="w-fit bg-[#e8e3dc] text-black">Problem</Badge>
-                  <CardTitle className="text-lg">Merge Intervals</CardTitle>
-                  <CardDescription>Medium Difficulty</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">
-                    Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="link" className="px-0 text-black">
-                    Solve Now
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Badge className="w-fit bg-[#e8e3dc] text-black">Course</Badge>
-                  <CardTitle className="text-lg">Dynamic Programming Masterclass</CardTitle>
-                  <CardDescription>Intermediate Level</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">
-                    Master the art of dynamic programming with step-by-step tutorials and practice problems.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="link" className="px-0 text-black">
-                    Start Learning
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Badge className="w-fit bg-[#e8e3dc] text-black">Contest</Badge>
-                  <CardTitle className="text-lg">Weekly Challenge #42</CardTitle>
-                  <CardDescription>Starts in 2 days</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">
-                    Test your skills in this weekly coding challenge with problems of varying difficulty.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="link" className="px-0 text-black">
-                    Register Now
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="courses" className="mt-6">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">My Courses</h2>
-            <Link href="/learn" className="text-sm font-medium text-gray-700 hover:text-black">
-              Browse all courses <ArrowRight className="ml-1 inline-block h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="mb-4 text-lg font-medium">In Progress</h3>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    title: "Data Structures Fundamentals",
-                    progress: 75,
-                    lessons: 12,
-                    completedLessons: 9,
-                    lastAccessed: "2 days ago",
-                  },
-                  {
-                    title: "Algorithms Masterclass",
-                    progress: 30,
-                    lessons: 18,
-                    completedLessons: 5,
-                    lastAccessed: "1 week ago",
-                  },
-                ].map((course, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{course.title}</CardTitle>
-                      <CardDescription>
-                        {course.completedLessons}/{course.lessons} lessons completed
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="mb-4">
-                        <div className="mb-1 flex justify-between text-sm">
-                          <span>Progress</span>
-                          <span>{course.progress}%</span>
-                        </div>
-                        <Progress value={course.progress} className="h-2" />
-                      </div>
-                      <p className="text-sm text-gray-500">Last accessed {course.lastAccessed}</p>
-                    </CardContent>
-                    <CardFooter>
-                      <Button className="w-full bg-black">Continue Learning</Button>
-                    </CardFooter>
-                  </Card>
-                ))}
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Global Rank</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-purple-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">#{userStats.rank}</div>
+                    <p className="text-xs text-muted-foreground">{userStats.points} points earned</p>
+                  </CardContent>
+                </Card>
               </div>
-            </div>
 
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Completed</h3>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    title: "Introduction to Programming",
-                    completedDate: "Mar 15, 2025",
-                    lessons: 10,
-                  },
-                  {
-                    title: "Web Development Basics",
-                    completedDate: "Feb 28, 2025",
-                    lessons: 15,
-                  },
-                ].map((course, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{course.title}</CardTitle>
-                        <CheckCircle2 className="h-5 w-5 text-green-500" />
-                      </div>
-                      <CardDescription>Completed on {course.completedDate}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-500">{course.lessons} lessons</p>
-                    </CardContent>
-                    <CardFooter className="flex justify-between">
-                      <Button variant="outline">View Certificate</Button>
-                      <Button variant="outline">Review Course</Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="contests" className="mt-6">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">My Contests</h2>
-            <Link href="/contests" className="text-sm font-medium text-gray-700 hover:text-black">
-              Browse all contests <ArrowRight className="ml-1 inline-block h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Upcoming Registrations</h3>
+              {/* Problem Breakdown */}
               <div className="grid gap-6 md:grid-cols-2">
-                {[
-                  {
-                    title: "Weekly Challenge #42",
-                    date: "Apr 15, 2025",
-                    time: "8:00 PM - 11:00 PM",
-                    difficulty: "Medium",
-                  },
-                  {
-                    title: "Data Structures Marathon",
-                    date: "Apr 20, 2025",
-                    time: "9:00 AM - 9:00 PM",
-                    difficulty: "Hard",
-                  },
-                ].map((contest, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{contest.title}</CardTitle>
-                      <CardDescription>
-                        <Badge variant="outline" className="mr-2">
-                          {contest.difficulty}
-                        </Badge>
-                        Registered
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Calendar className="mr-2 h-4 w-4" />
-                          {contest.date}
-                        </div>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Clock className="mr-2 h-4 w-4" />
-                          {contest.time}
-                        </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Problem Difficulty Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Easy</span>
+                        <span className="text-sm text-muted-foreground">
+                          {userStats.easyProblems.solved}/{userStats.easyProblems.total}
+                        </span>
                       </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button className="w-full bg-black">Set Reminder</Button>
-                    </CardFooter>
+                      <Progress
+                        value={(userStats.easyProblems.solved / userStats.easyProblems.total) * 100}
+                        className="h-2"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Medium</span>
+                        <span className="text-sm text-muted-foreground">
+                          {userStats.mediumProblems.solved}/{userStats.mediumProblems.total}
+                        </span>
+                      </div>
+                      <Progress
+                        value={(userStats.mediumProblems.solved / userStats.mediumProblems.total) * 100}
+                        className="h-2"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Hard</span>
+                        <span className="text-sm text-muted-foreground">
+                          {userStats.hardProblems.solved}/{userStats.hardProblems.total}
+                        </span>
+                      </div>
+                      <Progress
+                        value={(userStats.hardProblems.solved / userStats.hardProblems.total) * 100}
+                        className="h-2"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Weekly Activity</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-end justify-between h-32">
+                      {weeklyProgress.map((day, index) => (
+                        <div key={index} className="flex flex-col items-center gap-2">
+                          <div
+                            className="bg-primary rounded-sm w-8 transition-all hover:bg-primary/80"
+                            style={{ height: `${(day.problems / 5) * 100}px` }}
+                          />
+                          <span className="text-xs text-muted-foreground">{day.day}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Badges */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Earned Badges</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-4">
+                    {userStats.badges.map((badge, index) => (
+                      <div key={index} className="flex flex-col items-center gap-2">
+                        <div className="p-3 rounded-full bg-muted">
+                          <badge.icon className={`h-6 w-6 ${badge.color}`} />
+                        </div>
+                        <span className="text-xs font-medium">{badge.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="progress" className="space-y-6">
+              <div className="grid gap-6 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Overall Progress</CardTitle>
+                    <CardDescription>Your journey through all problems</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold">{overallProgress}%</div>
+                      <p className="text-muted-foreground">Complete</p>
+                    </div>
+                    <Progress value={overallProgress} className="h-3" />
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>{userStats.solvedProblems} solved</span>
+                      <span>{userStats.totalProblems - userStats.solvedProblems} remaining</span>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Skill Distribution</CardTitle>
+                    <CardDescription>Your strengths across different topics</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {[
+                      { skill: "Arrays & Strings", progress: 85 },
+                      { skill: "Dynamic Programming", progress: 45 },
+                      { skill: "Trees & Graphs", progress: 60 },
+                      { skill: "Sorting & Searching", progress: 75 },
+                      { skill: "Math & Logic", progress: 30 },
+                    ].map((item, index) => (
+                      <div key={index} className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span>{item.skill}</span>
+                          <span>{item.progress}%</span>
+                        </div>
+                        <Progress value={item.progress} className="h-2" />
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="achievements" className="space-y-6">
+              <div className="grid gap-4 md:grid-cols-2">
+                {achievements.map((achievement, index) => (
+                  <Card key={index} className={achievement.unlocked ? "border-green-200" : ""}>
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-full ${achievement.unlocked ? "bg-green-100" : "bg-muted"}`}>
+                          <achievement.icon
+                            className={`h-5 w-5 ${achievement.unlocked ? achievement.color : "text-muted-foreground"}`}
+                          />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{achievement.title}</CardTitle>
+                          <CardDescription>{achievement.description}</CardDescription>
+                        </div>
+                        {achievement.unlocked && (
+                          <Badge variant="secondary" className="ml-auto">
+                            <CheckCircle className="mr-1 h-3 w-3" />
+                            Unlocked
+                          </Badge>
+                        )}
+                      </div>
+                    </CardHeader>
+                    {!achievement.unlocked && (
+                      <CardContent>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span>Progress</span>
+                            <span>{achievement.progress}%</span>
+                          </div>
+                          <Progress value={achievement.progress} className="h-2" />
+                        </div>
+                      </CardContent>
+                    )}
                   </Card>
                 ))}
               </div>
-            </div>
+            </TabsContent>
 
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Past Participations</h3>
+            <TabsContent value="activity" className="space-y-6">
               <Card>
-                <CardContent className="p-0">
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b bg-[#f5f2ee]">
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Contest</th>
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date</th>
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Rank</th>
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Score</th>
-                          <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {[
-                          {
-                            title: "Weekly Challenge #41",
-                            date: "Apr 8, 2025",
-                            rank: 245,
-                            score: "300/500",
-                          },
-                          {
-                            title: "Algorithm Showdown",
-                            date: "Apr 1, 2025",
-                            rank: 189,
-                            score: "450/600",
-                          },
-                          {
-                            title: "Beginner's Coding Contest",
-                            date: "Mar 25, 2025",
-                            rank: 56,
-                            score: "280/300",
-                          },
-                        ].map((contest, index) => (
-                          <tr key={index} className="hover:bg-gray-50">
-                            <td className="px-6 py-4 text-sm font-medium text-gray-900">{contest.title}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{contest.date}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">#{contest.rank}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{contest.score}</td>
-                            <td className="px-6 py-4 text-sm">
-                              <Button variant="link" className="h-auto p-0 text-black">
-                                View Details
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="certificates" className="mt-6">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">My Certificates</h2>
-            <Link href="/learn" className="text-sm font-medium text-gray-700 hover:text-black">
-              Browse all courses <ArrowRight className="ml-1 inline-block h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Algorithm Specialist",
-                issueDate: "Mar 10, 2025",
-                expiryDate: "Mar 10, 2027",
-                credentialID: "ACRO-ALG-2025-1234",
-              },
-              {
-                title: "Data Structures Master",
-                issueDate: "Feb 15, 2025",
-                expiryDate: "Feb 15, 2027",
-                credentialID: "ACRO-DST-2025-5678",
-              },
-              {
-                title: "Web Development Fundamentals",
-                issueDate: "Jan 20, 2025",
-                expiryDate: "Jan 20, 2027",
-                credentialID: "ACRO-WEB-2025-9012",
-              },
-            ].map((certificate, index) => (
-              <Card key={index} className="overflow-hidden">
-                <div className="bg-[#e8e3dc] p-6 text-center">
-                  <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-white p-3">
-                    <Award className="h-full w-full text-black" />
-                  </div>
-                  <h3 className="text-lg font-semibold">{certificate.title}</h3>
-                  <p className="text-sm text-gray-700">Certificate of Completion</p>
-                </div>
-                <CardContent className="p-6">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Issued On:</span>
-                      <span>{certificate.issueDate}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Valid Until:</span>
-                      <span>{certificate.expiryDate}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Credential ID:</span>
-                      <span>{certificate.credentialID}</span>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between border-t bg-gray-50 px-6 py-3">
-                  <Button variant="outline">Download</Button>
-                  <Button variant="outline">Share</Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8">
-            <h3 className="mb-4 text-lg font-medium">Certificates in Progress</h3>
-            <Card>
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b bg-[#f5f2ee]">
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Course</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Progress</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          Estimated Completion
-                        </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {[
-                        {
-                          title: "Dynamic Programming Masterclass",
-                          progress: 30,
-                          estimatedCompletion: "May 15, 2025",
-                        },
-                        {
-                          title: "Advanced Graph Algorithms",
-                          progress: 45,
-                          estimatedCompletion: "Apr 30, 2025",
-                        },
-                      ].map((course, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 text-sm font-medium text-gray-900">{course.title}</td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center">
-                              <Progress value={course.progress} className="mr-2 h-2 w-24" />
-                              <span className="text-sm text-gray-700">{course.progress}%</span>
+                <CardHeader>
+                  <CardTitle>Recent Activity</CardTitle>
+                  <CardDescription>Your latest problem-solving sessions</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-96">
+                    <div className="space-y-4">
+                      {recentActivity.map((activity, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 rounded-lg border">
+                          <div className="flex items-center gap-3">
+                            {activity.status === "accepted" ? (
+                              <CheckCircle className="h-5 w-5 text-green-500" />
+                            ) : (
+                              <XCircle className="h-5 w-5 text-red-500" />
+                            )}
+                            <div>
+                              <div className="font-medium">{activity.problem}</div>
+                              <div className="text-sm text-muted-foreground">{activity.time}</div>
                             </div>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-700">{course.estimatedCompletion}</td>
-                          <td className="px-6 py-4 text-sm">
-                            <Button variant="link" className="h-auto p-0 text-black">
-                              Continue Course
-                            </Button>
-                          </td>
-                        </tr>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant={
+                                activity.difficulty === "Easy"
+                                  ? "secondary"
+                                  : activity.difficulty === "Medium"
+                                    ? "default"
+                                    : "destructive"
+                              }
+                            >
+                              {activity.difficulty}
+                            </Badge>
+                            <Badge variant={activity.status === "accepted" ? "secondary" : "destructive"}>
+                              {activity.status === "accepted" ? "Accepted" : "Wrong Answer"}
+                            </Badge>
+                          </div>
+                        </div>
                       ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+                    </div>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </main>
     </div>
   )
 }

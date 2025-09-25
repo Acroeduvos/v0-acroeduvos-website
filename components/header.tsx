@@ -1,162 +1,184 @@
 "use client"
 
-import Link from "next/link"
-import Image from "next/image"
-import { Suspense, useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, Bell, ChevronDown, User } from "lucide-react"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { SearchBar } from "@/components/search-bar"
-
-function SearchBarFallback() {
-  return <div className="w-full h-10 bg-gray-100 rounded-md"></div>
-}
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { Code2, BookOpen, Trophy, Users, Menu, Terminal, BarChart3 } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Link from "next/link"
 
 export function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState<{ username: string; name: string; profileImage?: string } | null>(null)
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn") === "true"
-    setIsLoggedIn(loggedIn)
-
-    if (loggedIn) {
-      const userData = localStorage.getItem("user")
-      if (userData) {
-        setUser(JSON.parse(userData))
-      }
-    }
-  }, [])
-
-  const handleSignOut = () => {
-    localStorage.removeItem("isLoggedIn")
-    localStorage.removeItem("user")
-    setIsLoggedIn(false)
-    setUser(null)
-    window.location.href = "/"
-  }
-
   return (
-    <header className="border-b border-gray-200 bg-white">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center">
-          <div className="relative h-12 w-12 mr-2">
-            <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
-          </div>
-          <span className="text-xl font-bold hidden sm:inline-block">Acroeduvos</span>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <Code2 className="h-8 w-8 text-primary" />
+          <span className="text-2xl font-bold">Acroeduvos</span>
         </Link>
 
-        {/* Search bar */}
-        <div className="hidden md:flex relative mx-4 flex-1 max-w-md">
-          <Suspense fallback={<SearchBarFallback />}>
-            <SearchBar />
-          </Suspense>
-        </div>
+        {/* Desktop Navigation */}
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="grid gap-3 p-6 w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <div className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/courses"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      >
+                        <BookOpen className="h-6 w-6" />
+                        <div className="mb-2 mt-4 text-lg font-medium">Programming Fundamentals</div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Master the basics with hands-on coding practice
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </div>
+                  <div className="grid gap-1">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/courses/dsa"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">Data Structures & Algorithms</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Arrays, Trees, Graphs, Dynamic Programming
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/courses/system-design"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">System Design</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Scalable architecture and design patterns
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/courses/web-development"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none">Web Development</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Full-stack development with modern frameworks
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </div>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/practice"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Practice
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/compiler"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Compiler
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/dashboard"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Dashboard
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/resources"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Resources
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
-        {/* Mobile menu button */}
-        <div className="md:hidden">
-          <Button variant="ghost" size="icon" className="text-gray-700">
-            <Menu className="h-6 w-6" />
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" className="hidden md:inline-flex">
+            Login
           </Button>
-        </div>
+          <Button className="hidden md:inline-flex">Get Started</Button>
 
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/problems" className="text-sm font-medium text-gray-700 hover:text-black">
-            Problems
-          </Link>
-          <Link href="/contests" className="text-sm font-medium text-gray-700 hover:text-black">
-            Contests
-          </Link>
-          <Link href="/leaderboard" className="text-sm font-medium text-gray-700 hover:text-black">
-            Leaderboard
-          </Link>
-          <Link href="/learn" className="text-sm font-medium text-gray-700 hover:text-black">
-            Learn
-          </Link>
-          <Link href="/discuss" className="text-sm font-medium text-gray-700 hover:text-black">
-            Discuss
-          </Link>
-
-          {isLoggedIn ? (
-            <>
-              <Button variant="ghost" size="icon" className="text-gray-700">
-                <Bell className="h-5 w-5" />
+          {/* Mobile Navigation */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
               </Button>
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2">
-                    <div className="relative h-8 w-8 overflow-hidden rounded-full bg-gray-200">
-                      {user?.profileImage ? (
-                        <Image
-                          src={
-                            user.profileImage ||
-                            "https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320"
-                          }
-                          alt={user.name || "User"}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <Image
-                          src="https://kzml86fqehr2pdkb0uai.lite.vusercontent.net/placeholder.svg?height=320&width=320"
-                          alt={user?.name || "User"}
-                          width={32}
-                          height={32}
-                        />
-                      )}
-                    </div>
-                    <span className="text-sm font-medium">{user?.name || "User"}</span>
-                    <ChevronDown className="h-4 w-4" />
+            </SheetTrigger>
+            <SheetContent side="right">
+              <div className="flex flex-col gap-4 mt-8">
+                <Link href="/courses">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Courses
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem asChild>
-                    <Link href="/dashboard">Dashboard</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={user?.username ? `/profile?u=${encodeURIComponent(user.username)}` : "/profile"}>Profile</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/settings">Settings</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/certificates">My Certificates</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/submissions">My Submissions</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          ) : (
-            <>
-              <Link href="/auth/login">
-                <Button variant="ghost" size="icon" className="text-gray-700 mr-2">
-                  <User className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/auth/login">
-                <Button variant="outline" className="border-black text-black hover:bg-black/5">
-                  Log in
-                </Button>
-              </Link>
-              <Link href="/auth/register">
-                <Button className="bg-black text-white hover:bg-gray-800">Sign up</Button>
-              </Link>
-            </>
-          )}
-        </nav>
+                </Link>
+                <Link href="/practice">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <Trophy className="mr-2 h-4 w-4" />
+                    Practice
+                  </Button>
+                </Link>
+                <Link href="/compiler">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <Terminal className="mr-2 h-4 w-4" />
+                    Compiler
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <BarChart3 className="mr-2 h-4 w-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Link href="/resources">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <Users className="mr-2 h-4 w-4" />
+                    Resources
+                  </Button>
+                </Link>
+                <div className="border-t pt-4 mt-4">
+                  <Button variant="ghost" className="w-full justify-start mb-2">
+                    Login
+                  </Button>
+                  <Button className="w-full">Get Started</Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   )
