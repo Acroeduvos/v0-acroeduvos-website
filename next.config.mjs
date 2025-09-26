@@ -16,6 +16,17 @@ const nextConfig = {
     NEXT_PUBLIC_APP_DESCRIPTION: 'Competitive Programming Platform',
     JUDGE0_API_KEY: process.env.JUDGE0_API_KEY,
   },
+  experimental: {
+    serverActions: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/api/:path*',
+      },
+    ]
+  },
 }
 
 export default nextConfig
