@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "https://acroeduvos.in",
+    "NEXT_PUBLIC_APP_NAME": "Acroeduvos",
+    "NEXT_PUBLIC_APP_DESCRIPTION": "Competitive Programming Platform"
+  },
+  "functions": {
+    "app/api/execute/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}
