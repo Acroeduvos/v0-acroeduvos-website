@@ -849,16 +849,17 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
       </section>
 
       {/* Tutorials Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gradient-to-b from-gray-50 to-white py-20">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold">Free Tutorials</h2>
-            <p className="mt-4 text-gray-600">
-              Learn at your own pace with our comprehensive tutorials
+            <span className="mb-4 inline-block rounded-full bg-purple-100 px-4 py-1 text-sm font-semibold text-purple-700">Free Resources</span>
+            <h2 className="text-4xl font-bold">Learn with Our Tutorials</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+              Master programming concepts with our comprehensive, hands-on tutorials
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 title: "C Programming Basics",
@@ -881,16 +882,97 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
                 readTime: "25 min read",
                 href: "/courses/5",
               },
+              {
+                title: "Python for Beginners",
+                category: "Programming",
+                description: "Start your Python journey with this comprehensive guide.",
+                readTime: "18 min read",
+                href: "/courses/4",
+              },
+              {
+                title: "JavaScript & React Essentials",
+                category: "Web",
+                description: "Modern JavaScript and React.js development guide.",
+                readTime: "22 min read",
+                href: "/courses/8",
+              },
+              {
+                title: "Full Stack Development",
+                category: "Development",
+                description: "Learn to build complete web applications from scratch.",
+                readTime: "30 min read",
+                href: "/courses/7",
+              },
+              {
+                title: "Mobile App Development",
+                category: "Development",
+                description: "Build native mobile apps with React Native.",
+                readTime: "25 min read",
+                href: "/courses/6",
+              },
+              {
+                title: "Linux System Administration",
+                category: "System",
+                description: "Master Linux server administration and DevOps.",
+                readTime: "28 min read",
+                href: "/courses/9",
+              },
+              {
+                title: "Cybersecurity Fundamentals",
+                category: "Security",
+                description: "Learn essential cybersecurity concepts and practices.",
+                readTime: "20 min read",
+                href: "/courses/10",
+              },
             ].map((tutorial) => (
               <Link
                 key={tutorial.title}
                 href={tutorial.href}
-                className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md"
+                className="group relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="mb-2 text-xs font-medium text-purple-700">{tutorial.category}</div>
-                <h3 className="text-lg font-bold group-hover:text-purple-600">{tutorial.title}</h3>
-                <p className="mt-2 text-sm text-gray-600">{tutorial.description}</p>
-                <div className="mt-3 text-xs text-gray-500">{tutorial.readTime}</div>
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
+                    {tutorial.category}
+                  </span>
+                  <span className="flex items-center text-xs text-gray-500">
+                    <svg
+                      className="mr-1.5 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {tutorial.readTime}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold leading-tight group-hover:text-purple-600">
+                  {tutorial.title}
+                </h3>
+                <p className="mt-3 text-sm text-gray-600 line-clamp-2">{tutorial.description}</p>
+                <div className="mt-4 flex items-center text-sm text-purple-600">
+                  <span className="font-medium">Start Learning</span>
+                  <svg
+                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
               </Link>
             ))}
           </div>
