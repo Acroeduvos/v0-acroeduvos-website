@@ -848,6 +848,64 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
         </div>
       </section>
 
+      {/* Tutorials Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold">Free Tutorials</h2>
+            <p className="mt-4 text-gray-600">
+              Learn at your own pace with our comprehensive tutorials
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                title: "C Programming Basics",
+                category: "Programming",
+                description: "Learn the fundamentals of C programming with hands-on examples.",
+                readTime: "15 min read",
+                href: "/courses/1",
+              },
+              {
+                title: "Data Structures & Algorithms",
+                category: "Computer Science",
+                description: "Master essential data structures and algorithms concepts.",
+                readTime: "20 min read",
+                href: "/courses/2",
+              },
+              {
+                title: "Web Development Guide",
+                category: "Web",
+                description: "Step-by-step guide to modern web development.",
+                readTime: "25 min read",
+                href: "/courses/5",
+              },
+            ].map((tutorial) => (
+              <Link
+                key={tutorial.title}
+                href={tutorial.href}
+                className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md"
+              >
+                <div className="mb-2 text-xs font-medium text-purple-700">{tutorial.category}</div>
+                <h3 className="text-lg font-bold group-hover:text-purple-600">{tutorial.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{tutorial.description}</p>
+                <div className="mt-3 text-xs text-gray-500">{tutorial.readTime}</div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/courses" className="flex items-center">
+                View All Tutorials
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Courses Grid */}
       <section id="courses-list" className="py-16">
         <div className="container mx-auto px-4">
