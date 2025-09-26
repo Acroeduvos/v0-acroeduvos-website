@@ -29,9 +29,8 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ["acroeduvos.in"],
     },
-    appDir: true,
-    serverComponentsExternalPackages: [],
   },
+  serverExternalPackages: [],
 }
 
 export default nextConfig

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Search } from "lucide-react"
+import { Search, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
