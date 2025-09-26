@@ -25,13 +25,11 @@ const nextConfig = {
   outputFileTracingRoot: process.cwd(),
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   trailingSlash: false,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*',
-      },
-    ]
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["acroeduvos.in"],
+    },
+    appDir: true,
   },
 }
 
