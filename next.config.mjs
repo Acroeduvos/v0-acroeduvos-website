@@ -23,31 +23,13 @@ const nextConfig = {
   },
   output: 'standalone',
   outputFileTracingRoot: process.cwd(),
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  trailingSlash: false,
   async rewrites() {
     return [
       {
         source: '/api/:path*',
         destination: '/api/:path*',
-      },
-      {
-        source: '/contests/:id/problems/:problemId/solve',
-        destination: '/contests/[id]/problems/[problemId]/solve',
-      },
-      {
-        source: '/auth/login',
-        destination: '/auth/login/page',
-      },
-      {
-        source: '/auth/register',
-        destination: '/auth/register/page',
-      },
-      {
-        source: '/tutorials/:slug*',
-        destination: '/tutorials/:slug*',
-      },
-      {
-        source: '/ide',
-        destination: '/ide/page',
       },
     ]
   },
