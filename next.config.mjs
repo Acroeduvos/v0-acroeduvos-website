@@ -25,6 +25,10 @@ const nextConfig = {
         source: '/api/:path*',
         destination: '/api/:path*',
       },
+      {
+        source: '/contests/:id/problems/:problemId/solve',
+        destination: '/contests/[id]/problems/[problemId]/solve',
+      },
     ]
   },
 }
