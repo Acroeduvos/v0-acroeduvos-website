@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-// Course data with detailed content
+// Course data
 const courses = [
   {
     id: 1,
@@ -22,91 +22,134 @@ const courses = [
         title: "Introduction to C Programming",
         duration: "45 mins",
         completed: false,
-        content: "History of C, Setting up environment, First program"
       },
       {
         id: 2,
         title: "Variables and Data Types",
         duration: "60 mins",
         completed: false,
-        content: "int, float, char, arrays, strings"
       },
       {
         id: 3,
-        title: "Control Flow",
-        duration: "90 mins",
+        title: "Operators and Expressions",
+        duration: "60 mins",
         completed: false,
-        content: "if-else, switch, loops, break, continue"
       },
       {
         id: 4,
-        title: "Functions",
-        duration: "120 mins",
+        title: "Control Flow - If, Switch, Loops",
+        duration: "90 mins",
         completed: false,
-        content: "Function declaration, parameters, return values"
       },
       {
         id: 5,
-        title: "Pointers",
-        duration: "150 mins",
+        title: "Arrays and Strings",
+        duration: "90 mins",
         completed: false,
-        content: "Memory addresses, pointer arithmetic, dynamic memory"
       },
       {
         id: 6,
-        title: "Structures and Unions",
+        title: "Functions and Recursion",
         duration: "120 mins",
         completed: false,
-        content: "Custom data types, nested structures, unions"
-      }
-    ]
+      },
+      {
+        id: 7,
+        title: "Pointers and Memory Management",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Structures and Unions",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "File Handling in C",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Building a Console Application",
+        duration: "180 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 2,
-    title: "C++ Advanced Concepts",
+    title: "C++ Programming Mastery",
     category: "Programming",
     level: "Intermediate",
     price: "FREE",
     rating: 4.7,
     image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
-    description: "Take your C++ skills to the next level with object-oriented programming and STL.",
+    description: "Master modern C++ programming with object-oriented principles and STL.",
     lessons: [
       {
         id: 1,
-        title: "Object-Oriented Programming",
-        duration: "120 mins",
+        title: "Introduction to C++ and OOP Concepts",
+        duration: "60 mins",
         completed: false,
-        content: "Classes, objects, inheritance, polymorphism"
       },
       {
         id: 2,
-        title: "Standard Template Library",
-        duration: "150 mins",
+        title: "Classes and Objects",
+        duration: "90 mins",
         completed: false,
-        content: "Vectors, lists, maps, algorithms"
       },
       {
         id: 3,
-        title: "Exception Handling",
-        duration: "90 mins",
+        title: "Inheritance and Polymorphism",
+        duration: "120 mins",
         completed: false,
-        content: "Try-catch blocks, custom exceptions"
       },
       {
         id: 4,
-        title: "Templates",
-        duration: "120 mins",
+        title: "Templates and Generic Programming",
+        duration: "90 mins",
         completed: false,
-        content: "Function templates, class templates, specialization"
       },
       {
         id: 5,
-        title: "Smart Pointers",
+        title: "STL Containers and Algorithms",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 6,
+        title: "Exception Handling",
+        duration: "60 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Smart Pointers and Memory Management",
         duration: "90 mins",
         completed: false,
-        content: "unique_ptr, shared_ptr, weak_ptr"
-      }
-    ]
+      },
+      {
+        id: 8,
+        title: "Modern C++ Features (C++11/14/17)",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Multithreading and Concurrency",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Building a Library System",
+        duration: "180 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 3,
@@ -116,44 +159,69 @@ const courses = [
     price: "FREE",
     rating: 4.9,
     image: "/placeholder.svg?height=200&width=400&text=Java+Development",
-    description: "Learn Java programming from scratch and build cross-platform applications.",
+    description: "Learn Java programming from basics to advanced concepts with practical projects.",
     lessons: [
       {
         id: 1,
-        title: "Java Basics",
-        duration: "90 mins",
+        title: "Introduction to Java and Setup",
+        duration: "45 mins",
         completed: false,
-        content: "JVM, variables, data types, operators"
       },
       {
         id: 2,
-        title: "Object-Oriented Java",
-        duration: "120 mins",
+        title: "Java Basics and Data Types",
+        duration: "60 mins",
         completed: false,
-        content: "Classes, inheritance, interfaces, packages"
       },
       {
         id: 3,
-        title: "Collections Framework",
-        duration: "150 mins",
+        title: "Object-Oriented Programming in Java",
+        duration: "120 mins",
         completed: false,
-        content: "Lists, sets, maps, queues"
       },
       {
         id: 4,
-        title: "Exception Handling",
+        title: "Collections Framework",
         duration: "90 mins",
         completed: false,
-        content: "Try-catch, throws, custom exceptions"
       },
       {
         id: 5,
-        title: "Multithreading",
+        title: "Exception Handling and File I/O",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 6,
+        title: "Multithreading Basics",
         duration: "120 mins",
         completed: false,
-        content: "Threads, synchronization, concurrent collections"
-      }
-    ]
+      },
+      {
+        id: 7,
+        title: "Java GUI Programming (Swing)",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Database Connectivity (JDBC)",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Unit Testing with JUnit",
+        duration: "60 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Student Management System",
+        duration: "180 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 4,
@@ -161,93 +229,143 @@ const courses = [
     category: "Programming",
     level: "Beginner",
     price: "FREE",
-    rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=Python",
+    rating: 4.8,
+    image: "/placeholder.svg?height=200&width=400&text=Python+Programming",
     description: "Master Python programming with practical examples and real-world applications.",
     lessons: [
       {
         id: 1,
-        title: "Python Basics",
-        duration: "60 mins",
+        title: "Python Basics and Setup",
+        duration: "45 mins",
         completed: false,
-        content: "Variables, data types, operators, control flow"
       },
       {
         id: 2,
-        title: "Functions and Modules",
-        duration: "90 mins",
+        title: "Data Types and Control Flow",
+        duration: "60 mins",
         completed: false,
-        content: "Function definition, arguments, return values, modules"
       },
       {
         id: 3,
-        title: "Data Structures",
-        duration: "120 mins",
+        title: "Functions and Modules",
+        duration: "90 mins",
         completed: false,
-        content: "Lists, tuples, sets, dictionaries"
       },
       {
         id: 4,
-        title: "Object-Oriented Python",
-        duration: "150 mins",
+        title: "Object-Oriented Programming",
+        duration: "120 mins",
         completed: false,
-        content: "Classes, inheritance, polymorphism"
       },
       {
         id: 5,
-        title: "File Handling and Exceptions",
+        title: "File Handling and Exception Handling",
         duration: "90 mins",
         completed: false,
-        content: "File operations, exception handling"
-      }
-    ]
+      },
+      {
+        id: 6,
+        title: "Working with Libraries (NumPy, Pandas)",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Web Scraping with Beautiful Soup",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Database Operations with SQLite",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "GUI Programming with Tkinter",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Task Management App",
+        duration: "180 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 5,
-    title: "Web Development Fundamentals",
+    title: "Web Development Bootcamp",
     category: "Web",
     level: "Beginner",
     price: "FREE",
-    rating: 4.8,
+    rating: 4.9,
     image: "/placeholder.svg?height=200&width=400&text=Web+Development",
-    description: "Learn modern web development with HTML5, CSS3, and JavaScript.",
+    description: "Complete web development bootcamp covering frontend and backend technologies.",
     lessons: [
       {
         id: 1,
-        title: "HTML5 Essentials",
-        duration: "90 mins",
+        title: "HTML5 Fundamentals",
+        duration: "60 mins",
         completed: false,
-        content: "Document structure, elements, forms, semantic HTML"
       },
       {
         id: 2,
-        title: "CSS3 Styling",
+        title: "CSS3 and Responsive Design",
         duration: "120 mins",
         completed: false,
-        content: "Selectors, box model, flexbox, grid"
       },
       {
         id: 3,
         title: "JavaScript Basics",
-        duration: "150 mins",
+        duration: "120 mins",
         completed: false,
-        content: "Variables, functions, DOM manipulation"
       },
       {
         id: 4,
-        title: "Responsive Design",
+        title: "DOM Manipulation",
         duration: "90 mins",
         completed: false,
-        content: "Media queries, mobile-first approach"
       },
       {
         id: 5,
-        title: "Web APIs",
+        title: "Modern JavaScript (ES6+)",
         duration: "120 mins",
         completed: false,
-        content: "Fetch API, local storage, geolocation"
-      }
-    ]
+      },
+      {
+        id: 6,
+        title: "React.js Fundamentals",
+        duration: "180 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Node.js and Express.js",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "MongoDB and Mongoose",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Authentication and Authorization",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Full Stack Social Media App",
+        duration: "240 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 6,
@@ -257,37 +375,69 @@ const courses = [
     price: "FREE",
     rating: 4.7,
     image: "/placeholder.svg?height=200&width=400&text=App+Development",
-    description: "Build native mobile applications for iOS and Android platforms.",
+    description: "Learn to build native mobile applications for iOS and Android platforms.",
     lessons: [
       {
         id: 1,
-        title: "React Native Basics",
-        duration: "120 mins",
+        title: "Introduction to React Native",
+        duration: "60 mins",
         completed: false,
-        content: "Components, props, state management"
       },
       {
         id: 2,
-        title: "Native Components",
-        duration: "150 mins",
+        title: "React Native Components",
+        duration: "90 mins",
         completed: false,
-        content: "UI components, navigation, animations"
       },
       {
         id: 3,
-        title: "Device Features",
-        duration: "90 mins",
+        title: "Navigation and Routing",
+        duration: "120 mins",
         completed: false,
-        content: "Camera, location, storage"
       },
       {
         id: 4,
-        title: "App Publishing",
+        title: "State Management with Redux",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 5,
+        title: "Working with APIs",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 6,
+        title: "Native Device Features",
         duration: "120 mins",
         completed: false,
-        content: "App Store and Play Store deployment"
-      }
-    ]
+      },
+      {
+        id: 7,
+        title: "App Styling and Themes",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Data Persistence",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "App Testing and Debugging",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: E-commerce Mobile App",
+        duration: "240 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 7,
@@ -297,212 +447,286 @@ const courses = [
     price: "FREE",
     rating: 4.9,
     image: "/placeholder.svg?height=200&width=400&text=Full+Stack",
-    description: "Master both frontend and backend development with modern technologies.",
+    description: "Become a full stack developer with modern web technologies and best practices.",
     lessons: [
       {
         id: 1,
-        title: "Frontend Development",
+        title: "Modern Frontend Development",
         duration: "180 mins",
         completed: false,
-        content: "React.js, Redux, TypeScript"
       },
       {
         id: 2,
-        title: "Backend Development",
+        title: "Backend Development with Node.js",
         duration: "180 mins",
         completed: false,
-        content: "Node.js, Express.js, MongoDB"
       },
       {
         id: 3,
-        title: "API Development",
+        title: "Database Design and Management",
         duration: "150 mins",
         completed: false,
-        content: "RESTful APIs, GraphQL"
       },
       {
         id: 4,
-        title: "Authentication",
+        title: "RESTful API Development",
         duration: "120 mins",
         completed: false,
-        content: "JWT, OAuth, session management"
       },
       {
         id: 5,
-        title: "Deployment",
-        duration: "90 mins",
+        title: "Authentication and Security",
+        duration: "150 mins",
         completed: false,
-        content: "Docker, CI/CD, cloud platforms"
-      }
-    ]
+      },
+      {
+        id: 6,
+        title: "Cloud Deployment (AWS/Heroku)",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Testing and CI/CD",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Performance Optimization",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Microservices Architecture",
+        duration: "180 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Enterprise Web Application",
+        duration: "300 mins",
+        completed: false,
+      },
+    ],
   },
   {
     id: 8,
-    title: "JavaScript Advanced",
-    category: "Programming",
-    level: "Intermediate",
-    price: "FREE",
-    rating: 4.8,
-    image: "/placeholder.svg?height=200&width=400&text=JavaScript",
-    description: "Deep dive into advanced JavaScript concepts and modern features.",
-    lessons: [
-      {
-        id: 1,
-        title: "ES6+ Features",
-        duration: "120 mins",
-        completed: false,
-        content: "Arrow functions, destructuring, modules"
-      },
-      {
-        id: 2,
-        title: "Async Programming",
-        duration: "150 mins",
-        completed: false,
-        content: "Promises, async/await, event loop"
-      },
-      {
-        id: 3,
-        title: "Design Patterns",
-        duration: "180 mins",
-        completed: false,
-        content: "Singleton, factory, observer patterns"
-      },
-      {
-        id: 4,
-        title: "Testing",
-        duration: "120 mins",
-        completed: false,
-        content: "Jest, testing best practices"
-      }
-    ]
-  },
-  {
-    id: 9,
-    title: "React.js Development",
+    title: "JavaScript & React Mastery",
     category: "Web",
     level: "Intermediate",
     price: "FREE",
-    rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=React",
-    description: "Build modern web applications with React.js ecosystem.",
+    rating: 4.8,
+    image: "/placeholder.svg?height=200&width=400&text=JavaScript+React",
+    description: "Master modern JavaScript and React.js for building dynamic web applications.",
     lessons: [
       {
         id: 1,
-        title: "React Fundamentals",
+        title: "Advanced JavaScript Concepts",
         duration: "120 mins",
         completed: false,
-        content: "Components, props, state, lifecycle"
       },
       {
         id: 2,
-        title: "Hooks",
+        title: "React Fundamentals and Hooks",
         duration: "150 mins",
         completed: false,
-        content: "useState, useEffect, custom hooks"
       },
       {
         id: 3,
-        title: "State Management",
+        title: "State Management with Redux",
         duration: "180 mins",
         completed: false,
-        content: "Context API, Redux, Redux Toolkit"
       },
       {
         id: 4,
-        title: "Performance",
+        title: "React Router and Navigation",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 5,
+        title: "API Integration and Axios",
         duration: "120 mins",
         completed: false,
-        content: "Optimization, lazy loading, memoization"
-      }
-    ]
+      },
+      {
+        id: 6,
+        title: "Testing React Applications",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Performance Optimization",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Server-Side Rendering",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "React Design Patterns",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Advanced React Application",
+        duration: "240 mins",
+        completed: false,
+      },
+    ],
   },
   {
-    id: 10,
+    id: 9,
     title: "Linux Administration",
     category: "System",
     level: "Intermediate",
     price: "FREE",
     rating: 4.7,
-    image: "/placeholder.svg?height=200&width=400&text=Linux",
-    description: "Master Linux system administration and server management.",
+    image: "/placeholder.svg?height=200&width=400&text=Linux+Admin",
+    description: "Learn Linux system administration from basics to advanced concepts.",
     lessons: [
       {
         id: 1,
-        title: "Linux Basics",
-        duration: "120 mins",
+        title: "Linux Fundamentals",
+        duration: "90 mins",
         completed: false,
-        content: "Command line, file system, permissions"
       },
       {
         id: 2,
-        title: "System Administration",
-        duration: "150 mins",
+        title: "Command Line Mastery",
+        duration: "120 mins",
         completed: false,
-        content: "User management, services, processes"
       },
       {
         id: 3,
-        title: "Network Configuration",
-        duration: "120 mins",
+        title: "User and Permission Management",
+        duration: "90 mins",
         completed: false,
-        content: "IP configuration, firewall, SSH"
       },
       {
         id: 4,
+        title: "Package Management",
+        duration: "60 mins",
+        completed: false,
+      },
+      {
+        id: 5,
+        title: "System Monitoring and Logging",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 6,
+        title: "Network Configuration",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 7,
         title: "Shell Scripting",
         duration: "180 mins",
         completed: false,
-        content: "Bash scripting, automation"
-      }
-    ]
+      },
+      {
+        id: 8,
+        title: "Security and Firewall",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Server Management",
+        duration: "180 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Server Setup and Security",
+        duration: "240 mins",
+        completed: false,
+      },
+    ],
   },
   {
-    id: 11,
+    id: 10,
     title: "Ethical Hacking",
     category: "Security",
     level: "Advanced",
     price: "FREE",
     rating: 4.9,
     image: "/placeholder.svg?height=200&width=400&text=Ethical+Hacking",
-    description: "Learn ethical hacking and cybersecurity techniques.",
+    description: "Learn ethical hacking and cybersecurity with hands-on practice.",
     lessons: [
       {
         id: 1,
-        title: "Introduction to Security",
-        duration: "120 mins",
+        title: "Introduction to Cybersecurity",
+        duration: "90 mins",
         completed: false,
-        content: "Security concepts, ethical guidelines"
       },
       {
         id: 2,
-        title: "Network Security",
-        duration: "180 mins",
+        title: "Network Security Fundamentals",
+        duration: "150 mins",
         completed: false,
-        content: "Network scanning, vulnerability assessment"
       },
       {
         id: 3,
-        title: "Web Security",
-        duration: "150 mins",
+        title: "Web Application Security",
+        duration: "180 mins",
         completed: false,
-        content: "XSS, SQL injection, CSRF"
       },
       {
         id: 4,
-        title: "System Security",
+        title: "System Hacking Techniques",
         duration: "180 mins",
         completed: false,
-        content: "Malware analysis, reverse engineering"
       },
       {
         id: 5,
-        title: "Security Tools",
+        title: "Malware Analysis",
         duration: "150 mins",
         completed: false,
-        content: "Kali Linux, Metasploit, Wireshark"
-      }
-    ]
-  }
+      },
+      {
+        id: 6,
+        title: "Wireless Network Security",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 7,
+        title: "Cryptography",
+        duration: "150 mins",
+        completed: false,
+      },
+      {
+        id: 8,
+        title: "Social Engineering",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 9,
+        title: "Incident Response",
+        duration: "120 mins",
+        completed: false,
+      },
+      {
+        id: 10,
+        title: "Final Project: Security Assessment",
+        duration: "300 mins",
+        completed: false,
+      },
+    ],
+  },
 ]
 
 // Course list page component
@@ -553,9 +777,6 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
                     <div className="text-sm text-muted-foreground">
                       Duration: {lesson.duration}
                     </div>
-                    <div className="mt-2 text-sm text-muted-foreground">
-                      {lesson.content}
-                    </div>
                     {lesson.completed && (
                       <div className="mt-2">
                         <span className="text-sm font-medium text-green-600">
@@ -604,9 +825,9 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
                 <option value="">All Categories</option>
                 <option value="programming">Programming</option>
                 <option value="web">Web Development</option>
-                <option value="security">Security</option>
-                <option value="development">Development</option>
-                <option value="system">System</option>
+                <option value="security">Cyber Security</option>
+                <option value="ai">AI & ML</option>
+                <option value="mobile">Mobile Development</option>
               </select>
 
               <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
@@ -619,7 +840,8 @@ export default function CoursesPage({ params }: { params?: { id: string } }) {
               <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
                 <option value="newest">Newest</option>
                 <option value="popular">Most Popular</option>
-                <option value="rating">Highest Rated</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
               </select>
             </div>
           </div>
