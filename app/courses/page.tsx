@@ -1,172 +1,127 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 
-export default function CoursesPage() {
-  // Define our programming courses
-  const courses = [
-    {
-      id: 1,
-      title: "C Programming Fundamentals",
-      category: "Programming",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=C+Programming",
-      description: "Master the fundamentals of C programming language with hands-on projects and exercises.",
-    },
-    {
-      id: 2,
-      title: "C++ Advanced Concepts",
-      category: "Programming",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.7,
-      image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
-      description: "Take your C++ skills to the next level with object-oriented programming and STL.",
-    },
-    {
-      id: 3,
-      title: "Java Development",
-      category: "Programming",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=Java+Development",
-      description: "Learn Java programming from scratch and build cross-platform applications.",
-    },
-    {
-      id: 4,
-      title: "Web Development Bootcamp",
-      category: "Web",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=Web+Development",
-      description: "Comprehensive course covering HTML, CSS, JavaScript, and modern frameworks.",
-    },
-    {
-      id: 5,
-      title: "Cyber Security Essentials",
-      category: "Security",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=Cyber+Security",
-      description: "Learn essential cybersecurity concepts, tools, and best practices.",
-    },
-    {
-      id: 6,
-      title: "Mobile App Development",
-      category: "Development",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.7,
-      image: "/placeholder.svg?height=200&width=400&text=App+Development",
-      description: "Build native mobile applications for iOS and Android platforms.",
-    },
-    {
-      id: 7,
-      title: "AI & Machine Learning",
-      category: "AI",
-      level: "Advanced",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=AI+Development",
-      description: "Dive into artificial intelligence and machine learning algorithms and applications.",
-    },
-    {
-      id: 8,
-      title: "Python for Data Science",
-      category: "Data Science",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=Python+Data+Science",
-      description: "Learn Python programming for data analysis, visualization, and machine learning.",
-    },
-    {
-      id: 9,
-      title: "JavaScript Mastery",
-      category: "Web",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=JavaScript",
-      description: "Learn JavaScript from basics to advanced concepts including ES6+ features and modern frameworks.",
-    },
-    {
-      id: 10,
-      title: "React.js Development",
-      category: "Web",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=React.js",
-      description: "Build modern web applications with React.js, hooks, context API, and state management.",
-    },
-    {
-      id: 11,
-      title: "Node.js Backend Development",
-      category: "Backend",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.7,
-      image: "/placeholder.svg?height=200&width=400&text=Node.js",
-      description: "Create scalable server-side applications with Node.js, Express, and MongoDB.",
-    },
-    {
-      id: 12,
-      title: "Python Programming",
-      category: "Programming",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=Python",
-      description: "Learn Python programming fundamentals, data structures, and practical applications.",
-    },
-    {
-      id: 13,
-      title: "SQL Database Management",
-      category: "Database",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=SQL",
-      description: "Master SQL queries, database design, and management with hands-on projects.",
-    },
-    {
-      id: 14,
-      title: "Git & GitHub Essentials",
-      category: "Development",
-      level: "Beginner",
-      price: "FREE",
-      rating: 4.9,
-      image: "/placeholder.svg?height=200&width=400&text=Git+GitHub",
-      description: "Learn version control with Git and collaborate effectively using GitHub.",
-    },
-    {
-      id: 15,
-      title: "Docker & Containerization",
-      category: "DevOps",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.7,
-      image: "/placeholder.svg?height=200&width=400&text=Docker",
-      description: "Containerize your applications with Docker and learn container orchestration basics.",
-    },
-    {
-      id: 16,
-      title: "AWS Cloud Fundamentals",
-      category: "Cloud",
-      level: "Intermediate",
-      price: "FREE",
-      rating: 4.8,
-      image: "/placeholder.svg?height=200&width=400&text=AWS",
-      description: "Introduction to Amazon Web Services and cloud computing concepts.",
-    },
-  ]
+// Course data
+const courses = [
+  {
+    id: 1,
+    title: "C Programming Fundamentals",
+    category: "Programming",
+    level: "Beginner",
+    price: "FREE",
+    rating: 4.8,
+    image: "/placeholder.svg?height=200&width=400&text=C+Programming",
+    description: "Master the fundamentals of C programming language with hands-on projects and exercises.",
+    lessons: [
+      {
+        id: 1,
+        title: "Introduction to C",
+        duration: "45 mins",
+        completed: true,
+      },
+      {
+        id: 2,
+        title: "Variables and Data Types",
+        duration: "60 mins",
+        completed: true,
+      },
+      {
+        id: 3,
+        title: "Control Flow",
+        duration: "90 mins",
+        completed: false,
+      },
+      {
+        id: 4,
+        title: "Functions",
+        duration: "120 mins",
+        completed: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "C++ Advanced Concepts",
+    category: "Programming",
+    level: "Intermediate",
+    price: "FREE",
+    rating: 4.7,
+    image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
+    description: "Take your C++ skills to the next level with object-oriented programming and STL.",
+  },
+  // ... (rest of the courses)
+]
 
+// Course list page component
+export default function CoursesPage({ params }: { params?: { id: string } }) {
+  // If we have an ID parameter, show the course details page
+  if (params?.id) {
+    const course = courses.find(c => c.id.toString() === params.id) || courses[0]
+    const completedLessons = course.lessons?.filter((lesson) => lesson.completed).length || 0
+    const progress = course.lessons ? (completedLessons / course.lessons.length) * 100 : 0
+
+    const handleEnroll = () => {
+      alert("Welcome! All courses are now free to access. You can start learning immediately!")
+    }
+
+    return (
+      <div className="container py-10">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <h1 className="text-3xl font-bold">{course.title}</h1>
+            <p className="mt-2 text-muted-foreground">{course.description}</p>
+            {course.lessons && (
+              <>
+                <div className="mt-4">
+                  <Progress value={progress} />
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {completedLessons} of {course.lessons.length} lessons completed
+                  </p>
+                </div>
+                <Button className="mt-6 w-full bg-black" onClick={handleEnroll}>
+                  Start Learning Free
+                </Button>
+              </>
+            )}
+          </div>
+          {course.lessons && (
+            <div className="grid gap-4">
+              {course.lessons.map((lesson) => (
+                <Card key={lesson.id}>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      {lesson.title}
+                    </CardTitle>
+                    <Button variant="link" className="h-auto p-0 text-black">
+                      Start Free
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-sm text-muted-foreground">
+                      Duration: {lesson.duration}
+                    </div>
+                    {lesson.completed && (
+                      <div className="mt-2">
+                        <span className="text-sm font-medium text-green-600">
+                          ✓ Completed
+                        </span>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Otherwise, show the course list page
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
