@@ -34,8 +34,12 @@ const nextConfig = {
         destination: '/contests/[id]/problems/[problemId]/solve',
       },
       {
-        source: '/auth/:path*',
-        destination: '/auth/:path*',
+        source: '/auth/login',
+        destination: '/auth/login/page',
+      },
+      {
+        source: '/auth/register',
+        destination: '/auth/register/page',
       },
       {
         source: '/tutorials/:slug*',
