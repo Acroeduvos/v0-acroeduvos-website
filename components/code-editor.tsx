@@ -185,72 +185,80 @@ rl.on('line', (line) => {
         )}
       </div>
 
-      <div className="rounded-lg border border-gray-200">
-        <Textarea
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          className="font-mono min-h-[400px] resize-none rounded-none border-0 text-sm"
-          placeholder="Write your code here..."
-          readOnly={readOnly}
-        />
-      </div>
-
-      {!readOnly && (
-        <>
-          <div>
-            <h3 className="mb-2 text-sm font-medium">Custom Input</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="space-y-4">
+          <div className="rounded-lg border border-gray-200">
             <Textarea
-              value={customInput}
-              onChange={(e) => setCustomInput(e.target.value)}
-              className="min-h-[100px] resize-none text-sm font-mono"
-              placeholder="Enter your custom input here..."
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              className="font-mono min-h-[600px] resize-none rounded-none border-0 text-sm"
+              placeholder="Write your code here..."
+              readOnly={readOnly}
             />
           </div>
 
-          <div className="flex space-x-4">
-            <Button className="flex-1 bg-black" onClick={handleRun} disabled={status === "running"}>
-              <Play className="mr-2 h-4 w-4" />
-              Run Code
-            </Button>
-            {showSubmit && (
-              <Button
-                className="flex-1 bg-green-600 hover:bg-green-700"
-                onClick={handleSubmit}
-                disabled={status === "running"}
-              >
-                <Send className="mr-2 h-4 w-4" />
-                Submit
+          {!readOnly && (
+            <div className="flex space-x-4">
+              <Button className="flex-1 bg-black" onClick={handleRun} disabled={status === "running"}>
+                <Play className="mr-2 h-4 w-4" />
+                Run Code
               </Button>
-            )}
-          </div>
-        </>
-      )}
-
-      <Card>
-        <CardContent className="p-0">
-          <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 flex items-center justify-between">
-            <h3 className="font-medium">Output</h3>
-            <div className="flex items-center">
-              {status === "running" && <span className="text-sm text-gray-500">Running...</span>}
-              {status === "success" && (
-                <span className="flex items-center text-sm text-green-600">
-                  <CheckCircle className="mr-1 h-4 w-4" />
-                  Success
-                </span>
-              )}
-              {status === "error" && (
-                <span className="flex items-center text-sm text-red-600">
-                  <AlertCircle className="mr-1 h-4 w-4" />
-                  Error
-                </span>
+              {showSubmit && (
+                <Button
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                  onClick={handleSubmit}
+                  disabled={status === "running"}
+                >
+                  <Send className="mr-2 h-4 w-4" />
+                  Submit
+                </Button>
               )}
             </div>
-          </div>
-          <pre className="p-4 text-sm font-mono whitespace-pre-wrap min-h-[100px] max-h-[200px] overflow-auto">
-            {output || "Run your code to see the output here."}
-          </pre>
-        </CardContent>
-      </Card>
+          )}
+        </div>
+
+        <div className="space-y-4">
+          {!readOnly && (
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="text-sm font-medium mb-2">Custom Input</h3>
+                <Textarea
+                  value={customInput}
+                  onChange={(e) => setCustomInput(e.target.value)}
+                  className="min-h-[200px] resize-none text-sm font-mono"
+                  placeholder="Enter your custom input here..."
+                />
+              </CardContent>
+            </Card>
+          )}
+
+          <Card>
+            <CardContent className="p-0">
+              <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 flex items-center justify-between">
+                <h3 className="font-medium">Output</h3>
+                <div className="flex items-center">
+                  {status === "running" && <span className="text-sm text-gray-500">Running...</span>}
+                  {status === "success" && (
+                    <span className="flex items-center text-sm text-green-600">
+                      <CheckCircle className="mr-1 h-4 w-4" />
+                      Success
+                    </span>
+                  )}
+                  {status === "error" && (
+                    <span className="flex items-center text-sm text-red-600">
+                      <AlertCircle className="mr-1 h-4 w-4" />
+                      Error
+                    </span>
+                  )}
+                </div>
+              </div>
+              <pre className="p-4 text-sm font-mono whitespace-pre-wrap min-h-[300px] max-h-[300px] overflow-auto">
+                {output || "Run your code to see the output here."}
+              </pre>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }

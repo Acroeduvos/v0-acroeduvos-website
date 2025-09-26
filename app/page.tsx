@@ -52,10 +52,10 @@ export default function Home() {
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
-                  <Link href="/courses#courses-list">Explore Courses</Link>
+                  <Link href="#featured-courses" scroll={false}>Explore Courses</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
-                  <Link href="/courses#courses-list">Start Learning Free</Link>
+                  <Link href="#featured-courses" scroll={false}>Start Learning Free</Link>
                 </Button>
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function Home() {
       </section>
 
       {/* Featured Courses */}
-      <section className="py-16">
+      <section id="featured-courses" className="py-16 scroll-mt-16">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold">Featured Courses</h2>
@@ -227,10 +227,10 @@ export default function Home() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100">
-              <Link href="/courses">Browse Courses</Link>
+              <Link href="#featured-courses" scroll={false}>Browse Courses</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-purple-600">
-              <Link href="/courses">Start Learning Free</Link>
+              <Link href="#featured-courses" scroll={false}>Start Learning Free</Link>
             </Button>
           </div>
         </div>

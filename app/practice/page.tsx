@@ -1,9 +1,35 @@
 import Link from "next/link"
 
 export default function PracticePage() {
-  const cards = [
-    { href: "/practice/difficulty", title: "By Difficulty", desc: "Solve Easy, Medium, Hard problems." },
-    { href: "/practice/mncs", title: "MNC Problem Sets", desc: "Company-wise curated coding questions." },
+  const sections = [
+    {
+      href: "/practice/difficulty",
+      title: "By Difficulty Level",
+      desc: "Problems categorized by difficulty - Easy, Medium, and Hard",
+      stats: {
+        total: 500,
+        categories: [
+          { name: "Easy", count: 200 },
+          { name: "Medium", count: 200 },
+          { name: "Hard", count: 100 },
+        ],
+      },
+    },
+    {
+      href: "/practice/mncs",
+      title: "MNC Interview Questions",
+      desc: "Real interview questions from top tech companies",
+      stats: {
+        total: 500,
+        companies: [
+          { name: "Google", count: 100 },
+          { name: "Microsoft", count: 100 },
+          { name: "Amazon", count: 100 },
+          { name: "Meta", count: 100 },
+          { name: "Others", count: 100 },
+        ],
+      },
+    },
   ]
 
   return (
@@ -17,11 +43,42 @@ export default function PracticePage() {
 
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {cards.map((c) => (
-              <Link key={c.href} href={c.href} className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md">
-                <h3 className="text-xl font-bold">{c.title}</h3>
-                <p className="mt-2 text-gray-600">{c.desc}</p>
+          <div className="grid gap-8 sm:grid-cols-2">
+            {sections.map((section) => (
+              <Link
+                key={section.href}
+                href={section.href}
+                className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-lg"
+              >
+                <div className="mb-4">
+                  <h3 className="text-2xl font-bold group-hover:text-purple-600">{section.title}</h3>
+                  <p className="mt-2 text-gray-600">{section.desc}</p>
+                </div>
+
+                <div className="mt-6 rounded-lg bg-gray-50 p-4">
+                  <div className="mb-4">
+                    <span className="text-sm font-medium text-gray-500">Total Problems:</span>
+                    <span className="ml-2 text-lg font-bold text-purple-600">{section.stats.total}</span>
+                  </div>
+
+                  <div className="grid gap-2">
+                    {section.stats.categories ? (
+                      section.stats.categories.map((cat) => (
+                        <div key={cat.name} className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{cat.name}</span>
+                          <span className="text-sm text-gray-500">{cat.count} problems</span>
+                        </div>
+                      ))
+                    ) : (
+                      section.stats.companies?.map((company) => (
+                        <div key={company.name} className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{company.name}</span>
+                          <span className="text-sm text-gray-500">{company.count} problems</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
               </Link>
             ))}
           </div>

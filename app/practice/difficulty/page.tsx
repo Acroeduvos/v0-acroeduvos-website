@@ -9,13 +9,129 @@ export default function PracticeByDifficultyPage({ searchParams }: { searchParam
   const levels = ["easy", "medium", "hard"]
 
   const problems = useMemo(() => {
-    const all = Array.from({ length: 300 }).map((_, i) => ({
-      id: i + 1,
-      title: `Problem ${i + 1}`,
-      level: levels[(i % 3)] as "easy" | "medium" | "hard",
-      slug: `p-${i + 1}`,
-    }))
-    return all.filter((p) => p.level === level)
+    const all = [
+      // Easy Problems
+      {
+        id: 1,
+        title: "Two Sum",
+        level: "easy",
+        slug: "two-sum",
+        description: "Find two numbers in an array that add up to a target sum.",
+        topics: ["Arrays", "Hash Table"],
+      },
+      {
+        id: 2,
+        title: "Valid Parentheses",
+        level: "easy",
+        slug: "valid-parentheses",
+        description: "Check if a string of parentheses is valid.",
+        topics: ["Stack", "String"],
+      },
+      {
+        id: 3,
+        title: "Reverse Linked List",
+        level: "easy",
+        slug: "reverse-linked-list",
+        description: "Reverse a singly linked list.",
+        topics: ["Linked List", "Recursion"],
+      },
+      // Medium Problems
+      {
+        id: 101,
+        title: "Container With Most Water",
+        level: "medium",
+        slug: "container-with-most-water",
+        description: "Find two lines that together with x-axis forms a container that holds the most water.",
+        topics: ["Arrays", "Two Pointers"],
+      },
+      {
+        id: 102,
+        title: "Binary Tree Level Order Traversal",
+        level: "medium",
+        slug: "binary-tree-level-order",
+        description: "Return the level order traversal of a binary tree's nodes' values.",
+        topics: ["Tree", "BFS"],
+      },
+      {
+        id: 103,
+        title: "Longest Palindromic Substring",
+        level: "medium",
+        slug: "longest-palindromic-substring",
+        description: "Find the longest palindromic substring in a string.",
+        topics: ["String", "Dynamic Programming"],
+      },
+      // Hard Problems
+      {
+        id: 201,
+        title: "Median of Two Sorted Arrays",
+        level: "hard",
+        slug: "median-of-sorted-arrays",
+        description: "Find the median of two sorted arrays.",
+        topics: ["Arrays", "Binary Search"],
+      },
+      {
+        id: 202,
+        title: "Regular Expression Matching",
+        level: "hard",
+        slug: "regex-matching",
+        description: "Implement regular expression matching with support for '.' and '*'.",
+        topics: ["String", "Dynamic Programming"],
+      },
+      {
+        id: 203,
+        title: "Merge k Sorted Lists",
+        level: "hard",
+        slug: "merge-k-sorted-lists",
+        description: "Merge k sorted linked lists into one sorted linked list.",
+        topics: ["Linked List", "Heap"],
+      },
+    ]
+    // Generate more problems programmatically
+    const generateProblems = (baseProblems: typeof all) => {
+      const result = [...baseProblems]
+      const templates = {
+        easy: [
+          "Find Maximum in Array",
+          "Count Characters",
+          "Binary Search Implementation",
+          "Implement Queue using Stack",
+          "First Non-Repeating Character",
+        ],
+        medium: [
+          "Longest Common Subsequence",
+          "Number of Islands",
+          "Minimum Path Sum",
+          "Validate Binary Search Tree",
+          "Word Break Problem",
+        ],
+        hard: [
+          "Shortest Path in Graph",
+          "Maximum Flow in Network",
+          "Longest Valid Parentheses",
+          "Word Search II",
+          "N-Queens Problem",
+        ],
+      }
+
+      let id = 1000
+      for (const difficulty of Object.keys(templates) as Array<keyof typeof templates>) {
+        for (let i = 0; i < 160; i++) {
+          const template = templates[difficulty][i % templates[difficulty].length]
+          result.push({
+            id: id++,
+            title: `${template} ${Math.floor(i / templates[difficulty].length) + 1}`,
+            level: difficulty,
+            slug: template.toLowerCase().replace(/\s+/g, '-') + `-${Math.floor(i / templates[difficulty].length) + 1}`,
+            description: `Solve the ${template.toLowerCase()} problem with optimal time and space complexity.`,
+            topics: ["Algorithms", "Data Structures"],
+          })
+        }
+      }
+      return result
+    }
+
+    const allProblems = generateProblems(all)
+    return allProblems.filter((p) => p.level === level)
   }, [level])
 
   const pageSize = 25
@@ -36,12 +152,41 @@ export default function PracticeByDifficultyPage({ searchParams }: { searchParam
         </div>
       </div>
 
-      <div className="grid gap-3">
+      <div className="grid gap-4">
         {pageItems.map((p) => (
-          <Link key={p.id} href={`/practice/difficulty/${p.slug}`} className="rounded border bg-white p-4 hover:shadow">
-            <div className="text-sm text-gray-500">#{p.id}</div>
-            <div className="text-lg font-semibold">{p.title}</div>
-            <div className="text-xs capitalize text-purple-700">{p.level}</div>
+          <Link
+            key={p.id}
+            href={`/practice/difficulty/${p.slug}`}
+            className="group rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-lg"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-500">#{p.id}</span>
+                  <span className={`rounded-full px-2 py-1 text-xs font-medium ${
+                    p.level === 'easy' ? 'bg-green-100 text-green-700' :
+                    p.level === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                    'bg-red-100 text-red-700'
+                  }`}>
+                    {p.level}
+                  </span>
+                </div>
+                <h3 className="mt-1 text-xl font-bold group-hover:text-purple-600">{p.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{p.description}</p>
+              </div>
+              <div className="ml-4 flex-shrink-0">
+                <div className="flex flex-wrap gap-2">
+                  {p.topics.map((topic) => (
+                    <span
+                      key={topic}
+                      className="rounded-full bg-purple-100 px-2 py-1 text-xs font-medium text-purple-700"
+                    >
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </Link>
         ))}
       </div>

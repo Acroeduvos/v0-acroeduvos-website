@@ -17,8 +17,12 @@ const nextConfig = {
     JUDGE0_API_KEY: process.env.JUDGE0_API_KEY,
   },
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["acroeduvos.in"],
+    },
   },
+  output: 'standalone',
+  outputFileTracingRoot: process.cwd(),
   async rewrites() {
     return [
       {
@@ -28,6 +32,14 @@ const nextConfig = {
       {
         source: '/contests/:id/problems/:problemId/solve',
         destination: '/contests/[id]/problems/[problemId]/solve',
+      },
+      {
+        source: '/auth/:path*',
+        destination: '/auth/:path*',
+      },
+      {
+        source: '/tutorials/:slug*',
+        destination: '/tutorials/:slug*',
       },
     ]
   },
