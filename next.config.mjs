@@ -45,6 +45,10 @@ const nextConfig = {
         source: '/tutorials/:slug*',
         destination: '/tutorials/:slug*',
       },
+      {
+        source: '/ide',
+        destination: '/ide/page',
+      },
     ]
   },
 }
