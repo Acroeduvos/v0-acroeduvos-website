@@ -1,1049 +1,394 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Search, ArrowRight } from "lucide-react"
+import { Header } from "@/components/header"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { BookOpen, Clock, Users, Star, Trophy } from "lucide-react"
+import Link from "next/link"
 
-// Course data
 const courses = [
   {
-    id: 1,
-    title: "C Programming Fundamentals",
-    category: "Programming",
-    level: "Beginner",
-    price: "FREE",
-    rating: 4.8,
-    image: "/placeholder.svg?height=200&width=400&text=C+Programming",
-    description: "Master the fundamentals of C programming language with hands-on projects and exercises.",
-    lessons: [
-      {
-        id: 1,
-        title: "Introduction to C Programming",
-        duration: "45 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Variables and Data Types",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Operators and Expressions",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "Control Flow - If, Switch, Loops",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Arrays and Strings",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Functions and Recursion",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Pointers and Memory Management",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Structures and Unions",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "File Handling in C",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Building a Console Application",
-        duration: "180 mins",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "C++ Programming Mastery",
-    category: "Programming",
-    level: "Intermediate",
-    price: "FREE",
-    rating: 4.7,
-    image: "/placeholder.svg?height=200&width=400&text=C%2B%2B+Programming",
-    description: "Master modern C++ programming with object-oriented principles and STL.",
-    lessons: [
-      {
-        id: 1,
-        title: "Introduction to C++ and OOP Concepts",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Classes and Objects",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Inheritance and Polymorphism",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "Templates and Generic Programming",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "STL Containers and Algorithms",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Exception Handling",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Smart Pointers and Memory Management",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Modern C++ Features (C++11/14/17)",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Multithreading and Concurrency",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Building a Library System",
-        duration: "180 mins",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "Java Development",
-    category: "Programming",
-    level: "Beginner",
-    price: "FREE",
-    rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=Java+Development",
-    description: "Learn Java programming from basics to advanced concepts with practical projects.",
-    lessons: [
-      {
-        id: 1,
-        title: "Introduction to Java and Setup",
-        duration: "45 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Java Basics and Data Types",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Object-Oriented Programming in Java",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "Collections Framework",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Exception Handling and File I/O",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Multithreading Basics",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Java GUI Programming (Swing)",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Database Connectivity (JDBC)",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Unit Testing with JUnit",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Student Management System",
-        duration: "180 mins",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 4,
+    id: "python",
     title: "Python Programming",
-    category: "Programming",
-    level: "Beginner",
-    price: "FREE",
+    description: "Master Python from basics to advanced with real-world projects and MNC interview questions",
+    level: "Beginner to Advanced",
+    duration: "10 weeks",
+    students: "8.5k",
+    rating: 4.9,
+    progress: 0,
+    problems: 189,
+    topics: ["Syntax", "OOP", "Data Structures", "Libraries", "Web Scraping", "APIs", "Testing"],
+    companies: ["Google", "Netflix", "Instagram", "Dropbox", "Spotify"],
+    color: "bg-yellow-500",
+  },
+  {
+    id: "java",
+    title: "Java Programming",
+    description: "Complete Java development with Spring Boot, enterprise patterns, and interview prep",
+    level: "Beginner to Advanced",
+    duration: "12 weeks",
+    students: "9.2k",
     rating: 4.8,
-    image: "/placeholder.svg?height=200&width=400&text=Python+Programming",
-    description: "Master Python programming with practical examples and real-world applications.",
-    lessons: [
-      {
-        id: 1,
-        title: "Python Basics and Setup",
-        duration: "45 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Data Types and Control Flow",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Functions and Modules",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "Object-Oriented Programming",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "File Handling and Exception Handling",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Working with Libraries (NumPy, Pandas)",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Web Scraping with Beautiful Soup",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Database Operations with SQLite",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "GUI Programming with Tkinter",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Task Management App",
-        duration: "180 mins",
-        completed: false,
-      },
-    ],
+    progress: 0,
+    problems: 234,
+    topics: ["Core Java", "OOP", "Collections", "Multithreading", "JVM", "Design Patterns", "Spring"],
+    companies: ["Oracle", "Amazon", "LinkedIn", "Uber", "Goldman Sachs"],
+    color: "bg-red-600",
   },
   {
-    id: 5,
-    title: "Web Development Bootcamp",
-    category: "Web",
-    level: "Beginner",
-    price: "FREE",
-    rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=Web+Development",
-    description: "Complete web development bootcamp covering frontend and backend technologies.",
-    lessons: [
-      {
-        id: 1,
-        title: "HTML5 Fundamentals",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "CSS3 and Responsive Design",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "JavaScript Basics",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "DOM Manipulation",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Modern JavaScript (ES6+)",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "React.js Fundamentals",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Node.js and Express.js",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "MongoDB and Mongoose",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Authentication and Authorization",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Full Stack Social Media App",
-        duration: "240 mins",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 6,
-    title: "Mobile App Development",
-    category: "Development",
-    level: "Intermediate",
-    price: "FREE",
+    id: "javascript",
+    title: "JavaScript Mastery",
+    description: "Modern JavaScript ES6+, DOM manipulation, async programming, and frameworks",
+    level: "Beginner to Advanced",
+    duration: "8 weeks",
+    students: "12.1k",
     rating: 4.7,
-    image: "/placeholder.svg?height=200&width=400&text=App+Development",
-    description: "Learn to build native mobile applications for iOS and Android platforms.",
-    lessons: [
-      {
-        id: 1,
-        title: "Introduction to React Native",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "React Native Components",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Navigation and Routing",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "State Management with Redux",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Working with APIs",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Native Device Features",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "App Styling and Themes",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Data Persistence",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "App Testing and Debugging",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: E-commerce Mobile App",
-        duration: "240 mins",
-        completed: false,
-      },
-    ],
+    progress: 0,
+    problems: 167,
+    topics: ["ES6+", "DOM", "Async/Await", "Promises", "Closures", "Prototypes", "Modules"],
+    companies: ["Facebook", "Airbnb", "Netflix", "Twitter", "Shopify"],
+    color: "bg-yellow-400",
   },
   {
-    id: 7,
-    title: "Full Stack Development",
-    category: "Development",
-    level: "Advanced",
-    price: "FREE",
-    rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=Full+Stack",
-    description: "Become a full stack developer with modern web technologies and best practices.",
-    lessons: [
-      {
-        id: 1,
-        title: "Modern Frontend Development",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Backend Development with Node.js",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Database Design and Management",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "RESTful API Development",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Authentication and Security",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Cloud Deployment (AWS/Heroku)",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Testing and CI/CD",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Performance Optimization",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Microservices Architecture",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Enterprise Web Application",
-        duration: "300 mins",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 8,
-    title: "JavaScript & React Mastery",
-    category: "Web",
+    id: "react",
+    title: "React Development",
+    description: "Build modern web apps with React, hooks, state management, and testing",
     level: "Intermediate",
-    price: "FREE",
+    duration: "10 weeks",
+    students: "7.8k",
     rating: 4.8,
-    image: "/placeholder.svg?height=200&width=400&text=JavaScript+React",
-    description: "Master modern JavaScript and React.js for building dynamic web applications.",
-    lessons: [
-      {
-        id: 1,
-        title: "Advanced JavaScript Concepts",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "React Fundamentals and Hooks",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "State Management with Redux",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "React Router and Navigation",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "API Integration and Axios",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Testing React Applications",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Performance Optimization",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Server-Side Rendering",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "React Design Patterns",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Advanced React Application",
-        duration: "240 mins",
-        completed: false,
-      },
-    ],
+    progress: 0,
+    problems: 145,
+    topics: ["Components", "Hooks", "State Management", "Router", "Testing", "Performance", "Next.js"],
+    companies: ["Facebook", "Netflix", "Airbnb", "WhatsApp", "Discord"],
+    color: "bg-blue-400",
   },
   {
-    id: 9,
-    title: "Linux Administration",
-    category: "System",
+    id: "nodejs",
+    title: "Node.js Backend",
+    description: "Server-side JavaScript with Express, databases, APIs, and microservices",
     level: "Intermediate",
-    price: "FREE",
-    rating: 4.7,
-    image: "/placeholder.svg?height=200&width=400&text=Linux+Admin",
-    description: "Learn Linux system administration from basics to advanced concepts.",
-    lessons: [
-      {
-        id: 1,
-        title: "Linux Fundamentals",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Command Line Mastery",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "User and Permission Management",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "Package Management",
-        duration: "60 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "System Monitoring and Logging",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Network Configuration",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Shell Scripting",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Security and Firewall",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Server Management",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Server Setup and Security",
-        duration: "240 mins",
-        completed: false,
-      },
-    ],
+    duration: "9 weeks",
+    students: "5.6k",
+    rating: 4.6,
+    progress: 0,
+    problems: 123,
+    topics: ["Express", "APIs", "Authentication", "Databases", "Middleware", "Testing", "Deployment"],
+    companies: ["Netflix", "LinkedIn", "Uber", "PayPal", "NASA"],
+    color: "bg-green-600",
   },
   {
-    id: 10,
-    title: "Ethical Hacking",
-    category: "Security",
-    level: "Advanced",
-    price: "FREE",
+    id: "spring-boot",
+    title: "Spring Boot Framework",
+    description: "Enterprise Java development with Spring Boot, microservices, and cloud deployment",
+    level: "Intermediate to Advanced",
+    duration: "11 weeks",
+    students: "4.3k",
+    rating: 4.7,
+    progress: 0,
+    problems: 98,
+    topics: ["Spring Core", "REST APIs", "JPA", "Security", "Microservices", "Testing", "Cloud"],
+    companies: ["JPMorgan", "Wells Fargo", "Accenture", "TCS", "Infosys"],
+    color: "bg-green-500",
+  },
+  {
+    id: "csharp",
+    title: "C# Programming",
+    description: "Complete C# development with .NET, ASP.NET Core, and enterprise applications",
+    level: "Beginner to Advanced",
+    duration: "10 weeks",
+    students: "3.9k",
+    rating: 4.5,
+    progress: 0,
+    problems: 156,
+    topics: ["C# Basics", "OOP", ".NET Core", "ASP.NET", "Entity Framework", "LINQ", "Testing"],
+    companies: ["Microsoft", "Stack Overflow", "Unity", "Xamarin", "Accenture"],
+    color: "bg-purple-600",
+  },
+  {
+    id: "php",
+    title: "PHP Web Development",
+    description: "Server-side scripting with PHP, Laravel, databases, and modern web development",
+    level: "Beginner to Intermediate",
+    duration: "8 weeks",
+    students: "4.7k",
+    rating: 4.4,
+    progress: 0,
+    problems: 134,
+    topics: ["PHP Basics", "OOP", "Laravel", "MySQL", "APIs", "Security", "Deployment"],
+    companies: ["WordPress", "Facebook", "Slack", "Etsy", "Mailchimp"],
+    color: "bg-indigo-500",
+  },
+  {
+    id: "c",
+    title: "C Programming",
+    description: "Master the fundamentals with C programming, memory management, and system programming",
+    level: "Beginner to Intermediate",
+    duration: "8 weeks",
+    students: "6.2k",
+    rating: 4.6,
+    progress: 0,
+    problems: 178,
+    topics: ["Syntax", "Pointers", "Memory Management", "File I/O", "Data Structures", "Algorithms"],
+    companies: ["Intel", "NVIDIA", "Qualcomm", "Embedded Systems", "Linux"],
+    color: "bg-gray-600",
+  },
+  {
+    id: "cpp",
+    title: "C++ Programming",
+    description: "Advanced C++ with OOP, STL, templates, and competitive programming techniques",
+    level: "Intermediate to Advanced",
+    duration: "10 weeks",
+    students: "5.8k",
+    rating: 4.7,
+    progress: 0,
+    problems: 201,
+    topics: ["OOP", "STL", "Templates", "Memory Management", "Multithreading", "Design Patterns"],
+    companies: ["Google", "Microsoft", "Adobe", "Bloomberg", "Tesla"],
+    color: "bg-blue-600",
+  },
+  {
+    id: "html-css",
+    title: "HTML & CSS Mastery",
+    description: "Modern web design with HTML5, CSS3, responsive design, and animations",
+    level: "Beginner",
+    duration: "6 weeks",
+    students: "15.3k",
+    rating: 4.5,
+    progress: 0,
+    problems: 89,
+    topics: ["HTML5", "CSS3", "Flexbox", "Grid", "Responsive Design", "Animations", "Sass"],
+    companies: ["Any Web Company", "Freelance", "Startups", "Agencies", "E-commerce"],
+    color: "bg-orange-500",
+  },
+  {
+    id: "sql",
+    title: "SQL & Database Design",
+    description: "Master SQL queries, database design, optimization, and advanced database concepts",
+    level: "Beginner to Advanced",
+    duration: "7 weeks",
+    students: "8.9k",
+    rating: 4.8,
+    progress: 0,
+    problems: 167,
+    topics: ["SQL Queries", "Joins", "Subqueries", "Indexing", "Stored Procedures", "Performance"],
+    companies: ["Oracle", "Microsoft", "IBM", "Amazon", "Any Data Company"],
+    color: "bg-cyan-600",
+  },
+  {
+    id: "mysql",
+    title: "MySQL Database",
+    description: "Complete MySQL administration, optimization, and real-world database projects",
+    level: "Beginner to Intermediate",
+    duration: "6 weeks",
+    students: "5.4k",
+    rating: 4.6,
+    progress: 0,
+    problems: 112,
+    topics: ["MySQL Basics", "Administration", "Optimization", "Replication", "Backup", "Security"],
+    companies: ["Facebook", "Twitter", "YouTube", "GitHub", "Airbnb"],
+    color: "bg-blue-500",
+  },
+  {
+    id: "mongodb",
+    title: "MongoDB NoSQL",
+    description: "NoSQL database design, aggregation pipelines, and modern application development",
+    level: "Intermediate",
+    duration: "5 weeks",
+    students: "3.8k",
+    rating: 4.5,
+    progress: 0,
+    problems: 87,
+    topics: ["Document DB", "Aggregation", "Indexing", "Sharding", "Replica Sets", "Atlas"],
+    companies: ["MongoDB", "Uber", "eBay", "Adobe", "Cisco"],
+    color: "bg-green-500",
+  },
+  {
+    id: "dsa",
+    title: "Data Structures & Algorithms",
+    description: "Master DSA with 300+ problems from Google, Microsoft, Amazon interviews",
+    level: "Beginner to Advanced",
+    duration: "14 weeks",
+    students: "11.2k",
     rating: 4.9,
-    image: "/placeholder.svg?height=200&width=400&text=Ethical+Hacking",
-    description: "Learn ethical hacking and cybersecurity with hands-on practice.",
-    lessons: [
-      {
-        id: 1,
-        title: "Introduction to Cybersecurity",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 2,
-        title: "Network Security Fundamentals",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 3,
-        title: "Web Application Security",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 4,
-        title: "System Hacking Techniques",
-        duration: "180 mins",
-        completed: false,
-      },
-      {
-        id: 5,
-        title: "Malware Analysis",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 6,
-        title: "Wireless Network Security",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 7,
-        title: "Cryptography",
-        duration: "150 mins",
-        completed: false,
-      },
-      {
-        id: 8,
-        title: "Social Engineering",
-        duration: "90 mins",
-        completed: false,
-      },
-      {
-        id: 9,
-        title: "Incident Response",
-        duration: "120 mins",
-        completed: false,
-      },
-      {
-        id: 10,
-        title: "Final Project: Security Assessment",
-        duration: "300 mins",
-        completed: false,
-      },
-    ],
+    progress: 0,
+    problems: 347,
+    topics: ["Arrays", "Linked Lists", "Trees", "Graphs", "Dynamic Programming", "Greedy", "Backtracking"],
+    companies: ["Google", "Microsoft", "Amazon", "Facebook", "Apple"],
+    color: "bg-red-500",
+  },
+  {
+    id: "ai-ml",
+    title: "AI & Machine Learning",
+    description: "Complete AI/ML with Python, TensorFlow, deep learning, and real-world projects",
+    level: "Intermediate to Advanced",
+    duration: "12 weeks",
+    students: "6.7k",
+    rating: 4.8,
+    progress: 0,
+    problems: 134,
+    topics: ["Python", "TensorFlow", "Neural Networks", "NLP", "Computer Vision", "Deep Learning"],
+    companies: ["OpenAI", "Tesla", "NVIDIA", "DeepMind", "Anthropic"],
+    color: "bg-purple-500",
+  },
+  {
+    id: "dbms",
+    title: "Database Management Systems",
+    description: "Complete DBMS concepts, normalization, transactions, and database theory",
+    level: "Intermediate",
+    duration: "8 weeks",
+    students: "4.9k",
+    rating: 4.6,
+    progress: 0,
+    problems: 145,
+    topics: ["RDBMS", "Normalization", "Transactions", "Concurrency", "Recovery", "Distributed DB"],
+    companies: ["Oracle", "IBM", "Microsoft", "SAP", "Teradata"],
+    color: "bg-teal-500",
+  },
+  {
+    id: "aptitude",
+    title: "Quantitative Aptitude",
+    description: "Master mathematical reasoning, logical thinking, and problem-solving for placements",
+    level: "Beginner to Advanced",
+    duration: "6 weeks",
+    students: "9.8k",
+    rating: 4.7,
+    progress: 0,
+    problems: 456,
+    topics: ["Number Systems", "Algebra", "Geometry", "Statistics", "Probability", "Time & Work"],
+    companies: ["TCS", "Infosys", "Wipro", "Accenture", "Cognizant"],
+    color: "bg-amber-500",
+  },
+  {
+    id: "reasoning",
+    title: "Logical Reasoning",
+    description: "Develop analytical thinking, pattern recognition, and logical problem-solving skills",
+    level: "Beginner to Advanced",
+    duration: "5 weeks",
+    students: "8.1k",
+    rating: 4.6,
+    progress: 0,
+    problems: 389,
+    topics: ["Verbal Reasoning", "Non-Verbal", "Analytical", "Critical Thinking", "Puzzles", "Patterns"],
+    companies: ["All MNCs", "Government Jobs", "Banking", "Consulting", "Competitive Exams"],
+    color: "bg-pink-500",
   },
 ]
 
-// Course list page component
-export default function CoursesPage({ params }: { params?: { id: string } }) {
-  // If we have an ID parameter, show the course details page
-  if (params?.id) {
-    const course = courses.find(c => c.id.toString() === params.id) || courses[0]
-    const completedLessons = course.lessons?.filter((lesson) => lesson.completed).length || 0
-    const progress = course.lessons ? (completedLessons / course.lessons.length) * 100 : 0
-
-    const handleEnroll = () => {
-      alert("Welcome! All courses are now free to access. You can start learning immediately!")
-    }
-
-    return (
-      <div className="container py-10">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <h1 className="text-3xl font-bold">{course.title}</h1>
-            <p className="mt-2 text-muted-foreground">{course.description}</p>
-            {course.lessons && (
-              <>
-                <div className="mt-4">
-                  <Progress value={progress} />
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {completedLessons} of {course.lessons.length} lessons completed
-                  </p>
-                </div>
-                <Button className="mt-6 w-full bg-black" onClick={handleEnroll}>
-                  Start Learning Free
-                </Button>
-              </>
-            )}
-          </div>
-          {course.lessons && (
-            <div className="grid gap-4">
-              {course.lessons.map((lesson) => (
-                <Card key={lesson.id}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      {lesson.title}
-                    </CardTitle>
-                    <Button variant="link" className="h-auto p-0 text-black">
-                      Start Free
-                    </Button>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-sm text-muted-foreground">
-                      Duration: {lesson.duration}
-                    </div>
-                    {lesson.completed && (
-                      <div className="mt-2">
-                        <span className="text-sm font-medium text-green-600">
-                          ✓ Completed
-                        </span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
-
-  // Otherwise, show the course list page
+export default function CoursesPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="bg-purple-700 py-20 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Our Courses</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-purple-100 md:text-xl">
-            Explore our wide range of programming and technology courses designed to help you achieve certification
-          </p>
-        </div>
-      </section>
-
-      {/* Search and Filter Section */}
-      <section className="border-b border-gray-200 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="relative w-full md:max-w-md">
-              <input
-                type="text"
-                placeholder="Search courses..."
-                className="w-full rounded-md border border-gray-300 px-4 py-2 pl-10 focus:border-purple-500 focus:outline-none focus:ring-purple-500"
-              />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            </div>
-
-            <div className="flex w-full flex-wrap gap-4 md:w-auto">
-              <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
-                <option value="">All Categories</option>
-                <option value="programming">Programming</option>
-                <option value="web">Web Development</option>
-                <option value="security">Cyber Security</option>
-                <option value="ai">AI & ML</option>
-                <option value="mobile">Mobile Development</option>
-              </select>
-
-              <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
-                <option value="">All Levels</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
-
-              <select className="rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-purple-500">
-                <option value="newest">Newest</option>
-                <option value="popular">Most Popular</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tutorials Section */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <span className="mb-4 inline-block rounded-full bg-purple-100 px-4 py-1 text-sm font-semibold text-purple-700">Free Resources</span>
-            <h2 className="text-4xl font-bold">Learn with Our Tutorials</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-              Master programming concepts with our comprehensive, hands-on tutorials
+    <div className="min-h-screen">
+      <Header />
+      <main className="py-12">
+        <div className="container">
+          <div className="text-center space-y-4 mb-12">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+              Master Programming with <span className="text-primary">Free Expert Courses</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Start learning immediately with 20+ completely free courses covering all major technologies. No
+              registration required - just click and start coding with real MNC interview questions.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+              <Button size="lg" className="text-lg px-8 py-6" asChild>
+                <a href="/practice">Start Practicing Now</a>
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-transparent" asChild>
+                <a href="/compiler">Try Free Compiler</a>
+              </Button>
+            </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "C Programming Basics",
-                category: "Programming",
-                description: "Learn the fundamentals of C programming with hands-on examples.",
-                readTime: "15 min read",
-                href: "/courses/1",
-              },
-              {
-                title: "Data Structures & Algorithms",
-                category: "Computer Science",
-                description: "Master essential data structures and algorithms concepts.",
-                readTime: "20 min read",
-                href: "/courses/2",
-              },
-              {
-                title: "Web Development Guide",
-                category: "Web",
-                description: "Step-by-step guide to modern web development.",
-                readTime: "25 min read",
-                href: "/courses/5",
-              },
-              {
-                title: "Python for Beginners",
-                category: "Programming",
-                description: "Start your Python journey with this comprehensive guide.",
-                readTime: "18 min read",
-                href: "/courses/4",
-              },
-              {
-                title: "JavaScript & React Essentials",
-                category: "Web",
-                description: "Modern JavaScript and React.js development guide.",
-                readTime: "22 min read",
-                href: "/courses/8",
-              },
-              {
-                title: "Full Stack Development",
-                category: "Development",
-                description: "Learn to build complete web applications from scratch.",
-                readTime: "30 min read",
-                href: "/courses/7",
-              },
-              {
-                title: "Mobile App Development",
-                category: "Development",
-                description: "Build native mobile apps with React Native.",
-                readTime: "25 min read",
-                href: "/courses/6",
-              },
-              {
-                title: "Linux System Administration",
-                category: "System",
-                description: "Master Linux server administration and DevOps.",
-                readTime: "28 min read",
-                href: "/courses/9",
-              },
-              {
-                title: "Cybersecurity Fundamentals",
-                category: "Security",
-                description: "Learn essential cybersecurity concepts and practices.",
-                readTime: "20 min read",
-                href: "/courses/10",
-              },
-            ].map((tutorial) => (
-              <Link
-                key={tutorial.title}
-                href={tutorial.href}
-                className="group relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700">
-                    {tutorial.category}
-                  </span>
-                  <span className="flex items-center text-xs text-gray-500">
-                    <svg
-                      className="mr-1.5 h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    {tutorial.readTime}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold leading-tight group-hover:text-purple-600">
-                  {tutorial.title}
-                </h3>
-                <p className="mt-3 text-sm text-gray-600 line-clamp-2">{tutorial.description}</p>
-                <div className="mt-4 flex items-center text-sm text-purple-600">
-                  <span className="font-medium">Start Learning</span>
-                  <svg
-                    className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </Link>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {courses.map((course) => (
+              <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div className={`h-1 ${course.color}`} />
+                <CardHeader className="pb-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-xs">
+                        {course.level}
+                      </Badge>
+                      <Badge variant="secondary" className="gap-1 text-xs">
+                        <Trophy className="h-3 w-3" />
+                        {course.problems}
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-lg leading-tight">{course.title}</CardTitle>
+                    <CardDescription className="text-sm leading-relaxed line-clamp-3">
+                      {course.description}
+                    </CardDescription>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {course.duration}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-3 w-3" />
+                      {course.students}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                      {course.rating}
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="text-xs font-medium">Key Topics</div>
+                    <div className="flex flex-wrap gap-1">
+                      {course.topics.slice(0, 3).map((topic, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs px-2 py-0">
+                          {topic}
+                        </Badge>
+                      ))}
+                      {course.topics.length > 3 && (
+                        <Badge variant="secondary" className="text-xs px-2 py-0">
+                          +{course.topics.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="text-xs font-medium">Companies</div>
+                    <div className="flex flex-wrap gap-1">
+                      {course.companies.slice(0, 2).map((company, index) => (
+                        <Badge key={index} variant="outline" className="text-xs px-2 py-0">
+                          {company}
+                        </Badge>
+                      ))}
+                      {course.companies.length > 2 && (
+                        <Badge variant="outline" className="text-xs px-2 py-0">
+                          +{course.companies.length - 2}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span>Progress</span>
+                      <span>{course.progress}%</span>
+                    </div>
+                    <Progress value={course.progress} className="h-1.5" />
+                  </div>
+
+                  <Link href={`/courses/${course.id}`}>
+                    <Button className="w-full" size="sm">
+                      <BookOpen className="mr-2 h-3 w-3" />
+                      Start Course
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             ))}
           </div>
-
-          <div className="mt-8 text-center">
-            <Button asChild variant="outline" size="lg">
-              <Link href="/courses" className="flex items-center">
-                View All Tutorials
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
         </div>
-      </section>
-
-      {/* Courses Grid */}
-      <section id="courses-list" className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {courses.map((course, index) => (
-              <div key={index} className="overflow-hidden rounded-lg bg-white shadow-md transition-all hover:shadow-lg">
-                <div className="relative h-48">
-                  <Image src={course.image || "/placeholder.svg"} alt={course.title} fill className="object-cover" />
-                </div>
-                <div className="p-6">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-800">
-                      {course.category}
-                    </span>
-                    <span className="text-sm font-medium text-gray-600">{course.rating} ★★★★★</span>
-                  </div>
-                  <h3 className="mb-2 text-xl font-bold">{course.title}</h3>
-                  <p className="mb-4 text-gray-600">{course.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-purple-600">{course.price}</span>
-                    <Link
-                      href={`/courses/${course.id}`}
-                      className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-purple-700"
-                    >
-                      Start Free
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="mt-12 flex justify-center">
-            <nav className="flex items-center space-x-2">
-              <button className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 hover:bg-gray-50">
-                Previous
-              </button>
-              <button className="rounded-md bg-purple-600 px-3 py-2 text-sm text-white">1</button>
-              <button className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 hover:bg-gray-50">
-                2
-              </button>
-              <button className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 hover:bg-gray-50">
-                3
-              </button>
-              <span className="px-2 text-gray-500">...</span>
-              <button className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 hover:bg-gray-50">
-                10
-              </button>
-              <button className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-500 hover:bg-gray-50">
-                Next
-              </button>
-            </nav>
-          </div>
-        </div>
-      </section>
+      </main>
     </div>
   )
 }
