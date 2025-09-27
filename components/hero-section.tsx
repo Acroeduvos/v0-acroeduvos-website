@@ -3,24 +3,29 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Play, Code, Trophy, Users } from "lucide-react"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
     <section className="hero-gradient py-20 lg:py-32">
       <div className="container">
         <div className="flex flex-col items-center text-center space-y-8">
-          <Badge variant="secondary" className="px-4 py-2">
-            <Trophy className="mr-2 h-4 w-4" />
-            Master Programming & Crack MNC Interviews
-          </Badge>
+          <div className="relative">
+            <div className="absolute -top-4 -right-4 h-16 w-16">
+              <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
+            </div>
+            <Badge variant="secondary" className="px-4 py-2">
+              <Trophy className="mr-2 h-4 w-4" />
+              Master Programming & Crack MNC Interviews
+            </Badge>
+          </div>
 
           <div className="space-y-4 max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl text-balance">
               Learn to Code with <span className="text-primary">Real Interview</span> Questions
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Practice with curated problems from CodeChef, LeetCode, and real MNC interviews. Code in multiple
-              languages with our integrated compiler.
+              learn code create certify
             </p>
           </div>
 
