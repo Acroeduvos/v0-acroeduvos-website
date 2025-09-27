@@ -1,7 +1,8 @@
 {
-  "name": "my-v0-project",
+  "name": "acroeduvos",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@latest",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
