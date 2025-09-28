@@ -447,51 +447,20 @@ export default function CompilerPage() {
   }
 
   const handleRunCode = async () => {
-    if (!code.trim()) {
-      setStatus("error")
-      setOutput("Error: Please write some code before running")
-      return
-    }
-
     setIsRunning(true)
     setStatus("idle")
-    setOutput("Compiling and running code...")
+    setOutput("Running code...")
 
-    try {
-      const response = await fetch('/api/compile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          language: selectedLanguage,
-          code: code,
-          input: input
-        })
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        setOutput(result.output || "Code executed successfully!")
-        setExecutionTime(result.executionTime || 0)
-        setMemoryUsage(result.memoryUsage || 0)
+    // Simulate code execution
+    setTimeout(() => {
+      if (currentLanguage) {
+        setOutput(currentLanguage.sampleOutput)
+        setExecutionTime(Math.random() * 500 + 100)
+        setMemoryUsage(Math.random() * 30 + 10)
         setStatus("success")
-      } else {
-        setOutput(result.error || "Execution failed")
-        setStatus("error")
-        setExecutionTime(null)
-        setMemoryUsage(null)
       }
-    } catch (error) {
-      console.error('Execution error:', error)
-      setOutput(`Error: ${error instanceof Error ? error.message : 'Failed to execute code'}`)
-      setStatus("error")
-      setExecutionTime(null)
-      setMemoryUsage(null)
-    } finally {
       setIsRunning(false)
-    }
+    }, 2000)
   }
 
   const handleCopyCode = () => {

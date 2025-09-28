@@ -39,7 +39,7 @@ export function HeroSection() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="text-lg px-8 py-6" asChild>
               <a href="/courses">Start Learning Free</a>
             </Button>
