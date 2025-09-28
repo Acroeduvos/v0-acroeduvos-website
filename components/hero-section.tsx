@@ -11,8 +11,12 @@ export function HeroSection() {
         <div className="flex flex-col items-center justify-center text-center space-y-8 min-h-[60vh]">
           {/* Logo Section */}
           <div className="mb-8">
-            <div className="w-24 h-24 mx-auto mb-6 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-              <div className="text-4xl font-bold text-primary">A</div>
+            <div className="w-32 h-32 mx-auto mb-6 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center overflow-hidden">
+              <img 
+                src="/logo.png" 
+                alt="Acroeduvos Logo" 
+                className="w-full h-full object-contain p-2"
+              />
             </div>
             <div className="text-2xl font-bold text-white/90 tracking-wider">ACROEDUVOS</div>
           </div>
