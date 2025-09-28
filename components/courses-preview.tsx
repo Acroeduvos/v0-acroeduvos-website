@@ -54,8 +54,8 @@ const courses = [
 export function CoursesPreview() {
   return (
     <section className="py-20 lg:py-32 bg-muted/30">
-      <div className="container">
-        <div className="text-center space-y-4 mb-16">
+      <div className="container mx-auto px-4">
+        <div className="text-center space-y-4 mb-16 max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Popular <span className="text-primary">Courses</span>
           </h2>
@@ -64,7 +64,7 @@ export function CoursesPreview() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-6xl mx-auto">
           {courses.map((course, index) => (
             <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className={`h-2 ${course.color}`} />

@@ -35,8 +35,8 @@ const quickStartOptions = [
 export function QuickStartSection() {
   return (
     <section className="py-20 lg:py-32">
-      <div className="container">
-        <div className="text-center space-y-4 mb-16">
+      <div className="container mx-auto px-4">
+        <div className="text-center space-y-4 mb-16 max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             <span className="text-primary">Quick Start</span> Your Learning Journey
           </h2>
@@ -45,7 +45,7 @@ export function QuickStartSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
           {quickStartOptions.map((option, index) => (
             <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
               <div className={`h-2 ${option.color}`} />
