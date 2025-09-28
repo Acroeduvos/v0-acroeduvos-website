@@ -39,17 +39,17 @@ const languages = [
 export function CompilerPreview() {
   return (
     <section className="py-20 lg:py-32">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16 max-w-4xl mx-auto">
+      <div className="container">
+        <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Code in <span className="text-primary">Any Language</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Practice with our integrated compiler supporting 15+ programming languages
+            Practice with our integrated compiler supporting 10+ programming languages
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <Card className="overflow-hidden">
             <CardHeader className="bg-muted/50">
               <div className="flex items-center justify-between">

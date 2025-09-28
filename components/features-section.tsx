@@ -46,8 +46,8 @@ const features = [
 export function FeaturesSection() {
   return (
     <section className="py-20 lg:py-32">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16 max-w-4xl mx-auto">
+      <div className="container">
+        <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Everything you need to <span className="text-primary">succeed</span>
           </h2>
@@ -57,7 +57,7 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <Card key={index} className="relative overflow-hidden">
               <CardHeader>

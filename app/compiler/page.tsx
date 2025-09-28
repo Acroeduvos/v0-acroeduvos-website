@@ -59,7 +59,7 @@ Sum: 8`,
     extension: ".js",
     example: `// JavaScript Example - Hello World
 function greet(name) {
-    return "Hello, " + name + "!";
+    return \`Hello, \${name}!\`;
 }
 
 // Main execution
@@ -74,7 +74,7 @@ rl.question('Enter your name: ', (name) => {
     
     rl.question('Enter first number: ', (a) => {
         rl.question('Enter second number: ', (b) => {
-            console.log("Sum: " + (parseInt(a) + parseInt(b)));
+            console.log(\`Sum: \${parseInt(a) + parseInt(b)}\`);
             rl.close();
         });
     });
@@ -307,7 +307,7 @@ Sum: 20`,
 import * as readline from 'readline';
 
 function greet(name: string): string {
-    return "Hello, " + name + "!";
+    return \`Hello, \${name}!\`;
 }
 
 const rl = readline.createInterface({
@@ -321,7 +321,7 @@ rl.question('Enter your name: ', (name: string) => {
     rl.question('Enter first number: ', (a: string) => {
         rl.question('Enter second number: ', (b: string) => {
             const sum: number = parseInt(a) + parseInt(b);
-            console.log("Sum: " + sum);
+            console.log(\`Sum: \${sum}\`);
             rl.close();
         });
     });
@@ -374,7 +374,7 @@ Sum: 20`,
     extension: ".rb",
     example: `# Ruby Example - Hello World
 def greet(name)
-  "Hello, " + name + "!"
+  "Hello, #{name}!"
 end
 
 print "Enter your name: "
@@ -385,7 +385,7 @@ print "Enter first number: "
 a = gets.chomp.to_i
 print "Enter second number: "
 b = gets.chomp.to_i
-puts "Sum: " + (a + b).to_s`,
+puts "Sum: #{a + b}"`,
     sampleInput: `Ivy
 2
 18`,
@@ -396,121 +396,6 @@ Enter second number: 18
 Sum: 20`,
     inputPlaceholder: "Enter input values (one per line):\nIvy\n2\n18",
   },
-  {
-    value: "sql",
-    label: "SQL",
-    version: "SQLite 3.27",
-    extension: ".sql",
-    example: `-- SQL Example - Database Queries
--- Create a sample table
-CREATE TABLE students (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    age INTEGER,
-    grade TEXT
-);
-
--- Insert sample data
-INSERT INTO students (name, age, grade) VALUES 
-('Alice', 20, 'A'),
-('Bob', 19, 'B'),
-('Charlie', 21, 'A'),
-('Diana', 18, 'C');
-
--- Query examples
-SELECT * FROM students;
-SELECT name, grade FROM students WHERE grade = 'A';
-SELECT COUNT(*) as total_students FROM students;
-SELECT AVG(age) as average_age FROM students;`,
-    sampleInput: ``,
-    sampleOutput: `-- Table created successfully
--- Data inserted successfully
-id|name|age|grade
-1|Alice|20|A
-2|Bob|19|B
-3|Charlie|21|A
-4|Diana|18|C
-
-name|grade
-Alice|A
-Charlie|A
-
-total_students
-4
-
-average_age
-19.5`,
-    inputPlaceholder: "SQL doesn't require input - just run the queries",
-  },
-  {
-    value: "csharp",
-    label: "C#",
-    version: "8.0",
-    extension: ".cs",
-    example: `// C# Example - Hello World
-using System;
-
-class Program
-{
-    static string Greet(string name)
-    {
-        return "Hello, " + name + "!";
-    }
-    
-    static void Main(string[] args)
-    {
-        Console.Write("Enter your name: ");
-        string name = Console.ReadLine();
-        Console.WriteLine(Greet(name));
-        
-        Console.Write("Enter first number: ");
-        int a = Convert.ToInt32(Console.ReadLine());
-        Console.Write("Enter second number: ");
-        int b = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Sum: " + (a + b));
-    }
-}`,
-    sampleInput: `Jack
-8
-12`,
-    sampleOutput: `Enter your name: Jack
-Hello, Jack!
-Enter first number: 8
-Enter second number: 12
-Sum: 20`,
-    inputPlaceholder: "Enter input values (one per line):\nJack\n8\n12",
-  },
-  {
-    value: "kotlin",
-    label: "Kotlin",
-    version: "1.8",
-    extension: ".kt",
-    example: `// Kotlin Example - Hello World
-fun greet(name: String): String {
-    return "Hello, " + name + "!"
-}
-
-fun main() {
-    print("Enter your name: ")
-    val name = readLine() ?: ""
-    println(greet(name))
-    
-    print("Enter first number: ")
-    val a = readLine()?.toInt() ?: 0
-    print("Enter second number: ")
-    val b = readLine()?.toInt() ?: 0
-    println("Sum: " + (a + b))
-}`,
-    sampleInput: `Kate
-6
-14`,
-    sampleOutput: `Enter your name: Kate
-Hello, Kate!
-Enter first number: 6
-Enter second number: 14
-Sum: 20`,
-    inputPlaceholder: "Enter input values (one per line):\nKate\n6\n14",
-  },
 ]
 
 const sampleProblems = [
@@ -518,339 +403,21 @@ const sampleProblems = [
     title: "Hello World",
     description: "Print 'Hello, World!' to the console",
     difficulty: "Easy",
-    code: {
-      python: `print("Hello, World!")`,
-      javascript: `console.log("Hello, World!");`,
-      java: `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}`,
-      cpp: `#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}`,
-      c: `#include <stdio.h>
-
-int main() {
-    printf("Hello, World!\\n");
-    return 0;
-}`,
-      sql: `SELECT 'Hello, World!' as greeting;`
-    }
   },
   {
-    title: "Simple Calculator",
-    description: "Add two numbers together",
+    title: "Two Sum",
+    description: "Find two numbers that add up to a target",
     difficulty: "Easy",
-    code: {
-      python: `a = int(input("Enter first number: "))
-b = int(input("Enter second number: "))
-print(f"Sum: {a + b}")`,
-      javascript: `const a = parseInt(prompt("Enter first number: "));
-const b = parseInt(prompt("Enter second number: "));
-console.log("Sum: " + (a + b));`,
-      java: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter first number: ");
-        int a = scanner.nextInt();
-        System.out.print("Enter second number: ");
-        int b = scanner.nextInt();
-        System.out.println("Sum: " + (a + b));
-        scanner.close();
-    }
-}`,
-      cpp: `#include <iostream>
-using namespace std;
-
-int main() {
-    int a, b;
-    cout << "Enter first number: ";
-    cin >> a;
-    cout << "Enter second number: ";
-    cin >> b;
-    cout << "Sum: " << (a + b) << endl;
-    return 0;
-}`,
-      c: `#include <stdio.h>
-
-int main() {
-    int a, b;
-    printf("Enter first number: ");
-    scanf("%d", &a);
-    printf("Enter second number: ");
-    scanf("%d", &b);
-    printf("Sum: %d\\n", a + b);
-    return 0;
-}`,
-      sql: `SELECT 5 + 3 as sum_result;`
-    }
-  },
-  {
-    title: "Even or Odd",
-    description: "Check if a number is even or odd",
-    difficulty: "Easy",
-    code: {
-      python: `num = int(input("Enter a number: "))
-if num % 2 == 0:
-    print("Even")
-else:
-    print("Odd")`,
-      javascript: `const num = parseInt(prompt("Enter a number: "));
-if (num % 2 === 0) {
-    console.log("Even");
-} else {
-    console.log("Odd");
-}`,
-      java: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a number: ");
-        int num = scanner.nextInt();
-        if (num % 2 == 0) {
-            System.out.println("Even");
-        } else {
-            System.out.println("Odd");
-        }
-        scanner.close();
-    }
-}`,
-      cpp: `#include <iostream>
-using namespace std;
-
-int main() {
-    int num;
-    cout << "Enter a number: ";
-    cin >> num;
-    if (num % 2 == 0) {
-        cout << "Even" << endl;
-    } else {
-        cout << "Odd" << endl;
-    }
-    return 0;
-}`,
-      c: `#include <stdio.h>
-
-int main() {
-    int num;
-    printf("Enter a number: ");
-    scanf("%d", &num);
-    if (num % 2 == 0) {
-        printf("Even\\n");
-    } else {
-        printf("Odd\\n");
-    }
-    return 0;
-}`,
-      sql: `SELECT 
-    CASE 
-        WHEN 7 % 2 = 0 THEN 'Even'
-        ELSE 'Odd'
-    END as result;`
-    }
   },
   {
     title: "Fibonacci Sequence",
     description: "Generate the first n Fibonacci numbers",
     difficulty: "Medium",
-    code: {
-      python: `def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-n = int(input("Enter number of terms: "))
-for i in range(n):
-    print(fibonacci(i), end=" ")`,
-      javascript: `function fibonacci(n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-const n = parseInt(prompt("Enter number of terms: "));
-for (let i = 0; i < n; i++) {
-    console.log(fibonacci(i));
-}`,
-      java: `import java.util.Scanner;
-
-public class Main {
-    public static int fibonacci(int n) {
-        if (n <= 1) return n;
-        return fibonacci(n-1) + fibonacci(n-2);
-    }
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter number of terms: ");
-        int n = scanner.nextInt();
-        for (int i = 0; i < n; i++) {
-            System.out.print(fibonacci(i) + " ");
-        }
-        scanner.close();
-    }
-}`,
-      cpp: `#include <iostream>
-using namespace std;
-
-int fibonacci(int n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-int main() {
-    int n;
-    cout << "Enter number of terms: ";
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        cout << fibonacci(i) << " ";
-    }
-    return 0;
-}`,
-      c: `#include <stdio.h>
-
-int fibonacci(int n) {
-    if (n <= 1) return n;
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-int main() {
-    int n;
-    printf("Enter number of terms: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", fibonacci(i));
-    }
-    return 0;
-}`,
-      sql: `WITH RECURSIVE fibonacci(n, fib_n, next_fib_n) AS (
-    SELECT 1, 0, 1
-    UNION ALL
-    SELECT n+1, next_fib_n, fib_n + next_fib_n
-    FROM fibonacci WHERE n < 10
-)
-SELECT fib_n FROM fibonacci;`
-    }
   },
   {
-    title: "Two Sum",
-    description: "Find two numbers that add up to a target",
+    title: "Binary Search",
+    description: "Implement binary search algorithm",
     difficulty: "Medium",
-    code: {
-      python: `def two_sum(nums, target):
-    for i in range(len(nums)):
-        for j in range(i+1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-    return []
-
-nums = [2, 7, 11, 15]
-target = 9
-result = two_sum(nums, target)
-print(f"Indices: {result}")`,
-      javascript: `function twoSum(nums, target) {
-    for (let i = 0; i < nums.length; i++) {
-        for (let j = i + 1; j < nums.length; j++) {
-            if (nums[i] + nums[j] === target) {
-                return [i, j];
-            }
-        }
-    }
-    return [];
-}
-
-const nums = [2, 7, 11, 15];
-const target = 9;
-const result = twoSum(nums, target);
-console.log("Indices:", result);`,
-      java: `import java.util.Arrays;
-
-public class Main {
-    public static int[] twoSum(int[] nums, int target) {
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] + nums[j] == target) {
-                    return new int[]{i, j};
-                }
-            }
-        }
-        return new int[]{};
-    }
-    
-    public static void main(String[] args) {
-        int[] nums = {2, 7, 11, 15};
-        int target = 9;
-        int[] result = twoSum(nums, target);
-        System.out.println("Indices: " + Arrays.toString(result));
-    }
-}`,
-      cpp: `#include <iostream>
-#include <vector>
-using namespace std;
-
-vector<int> twoSum(vector<int>& nums, int target) {
-    for (int i = 0; i < nums.size(); i++) {
-        for (int j = i + 1; j < nums.size(); j++) {
-            if (nums[i] + nums[j] == target) {
-                return {i, j};
-            }
-        }
-    }
-    return {};
-}
-
-int main() {
-    vector<int> nums = {2, 7, 11, 15};
-    int target = 9;
-    vector<int> result = twoSum(nums, target);
-    cout << "Indices: [" << result[0] << ", " << result[1] << "]" << endl;
-    return 0;
-}`,
-      c: `#include <stdio.h>
-
-int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
-    static int result[2];
-    *returnSize = 2;
-    for (int i = 0; i < numsSize; i++) {
-        for (int j = i + 1; j < numsSize; j++) {
-            if (nums[i] + nums[j] == target) {
-                result[0] = i;
-                result[1] = j;
-                return result;
-            }
-        }
-    }
-    *returnSize = 0;
-    return NULL;
-}
-
-int main() {
-    int nums[] = {2, 7, 11, 15};
-    int target = 9;
-    int returnSize;
-    int* result = twoSum(nums, 4, target, &returnSize);
-    if (returnSize > 0) {
-        printf("Indices: [%d, %d]\\n", result[0], result[1]);
-    }
-    return 0;
-}`,
-      sql: `WITH numbers AS (
-    SELECT 0 as idx, 2 as val
-    UNION ALL SELECT 1, 7
-    UNION ALL SELECT 2, 11
-    UNION ALL SELECT 3, 15
-)
-SELECT n1.idx, n2.idx
-FROM numbers n1, numbers n2
-WHERE n1.idx < n2.idx AND n1.val + n2.val = 9;`
-    }
   },
 ]
 
@@ -880,51 +447,20 @@ export default function CompilerPage() {
   }
 
   const handleRunCode = async () => {
-    if (!code.trim()) {
-      setStatus("error")
-      setOutput("Error: Please write some code before running")
-      return
-    }
-
     setIsRunning(true)
     setStatus("idle")
-    setOutput("Compiling and running code...")
+    setOutput("Running code...")
 
-    try {
-      const response = await fetch('/api/compile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          language: selectedLanguage,
-          code: code,
-          input: input
-        })
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        setOutput(result.output || "Code executed successfully!")
-        setExecutionTime(result.executionTime || 0)
-        setMemoryUsage(result.memoryUsage || 0)
+    // Simulate code execution
+    setTimeout(() => {
+      if (currentLanguage) {
+        setOutput(currentLanguage.sampleOutput)
+        setExecutionTime(Math.random() * 500 + 100)
+        setMemoryUsage(Math.random() * 30 + 10)
         setStatus("success")
-      } else {
-        setOutput(result.error || "Execution failed")
-        setStatus("error")
-        setExecutionTime(null)
-        setMemoryUsage(null)
       }
-    } catch (error) {
-      console.error('Execution error:', error)
-      setOutput(`Error: ${error instanceof Error ? error.message : 'Failed to execute code'}`)
-      setStatus("error")
-      setExecutionTime(null)
-      setMemoryUsage(null)
-    } finally {
       setIsRunning(false)
-    }
+    }, 2000)
   }
 
   const handleCopyCode = () => {
@@ -941,11 +477,7 @@ export default function CompilerPage() {
   }
 
   const handleLoadSample = (problem: (typeof sampleProblems)[0]) => {
-    const problemCode = problem.code[selectedLanguage as keyof typeof problem.code] || currentLanguage?.example || ""
-    setCode(problemCode)
-    setInput("")
-    setOutput("")
-    setStatus("idle")
+    setCode(`// ${problem.title}\n// ${problem.description}\n\n${currentLanguage?.example || ""}`)
   }
 
   useEffect(() => {
