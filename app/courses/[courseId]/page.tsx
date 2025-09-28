@@ -21,291 +21,16 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-// Comprehensive course data with detailed tutorials
+// This would typically come from a database or API
 const courseData = {
-  python: {
-    title: "Python Programming",
-    description: "Master Python from basics to advanced with real-world projects and MNC interview questions",
-    level: "Beginner to Advanced",
-    duration: "10 weeks",
-    students: "8.5k",
-    rating: 4.9,
-    progress: 0,
-    instructor: "Dr. Alex Rodriguez",
-    instructorBio: "Senior Python Developer at Google, 10+ years experience",
-    modules: [
-      {
-        id: 1,
-        title: "Python Fundamentals",
-        description: "Learn Python basics, syntax, and data types",
-        lessons: 15,
-        problems: 45,
-        duration: "2 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Variables and Data Types",
-            problems: [
-              {
-                id: "python-hello-world",
-                title: "Hello World Program",
-                difficulty: "Easy",
-                companies: ["Any Tech Company"],
-                description: "Write your first Python program",
-                completed: false,
-              },
-              {
-                id: "python-variables",
-                title: "Variable Operations",
-                difficulty: "Easy",
-                companies: ["Microsoft", "Amazon"],
-                description: "Practice with different variable types",
-                completed: false,
-              },
-            ],
-          },
-          {
-            title: "Control Structures",
-            problems: [
-              {
-                id: "python-loops",
-                title: "For and While Loops",
-                difficulty: "Easy",
-                companies: ["Google", "Facebook"],
-                description: "Master loop constructs in Python",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "Object-Oriented Programming",
-        description: "Learn classes, objects, inheritance, and polymorphism",
-        lessons: 12,
-        problems: 35,
-        duration: "2 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Classes and Objects",
-            problems: [
-              {
-                id: "python-classes",
-                title: "Create a Bank Account Class",
-                difficulty: "Medium",
-                companies: ["JPMorgan", "Goldman Sachs"],
-                description: "Implement a complete bank account system",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  java: {
-    title: "Java Programming",
-    description: "Complete Java development with Spring Boot, enterprise patterns, and interview prep",
-    level: "Beginner to Advanced",
-    duration: "12 weeks",
-    students: "9.2k",
-    rating: 4.8,
-    progress: 0,
-    instructor: "Sarah Johnson",
-    instructorBio: "Senior Java Architect at Oracle, Spring Framework expert",
-    modules: [
-      {
-        id: 1,
-        title: "Java Fundamentals",
-        description: "Master Java basics, OOP concepts, and core libraries",
-        lessons: 18,
-        problems: 55,
-        duration: "3 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Basic Syntax and OOP",
-            problems: [
-              {
-                id: "java-hello-world",
-                title: "Hello World in Java",
-                difficulty: "Easy",
-                companies: ["Any Tech Company"],
-                description: "Write your first Java program",
-                completed: false,
-              },
-              {
-                id: "java-oop",
-                title: "Object-Oriented Design",
-                difficulty: "Medium",
-                companies: ["Oracle", "Amazon"],
-                description: "Implement OOP concepts in Java",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  javascript: {
-    title: "JavaScript Mastery",
-    description: "Modern JavaScript ES6+, DOM manipulation, async programming, and frameworks",
-    level: "Beginner to Advanced",
-    duration: "8 weeks",
-    students: "12.1k",
-    rating: 4.7,
-    progress: 0,
-    instructor: "Mike Chen",
-    instructorBio: "Full-stack developer at Netflix, JavaScript expert",
-    modules: [
-      {
-        id: 1,
-        title: "JavaScript Basics",
-        description: "Learn JavaScript fundamentals and ES6+ features",
-        lessons: 12,
-        problems: 40,
-        duration: "2 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Variables and Functions",
-            problems: [
-              {
-                id: "js-hello-world",
-                title: "Hello World in JavaScript",
-                difficulty: "Easy",
-                companies: ["Any Web Company"],
-                description: "Write your first JavaScript program",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  c: {
-    title: "C Programming",
-    description: "Master the fundamentals with C programming, memory management, and system programming",
-    level: "Beginner to Intermediate",
-    duration: "8 weeks",
-    students: "6.2k",
-    rating: 4.6,
-    progress: 0,
-    instructor: "Dr. Robert Kim",
-    instructorBio: "Systems programmer at Intel, C expert for 15+ years",
-    modules: [
-      {
-        id: 1,
-        title: "C Fundamentals",
-        description: "Learn C syntax, pointers, and memory management",
-        lessons: 14,
-        problems: 42,
-        duration: "2 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Basic Syntax and Pointers",
-            problems: [
-              {
-                id: "c-hello-world",
-                title: "Hello World in C",
-                difficulty: "Easy",
-                companies: ["Intel", "NVIDIA"],
-                description: "Write your first C program",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  cpp: {
-    title: "C++ Programming",
-    description: "Advanced C++ with OOP, STL, templates, and competitive programming techniques",
-    level: "Intermediate to Advanced",
-    duration: "10 weeks",
-    students: "5.8k",
-    rating: 4.7,
-    progress: 0,
-    instructor: "Dr. Lisa Wang",
-    instructorBio: "C++ expert at Microsoft, competitive programming champion",
-    modules: [
-      {
-        id: 1,
-        title: "C++ Fundamentals",
-        description: "Learn C++ basics, OOP, and STL",
-        lessons: 16,
-        problems: 48,
-        duration: "3 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "OOP and STL",
-            problems: [
-              {
-                id: "cpp-hello-world",
-                title: "Hello World in C++",
-                difficulty: "Easy",
-                companies: ["Microsoft", "Google"],
-                description: "Write your first C++ program",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  sql: {
-    title: "SQL & Database Design",
-    description: "Master SQL queries, database design, optimization, and advanced database concepts",
-    level: "Beginner to Advanced",
-    duration: "7 weeks",
-    students: "8.9k",
-    rating: 4.8,
-    progress: 0,
-    instructor: "David Martinez",
-    instructorBio: "Database architect at Oracle, SQL expert for 12+ years",
-    modules: [
-      {
-        id: 1,
-        title: "SQL Fundamentals",
-        description: "Learn SQL basics, queries, and database operations",
-        lessons: 10,
-        problems: 35,
-        duration: "2 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Basic Queries",
-            problems: [
-              {
-                id: "sql-select",
-                title: "Basic SELECT Queries",
-                difficulty: "Easy",
-                companies: ["Oracle", "Microsoft"],
-                description: "Master basic SQL SELECT operations",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
   dsa: {
     title: "Data Structures & Algorithms",
-    description: "Master DSA with 300+ problems from Google, Microsoft, Amazon interviews",
+    description: "Master DSA with 200+ problems from Google, Microsoft, Amazon interviews",
     level: "Beginner to Advanced",
-    duration: "14 weeks",
-    students: "11.2k",
-    rating: 4.9,
-    progress: 0,
+    duration: "12 weeks",
+    students: "5.2k",
+    rating: 4.8,
+    progress: 15,
     instructor: "Dr. Sarah Chen",
     instructorBio: "Former Google SWE, PhD in Computer Science",
     modules: [
@@ -316,7 +41,7 @@ const courseData = {
         lessons: 12,
         problems: 35,
         duration: "2 weeks",
-        completed: false,
+        completed: true,
         topics: [
           {
             title: "Two Pointer Technique",
@@ -327,7 +52,7 @@ const courseData = {
                 difficulty: "Easy",
                 companies: ["Google", "Amazon", "Microsoft"],
                 description: "Find two numbers in array that add up to target",
-                completed: false,
+                completed: true,
               },
               {
                 id: "three-sum",
@@ -335,7 +60,7 @@ const courseData = {
                 difficulty: "Medium",
                 companies: ["Facebook", "Apple"],
                 description: "Find all unique triplets that sum to zero",
-                completed: false,
+                completed: true,
               },
               {
                 id: "container-water",
