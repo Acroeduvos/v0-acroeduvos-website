@@ -45,7 +45,7 @@ export function CompilerPreview() {
             Code in <span className="text-primary">Any Language</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Practice with our integrated compiler supporting 15+ programming languages
+            Practice with our integrated compiler supporting 10+ programming languages
           </p>
         </div>
 
