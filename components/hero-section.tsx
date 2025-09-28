@@ -16,6 +16,10 @@ export function HeroSection() {
                 src="/logo.png"
                 alt="Acroeduvos Logo"
                 className="w-full h-full object-contain p-2"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/placeholder-logo.png';
+                }}
               />
             </div>
             <div className="text-2xl font-bold text-white/90 tracking-wider">ACROEDUVOS</div>
