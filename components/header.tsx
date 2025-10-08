@@ -18,12 +18,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <img 
-            src="/logo.png" 
-            alt="AcroEduvos Logo" 
-            className="h-8 w-8 rounded-lg"
-          />
-          <span className="text-2xl font-bold">AcroEduvos</span>
+          <Code2 className="h-8 w-8 text-primary" />
+          <span className="text-2xl font-bold">Acroeduvos</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -81,18 +77,18 @@ export function Header() {
                         </p>
                       </Link>
                     </NavigationMenuLink>
-        </div>
-        </div>
+                  </div>
+                </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href="/problems"
+                  href="/practice"
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
-                  Problems
-          </Link>
+                  Practice
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -102,7 +98,7 @@ export function Header() {
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
                   Compiler
-          </Link>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -112,7 +108,7 @@ export function Header() {
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
                   Classroom
-          </Link>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -122,7 +118,7 @@ export function Header() {
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
                   Leaderboard
-          </Link>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -132,7 +128,7 @@ export function Header() {
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
                   Dashboard
-          </Link>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -142,7 +138,7 @@ export function Header() {
                   className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                 >
                   Resources
-          </Link>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -169,42 +165,42 @@ export function Header() {
                     Courses
                   </Button>
                 </Link>
-                <Link href="/problems">
+                <Link href="/practice">
                   <Button variant="ghost" className="justify-start w-full">
                     <Trophy className="mr-2 h-4 w-4" />
-                    Problems
+                    Practice
                   </Button>
                 </Link>
                 <Link href="/compiler">
                   <Button variant="ghost" className="justify-start w-full">
                     <Terminal className="mr-2 h-4 w-4" />
                     Compiler
-                </Button>
-              </Link>
+                  </Button>
+                </Link>
                 <Link href="/classroom">
                   <Button variant="ghost" className="justify-start w-full">
                     <Terminal className="mr-2 h-4 w-4" />
                     Classroom
-                </Button>
-              </Link>
+                  </Button>
+                </Link>
                 <Link href="/leaderboard">
                   <Button variant="ghost" className="justify-start w-full">
                     <Trophy className="mr-2 h-4 w-4" />
                     Leaderboard
-                </Button>
-              </Link>
+                  </Button>
+                </Link>
                 <Link href="/dashboard">
                   <Button variant="ghost" className="justify-start w-full">
                     <BarChart3 className="mr-2 h-4 w-4" />
                     Dashboard
-                </Button>
-              </Link>
+                  </Button>
+                </Link>
                 <Link href="/resources">
                   <Button variant="ghost" className="justify-start w-full">
                     <Users className="mr-2 h-4 w-4" />
                     Resources
                   </Button>
-              </Link>
+                </Link>
                 <div className="border-t pt-4 mt-4">
                   <Button variant="ghost" className="w-full justify-start mb-2">
                     Login

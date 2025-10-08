@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
 import { 
   BookOpen, 
   Clock, 
@@ -55,6 +56,10 @@ interface Course {
   }
   languages: string[]
   resources: string[]
+  problems: number
+  topics: string[]
+  companies: string[]
+  color: string
 }
 
 export default function CoursesPage() {
@@ -90,7 +95,11 @@ export default function CoursesPage() {
         averageRating: 4.9
       },
       languages: ['Python'],
-      resources: ['W3Schools', 'TutorialsPoint', 'Python.org']
+      resources: ['W3Schools', 'TutorialsPoint', 'Python.org'],
+      problems: 189,
+      topics: ['Syntax', 'OOP', 'Data Structures', 'Libraries', 'Web Scraping', 'APIs', 'Testing'],
+      companies: ['Google', 'Netflix', 'Instagram', 'Dropbox', 'Spotify'],
+      color: 'bg-yellow-500'
     },
     {
       id: 'java',
@@ -115,7 +124,11 @@ export default function CoursesPage() {
         averageRating: 4.9
       },
       languages: ['Java'],
-      resources: ['W3Schools', 'TutorialsPoint', 'Oracle Docs']
+      resources: ['W3Schools', 'TutorialsPoint', 'Oracle Docs'],
+      problems: 234,
+      topics: ['Core Java', 'OOP', 'Collections', 'Multithreading', 'JVM', 'Design Patterns', 'Spring'],
+      companies: ['Oracle', 'Amazon', 'LinkedIn', 'Uber', 'Goldman Sachs'],
+      color: 'bg-red-600'
     },
     {
       id: 'cpp',
@@ -140,7 +153,11 @@ export default function CoursesPage() {
         averageRating: 4.9
       },
       languages: ['C++'],
-      resources: ['W3Schools', 'TutorialsPoint', 'C++ Reference']
+      resources: ['W3Schools', 'TutorialsPoint', 'C++ Reference'],
+      problems: 201,
+      topics: ['OOP', 'STL', 'Templates', 'Memory Management', 'Multithreading', 'Design Patterns'],
+      companies: ['Google', 'Microsoft', 'Adobe', 'Bloomberg', 'Tesla'],
+      color: 'bg-blue-600'
     },
     {
       id: 'c',
@@ -165,7 +182,11 @@ export default function CoursesPage() {
         averageRating: 4.8
       },
       languages: ['C'],
-      resources: ['W3Schools', 'TutorialsPoint', 'C Reference']
+      resources: ['W3Schools', 'TutorialsPoint', 'C Reference'],
+      problems: 178,
+      topics: ['Syntax', 'Pointers', 'Memory Management', 'File I/O', 'Data Structures', 'Algorithms'],
+      companies: ['Intel', 'NVIDIA', 'Qualcomm', 'Embedded Systems', 'Linux'],
+      color: 'bg-gray-600'
     },
     {
       id: 'data-structures-and-algorithms',
@@ -190,7 +211,11 @@ export default function CoursesPage() {
         averageRating: 4.8
       },
       languages: ['Python', 'Java', 'C++'],
-      resources: ['LeetCode', 'CodeChef', 'HackerRank']
+      resources: ['LeetCode', 'CodeChef', 'HackerRank'],
+      problems: 347,
+      topics: ['Arrays', 'Linked Lists', 'Trees', 'Graphs', 'Dynamic Programming', 'Greedy', 'Backtracking'],
+      companies: ['Google', 'Microsoft', 'Amazon', 'Facebook', 'Apple'],
+      color: 'bg-red-500'
     },
     {
       id: 'system-design-mastery',
@@ -215,7 +240,11 @@ export default function CoursesPage() {
         averageRating: 4.9
       },
       languages: ['Python', 'Java', 'JavaScript'],
-      resources: ['System Design Interviews', 'AWS Docs']
+      resources: ['System Design Interviews', 'AWS Docs'],
+      problems: 98,
+      topics: ['Spring Core', 'REST APIs', 'JPA', 'Security', 'Microservices', 'Testing', 'Cloud'],
+      companies: ['JPMorgan', 'Wells Fargo', 'Accenture', 'TCS', 'Infosys'],
+      color: 'bg-green-500'
     }
   ]
 
@@ -348,6 +377,7 @@ export default function CoursesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map((course) => (
             <Card key={course.id} className="hover:shadow-lg transition-all duration-300 group">
+              <div className={`h-1 ${course.color}`} />
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -359,6 +389,10 @@ export default function CoursesPage() {
                           LIVE
                         </Badge>
                       )}
+                      <Badge variant="secondary" className="gap-1 text-xs">
+                        <Trophy className="h-3 w-3" />
+                        {course.problems}
+                      </Badge>
                     </div>
                     <CardTitle className="text-lg group-hover:text-primary transition-colors">
                       {course.title}
@@ -405,30 +439,47 @@ export default function CoursesPage() {
                   </div>
                 )}
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1">
-                  {course.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                  {course.tags.length > 3 && (
-                    <Badge variant="secondary" className="text-xs">
-                      +{course.tags.length - 3}
-                    </Badge>
-                  )}
+                {/* Key Topics */}
+                <div className="space-y-2">
+                  <div className="text-xs font-medium">Key Topics</div>
+                  <div className="flex flex-wrap gap-1">
+                    {course.topics.slice(0, 3).map((topic, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs px-2 py-0">
+                        {topic}
+                      </Badge>
+                    ))}
+                    {course.topics.length > 3 && (
+                      <Badge variant="secondary" className="text-xs px-2 py-0">
+                        +{course.topics.length - 3}
+                      </Badge>
+                    )}
+                  </div>
                 </div>
 
-                {/* Languages and Resources */}
+                {/* Companies */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Code2 className="h-3 w-3" />
-                    <span>Languages: {course.languages.join(', ')}</span>
+                  <div className="text-xs font-medium">Companies</div>
+                  <div className="flex flex-wrap gap-1">
+                    {course.companies.slice(0, 2).map((company, index) => (
+                      <Badge key={index} variant="outline" className="text-xs px-2 py-0">
+                        {company}
+                      </Badge>
+                    ))}
+                    {course.companies.length > 2 && (
+                      <Badge variant="outline" className="text-xs px-2 py-0">
+                        +{course.companies.length - 2}
+                      </Badge>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <FileText className="h-3 w-3" />
-                    <span>Resources: {course.resources.join(', ')}</span>
+                </div>
+
+                {/* Progress */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs">
+                    <span>Progress</span>
+                    <span>{course.progress}%</span>
                   </div>
+                  <Progress value={course.progress} className="h-1.5" />
                 </div>
 
                 {/* Action Buttons */}
