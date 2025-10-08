@@ -1,0 +1,26 @@
+# AcroEduvos Dynamic DNS Configuration
+
+## DNS Records for acroeduvos.in
+
+### CNAME Records:
+Type: CNAME
+Name: @
+Value: acroeduvos-dynamic-final.loca.lt
+TTL: 300
+
+Type: CNAME
+Name: www
+Value: acroeduvos-dynamic-final.loca.lt
+TTL: 300
+
+## Live URL: https://acroeduvos-dynamic-final.loca.lt
+
+## Features Now Live:
+✅ Dynamic Real-Time Website
+✅ Visible Courses with Live Stats
+✅ Logo on Home Page
+✅ Real-Time Compiler
+✅ Live Problems, Leaderboard, Dashboard
+✅ Auto-Refresh Systems
+✅ Live User Activity
+✅ Dynamic Statistics

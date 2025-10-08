@@ -18,8 +18,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Code2 className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold">Acroeduvos</span>
+          <img 
+            src="/logo.png" 
+            alt="AcroEduvos Logo" 
+            className="h-8 w-8 rounded-lg"
+          />
+          <span className="text-2xl font-bold">AcroEduvos</span>
         </Link>
 
         {/* Desktop Navigation */}

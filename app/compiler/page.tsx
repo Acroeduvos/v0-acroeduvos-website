@@ -38,28 +38,85 @@ const languages = [
     label: "Python",
     version: "3.11",
     extension: ".py",
-    example: `# Python Example - Hello World
-def greet(name):
-    return f"Hello, {name}!"
+    icon: "🐍",
+    description: "Versatile programming language for web, data science, and AI",
+    example: `# Python Dynamic Compiler - Advanced Features
+import sys
+from datetime import datetime
+import json
 
-# Main execution
-if __name__ == "__main__":
-    name = input("Enter your name: ")
-    print(greet(name))
+def fibonacci(n):
+    """Generate Fibonacci sequence dynamically"""
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+def dynamic_calculator(operation, a, b):
+    """Dynamic calculator with multiple operations"""
+    operations = {
+        '+': lambda x, y: x + y,
+        '-': lambda x, y: x - y,
+        '*': lambda x, y: x * y,
+        '/': lambda x, y: x / y if y != 0 else "Cannot divide by zero",
+        '%': lambda x, y: x % y if y != 0 else "Cannot mod by zero"
+    }
+    return operations.get(operation, lambda x, y: "Invalid operation")(a, b)
+
+def main():
+    print("🐍 Python Dynamic Compiler")
+    print(f"Python Version: {sys.version.split()[0]}")
+    print(f"Current Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Example: Simple calculator
-    a = int(input("Enter first number: "))
-    b = int(input("Enter second number: "))
-    print(f"Sum: {a + b}")`,
-    sampleInput: `John
-5
+    # Dynamic user interaction
+    name = input("Enter your name: ")
+    print(f"Welcome, {name}!")
+    
+    # Dynamic calculations
+    try:
+        num = int(input("Enter a number for Fibonacci sequence: "))
+        fib_result = fibonacci(num)
+        print(f"Fibonacci({num}) = {fib_result}")
+        
+        # List comprehension with dynamic range
+        squares = [x**2 for x in range(1, min(num+1, 11))]
+        print(f"Squares: {squares}")
+        
+        # Dynamic calculator
+        a = float(input("Enter first number: "))
+        op = input("Enter operation (+, -, *, /, %): ")
+        b = float(input("Enter second number: "))
+        
+        result = dynamic_calculator(op, a, b)
+        print(f"{a} {op} {b} = {result}")
+        
+    except ValueError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+if __name__ == "__main__":
+    main()`,
+    sampleInput: `Alice
+8
+10
+*
 3`,
-    sampleOutput: `Enter your name: John
-Hello, John!
-Enter first number: 5
+    sampleOutput: `🐍 Python Dynamic Compiler
+Python Version: 3.11.0
+Current Time: 2024-01-15 14:30:25
+Enter your name: Alice
+Welcome, Alice!
+Enter a number for Fibonacci sequence: 8
+Fibonacci(8) = 21
+Squares: [1, 4, 9, 16, 25, 36, 49, 64]
+Enter first number: 10
+Enter operation (+, -, *, /, %): *
 Enter second number: 3
-Sum: 8`,
-    inputPlaceholder: "Enter input values (one per line):\nJohn\n5\n3",
+10.0 * 3.0 = 30.0`,
+    inputPlaceholder: "Enter your name:\nEnter a number for Fibonacci:\nEnter first number:\nEnter operation (+, -, *, /, %):\nEnter second number:",
+    features: ["Dynamic Typing", "List Comprehensions", "Error Handling", "Real-time Execution"],
+    difficulty: "Beginner",
+    category: "General Purpose"
   },
   {
     value: "javascript",
