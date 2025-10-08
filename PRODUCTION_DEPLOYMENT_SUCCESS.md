@@ -58,7 +58,7 @@ All changes have been successfully deployed to production using Git, ngrok, and 
 
 1. **Local Access**: Visit `http://localhost:3000`
 2. **Public Access**: 
-   - Open `http://localhost:4040` in browser
+   - Open `http://loc alhost:4040` in browser
    - Copy the HTTPS URL from ngrok dashboard
    - Share the public URL with students
 

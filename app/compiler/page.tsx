@@ -682,51 +682,46 @@ export default function CompilerPage() {
     }
   }
 
-  const handleRunCode = async () => {
-    setIsRunning(true)
-    setStatus("idle")
-    setOutput("Running code...")
+    const handleRunCode = async () => {
+      setIsRunning(true)
+      setStatus("idle")
+      setOutput("Executing code in real-time...")
 
-    try {
-      // Try API first
-      const response = await fetch('/api/compile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          language: selectedLanguage,
-          code: code,
-          input: input,
-        }),
-      })
+      try {
+        // Use real execution API
+        const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            language: selectedLanguage,
+            code: code,
+            input: input,
+          }),
+        })
 
-      if (response.ok) {
-        const result = await response.json()
-        if (result.success) {
-          setOutput(result.output || 'No output')
-          setExecutionTime(result.executionTime || 0)
-          setMemoryUsage(result.memoryUsage || 0)
-          setStatus("success")
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success) {
+            setOutput(result.output || 'No output')
+            setExecutionTime(result.executionTime || 0)
+            setMemoryUsage(result.memoryUsage || 0)
+            setStatus("success")
+          } else {
+            setOutput(`Error: ${result.error}`)
+            setStatus("error")
+          }
         } else {
-          setOutput(`Error: ${result.error}`)
-          setStatus("error")
+          throw new Error('Real execution API not available')
         }
-      } else {
-        throw new Error('API not available')
+      } catch (error) {
+        setOutput(`Real-time execution failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+        setStatus("error")
+      } finally {
+        setIsRunning(false)
       }
-    } catch (error) {
-      // Fallback to client-side simulation
-      console.log('API not available, using client-side simulation')
-      const result = simulateCodeExecution(selectedLanguage, code, input)
-      setOutput(result.output)
-      setExecutionTime(result.executionTime)
-      setMemoryUsage(result.memoryUsage)
-      setStatus("success")
-    } finally {
-      setIsRunning(false)
     }
-  }
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code)
