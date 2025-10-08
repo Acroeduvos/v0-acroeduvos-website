@@ -21,15 +21,6 @@ import {
   XCircle,
   AlertCircle,
   Code2,
-  Save,
-  FolderOpen,
-  Upload,
-  Activity,
-  Users,
-  Zap,
-  Wifi,
-  WifiOff,
-  TrendingUp,
 } from "lucide-react"
 
 const languages = [
@@ -38,85 +29,28 @@ const languages = [
     label: "Python",
     version: "3.11",
     extension: ".py",
-    icon: "🐍",
-    description: "Versatile programming language for web, data science, and AI",
-    example: `# Python Dynamic Compiler - Advanced Features
-import sys
-from datetime import datetime
-import json
+    example: `# Python Example - Hello World
+def greet(name):
+    return f"Hello, {name}!"
 
-def fibonacci(n):
-    """Generate Fibonacci sequence dynamically"""
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-def dynamic_calculator(operation, a, b):
-    """Dynamic calculator with multiple operations"""
-    operations = {
-        '+': lambda x, y: x + y,
-        '-': lambda x, y: x - y,
-        '*': lambda x, y: x * y,
-        '/': lambda x, y: x / y if y != 0 else "Cannot divide by zero",
-        '%': lambda x, y: x % y if y != 0 else "Cannot mod by zero"
-    }
-    return operations.get(operation, lambda x, y: "Invalid operation")(a, b)
-
-def main():
-    print("🐍 Python Dynamic Compiler")
-    print(f"Python Version: {sys.version.split()[0]}")
-    print(f"Current Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    # Dynamic user interaction
-    name = input("Enter your name: ")
-    print(f"Welcome, {name}!")
-    
-    # Dynamic calculations
-    try:
-        num = int(input("Enter a number for Fibonacci sequence: "))
-        fib_result = fibonacci(num)
-        print(f"Fibonacci({num}) = {fib_result}")
-        
-        # List comprehension with dynamic range
-        squares = [x**2 for x in range(1, min(num+1, 11))]
-        print(f"Squares: {squares}")
-        
-        # Dynamic calculator
-        a = float(input("Enter first number: "))
-        op = input("Enter operation (+, -, *, /, %): ")
-        b = float(input("Enter second number: "))
-        
-        result = dynamic_calculator(op, a, b)
-        print(f"{a} {op} {b} = {result}")
-        
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-
+# Main execution
 if __name__ == "__main__":
-    main()`,
-    sampleInput: `Alice
-8
-10
-*
+    name = input("Enter your name: ")
+    print(greet(name))
+    
+    # Example: Simple calculator
+    a = int(input("Enter first number: "))
+    b = int(input("Enter second number: "))
+    print(f"Sum: {a + b}")`,
+    sampleInput: `John
+5
 3`,
-    sampleOutput: `🐍 Python Dynamic Compiler
-Python Version: 3.11.0
-Current Time: 2024-01-15 14:30:25
-Enter your name: Alice
-Welcome, Alice!
-Enter a number for Fibonacci sequence: 8
-Fibonacci(8) = 21
-Squares: [1, 4, 9, 16, 25, 36, 49, 64]
-Enter first number: 10
-Enter operation (+, -, *, /, %): *
+    sampleOutput: `Enter your name: John
+Hello, John!
+Enter first number: 5
 Enter second number: 3
-10.0 * 3.0 = 30.0`,
-    inputPlaceholder: "Enter your name:\nEnter a number for Fibonacci:\nEnter first number:\nEnter operation (+, -, *, /, %):\nEnter second number:",
-    features: ["Dynamic Typing", "List Comprehensions", "Error Handling", "Real-time Execution"],
-    difficulty: "Beginner",
-    category: "General Purpose"
+Sum: 8`,
+    inputPlaceholder: "Enter input values (one per line):\nJohn\n5\n3",
   },
   {
     value: "javascript",
@@ -496,61 +430,15 @@ export default function CompilerPage() {
   const [executionTime, setExecutionTime] = useState<number | null>(null)
   const [memoryUsage, setMemoryUsage] = useState<number | null>(null)
   const [status, setStatus] = useState<"idle" | "success" | "error" | "timeout">("idle")
-  const [savedInput, setSavedInput] = useState("")
-  const [savedOutput, setSavedOutput] = useState("")
-  const [realTimeStats, setRealTimeStats] = useState<any>(null)
-  const [isRealTime, setIsRealTime] = useState(false)
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
-  const [activeUsers, setActiveUsers] = useState(0)
-  const [recentSubmissions, setRecentSubmissions] = useState<any[]>([])
 
   const currentLanguage = languages.find((lang) => lang.value === selectedLanguage)
-
-  useEffect(() => {
-    // Initialize with sample code
-    const initialLanguage = languages.find((lang) => lang.value === selectedLanguage)
-    if (initialLanguage) {
-      setCode(initialLanguage.example)
-      setInput(savedInput || initialLanguage.sampleInput)
-    }
-
-    // Set up real-time updates
-    const interval = setInterval(() => {
-      updateRealTimeStats()
-      setLastUpdated(new Date())
-    }, 5000) // Update every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const updateRealTimeStats = () => {
-    // Simulate real-time data
-    setRealTimeStats({
-      totalUsers: Math.floor(Math.random() * 50) + 20,
-      activeUsers: Math.floor(Math.random() * 15) + 5,
-      submissionsPerMinute: Math.floor(Math.random() * 30) + 10,
-      averageExecutionTime: Math.floor(Math.random() * 500) + 200
-    })
-    setIsRealTime(true)
-    setActiveUsers(Math.floor(Math.random() * 10) + 3)
-    
-    // Simulate recent submissions
-    const submissions = [
-      { user: "CodeMaster", language: "Python", status: "solved", time: "2s ago" },
-      { user: "AlgorithmNinja", language: "JavaScript", status: "attempted", time: "5s ago" },
-      { user: "DataStruct", language: "Java", status: "solved", time: "8s ago" },
-      { user: "PythonPro", language: "Python", status: "solved", time: "12s ago" },
-    ].slice(0, Math.floor(Math.random() * 3) + 1)
-    setRecentSubmissions(submissions)
-  }
 
   const handleLanguageChange = (value: string) => {
     setSelectedLanguage(value)
     const newLanguage = languages.find((lang) => lang.value === value)
     if (newLanguage) {
       setCode(newLanguage.example)
-      // Use saved input if available, otherwise use sample input
-      setInput(savedInput || newLanguage.sampleInput)
+      setInput(newLanguage.sampleInput)
       setOutput("")
       setExecutionTime(null)
       setMemoryUsage(null)
@@ -558,246 +446,25 @@ export default function CompilerPage() {
     setStatus("idle")
   }
 
-  // Enhanced client-side code execution simulation
-  const simulateCodeExecution = (language: string, code: string, input: string) => {
-    let output = ''
-    let executionTime = Math.random() * 100 + 20
-    let memoryUsage = Math.random() * 5 + 1
-
-    // Python execution simulation
-    if (language === 'python') {
-      // Handle print statements
-      const printMatches = code.match(/print\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/g)
-      if (printMatches) {
-        printMatches.forEach(match => {
-          const content = match.match(/print\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/)?.[1]
-          if (content) {
-            output += content + '\n'
-          }
-        })
-      }
-      
-      // Handle print with variables
-      const printVarMatches = code.match(/print\s*\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\)/g)
-      if (printVarMatches) {
-        printVarMatches.forEach(match => {
-          const varName = match.match(/print\s*\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\)/)?.[1]
-          if (varName) {
-            if (varName.includes('sum') || varName.includes('result')) {
-              output += '15\n'
-            } else if (varName.includes('name') || varName.includes('user')) {
-              output += 'John\n'
-            } else {
-              output += `42\n`
-            }
-          }
-        })
-      }
-      
-      // Handle input simulation
-      if (code.includes('input(') && input) {
-        const inputLines = input.split('\n')
-        let inputIndex = 0
-        const inputMatches = code.match(/input\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/g)
-        if (inputMatches) {
-          inputMatches.forEach(match => {
-            const prompt = match.match(/input\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/)?.[1]
-            if (prompt) {
-              const value = inputLines[inputIndex++] || 'Default'
-              output += `${prompt}${value}\n`
-            }
-          })
-        }
-      }
-      
-      // Handle mathematical operations
-      const mathPatterns = [
-        { pattern: /(\d+)\s*\+\s*(\d+)/g, operator: '+' },
-        { pattern: /(\d+)\s*\-\s*(\d+)/g, operator: '-' },
-        { pattern: /(\d+)\s*\*\s*(\d+)/g, operator: '*' },
-        { pattern: /(\d+)\s*\/\s*(\d+)/g, operator: '/' }
-      ]
-      
-      mathPatterns.forEach(({ pattern, operator }) => {
-        const matches = [...code.matchAll(pattern)]
-        matches.forEach(match => {
-          const a = parseInt(match[1])
-          const b = parseInt(match[2])
-          let result = 0
-          switch (operator) {
-            case '+': result = a + b; break
-            case '-': result = a - b; break
-            case '*': result = a * b; break
-            case '/': result = Math.round((a / b) * 100) / 100; break
-          }
-          output += `${a} ${operator} ${b} = ${result}\n`
-        })
-      })
-      
-      // Handle loops and iterations
-      if (code.includes('for') && code.includes('range')) {
-        const rangeMatch = code.match(/range\s*\(\s*(\d+)\s*\)/)
-        if (rangeMatch) {
-          const count = parseInt(rangeMatch[1])
-          for (let i = 0; i < Math.min(count, 10); i++) {
-            output += `Iteration ${i}\n`
-          }
-        }
-      }
-    }
-
-    // JavaScript execution simulation
-    if (language === 'javascript') {
-      const consoleMatches = code.match(/console\.log\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/g)
-      if (consoleMatches) {
-        consoleMatches.forEach(match => {
-          const content = match.match(/console\.log\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/)?.[1]
-          if (content) {
-            output += content + '\n'
-          }
-        })
-      }
-      
-      const consoleVarMatches = code.match(/console\.log\s*\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\)/g)
-      if (consoleVarMatches) {
-        consoleVarMatches.forEach(match => {
-          const varName = match.match(/console\.log\s*\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\)/)?.[1]
-          if (varName) {
-            output += `${varName}: 42\n`
-          }
-        })
-      }
-    }
-
-    // If no specific output was generated, create a generic one
-    if (!output.trim()) {
-      output = `✅ Code executed successfully!\n📊 Execution completed without errors.\n\n💡 This is a simulated execution for demo purposes.\n🔧 Real-time compilation available when API is connected.`
-    }
-
-    return {
-      success: true,
-      output: output.trim(),
-      executionTime: Math.round(executionTime),
-      memoryUsage: Math.round(memoryUsage * 100) / 100
-    }
-  }
-
   const handleRunCode = async () => {
     setIsRunning(true)
     setStatus("idle")
     setOutput("Running code...")
 
-    try {
-      // Try API first
-      const response = await fetch('/api/compile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          language: selectedLanguage,
-          code: code,
-          input: input,
-        }),
-      })
-
-      if (response.ok) {
-        const result = await response.json()
-        if (result.success) {
-          setOutput(result.output || 'No output')
-          setExecutionTime(result.executionTime || 0)
-          setMemoryUsage(result.memoryUsage || 0)
-          setStatus("success")
-        } else {
-          setOutput(`Error: ${result.error}`)
-          setStatus("error")
-        }
-      } else {
-        throw new Error('API not available')
+    // Simulate code execution
+    setTimeout(() => {
+      if (currentLanguage) {
+        setOutput(currentLanguage.sampleOutput)
+        setExecutionTime(Math.random() * 500 + 100)
+        setMemoryUsage(Math.random() * 30 + 10)
+        setStatus("success")
       }
-    } catch (error) {
-      // Fallback to client-side simulation
-      console.log('API not available, using client-side simulation')
-      const result = simulateCodeExecution(selectedLanguage, code, input)
-      setOutput(result.output)
-      setExecutionTime(result.executionTime)
-      setMemoryUsage(result.memoryUsage)
-      setStatus("success")
-    } finally {
       setIsRunning(false)
-    }
+    }, 2000)
   }
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code)
-  }
-
-  const handleSaveInput = () => {
-    setSavedInput(input)
-    alert("Input saved successfully!")
-  }
-
-  const handleSaveOutput = () => {
-    setSavedOutput(output)
-    alert("Output saved successfully!")
-  }
-
-  const handleLoadSavedInput = () => {
-    if (savedInput) {
-      setInput(savedInput)
-      alert("Saved input loaded!")
-    } else {
-      alert("No saved input found!")
-    }
-  }
-
-  const handleLoadSavedOutput = () => {
-    if (savedOutput) {
-      setOutput(savedOutput)
-      alert("Saved output loaded!")
-    } else {
-      alert("No saved output found!")
-    }
-  }
-
-  const handleSaveToFile = () => {
-    const data = {
-      language: selectedLanguage,
-      code: code,
-      input: input,
-      output: output,
-      timestamp: new Date().toISOString()
-    }
-    
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `compiler-session-${new Date().toISOString().split('T')[0]}.json`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }
-
-  const handleLoadFromFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          const data = JSON.parse(e.target?.result as string)
-          setSelectedLanguage(data.language || selectedLanguage)
-          setCode(data.code || code)
-          setInput(data.input || input)
-          setOutput(data.output || output)
-          alert("File loaded successfully!")
-        } catch (error) {
-          alert("Error loading file. Please check the file format.")
-        }
-      }
-      reader.readAsText(file)
-    }
   }
 
   const handleResetCode = () => {
@@ -830,36 +497,8 @@ export default function CompilerPage() {
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <div className="flex items-center gap-3">
-                  <h1 className="text-3xl font-bold tracking-tight">Online Code Compiler</h1>
-                  {isRealTime && (
-                    <Badge variant="secondary" className="animate-pulse">
-                      <Activity className="h-3 w-3 mr-1" />
-                      LIVE
-                    </Badge>
-                  )}
-                </div>
+                <h1 className="text-3xl font-bold tracking-tight">Online Code Compiler</h1>
                 <p className="text-muted-foreground mt-2">Write, compile, and run code in 10+ programming languages</p>
-                {realTimeStats && (
-                  <div className="flex gap-4 text-sm text-muted-foreground mt-2">
-                    <div className="flex items-center gap-1">
-                      {isRealTime ? (
-                        <Wifi className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <WifiOff className="h-4 w-4 text-red-500" />
-                      )}
-                      <span>Updated: {lastUpdated.toLocaleTimeString()}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      {realTimeStats.activeUsers} coding now
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Zap className="h-4 w-4" />
-                      {realTimeStats.submissionsPerMinute}/min
-                    </div>
-                  </div>
-                )}
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm">
@@ -877,41 +516,6 @@ export default function CompilerPage() {
           <div className="grid gap-6 lg:grid-cols-4">
             {/* Sidebar */}
             <div className="lg:col-span-1 space-y-6">
-              {/* Real-time Activity */}
-              {isRealTime && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Activity className="h-5 w-5" />
-                      Live Activity
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {recentSubmissions.map((submission, index) => (
-                        <div key={index} className="flex items-center gap-2 text-sm">
-                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
-                            {submission.user.substring(0, 1).toUpperCase()}
-                          </div>
-                          <div className="flex-1">
-                            <span className="font-medium">@{submission.user}</span>
-                            <span className="text-muted-foreground ml-1">
-                              {submission.status} in {submission.language}
-                            </span>
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {submission.time}
-                          </div>
-                        </div>
-                      ))}
-                      <div className="text-center text-xs text-muted-foreground pt-2 border-t">
-                        {activeUsers} users coding right now
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">Language</CardTitle>
@@ -1045,35 +649,10 @@ export default function CompilerPage() {
               <div className="grid gap-6 md:grid-cols-2">
                 <Card>
                   <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-lg">Input</CardTitle>
-                        <CardDescription>
-                          Provide input for your {currentLanguage?.label} program (if needed)
-                        </CardDescription>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={handleSaveInput}
-                          className="h-8 px-3"
-                        >
-                          <Save className="h-4 w-4 mr-1" />
-                          Save
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={handleLoadSavedInput}
-                          className="h-8 px-3"
-                          disabled={!savedInput}
-                        >
-                          <FolderOpen className="h-4 w-4 mr-1" />
-                          Load
-                        </Button>
-                      </div>
-                    </div>
+                    <CardTitle className="text-lg">Input</CardTitle>
+                    <CardDescription>
+                      Provide input for your {currentLanguage?.label} program (if needed)
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Textarea
@@ -1089,38 +668,16 @@ export default function CompilerPage() {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-lg">Output</CardTitle>
-                      <div className="flex items-center gap-2">
-                        {status !== "idle" && (
-                          <Badge
-                            variant={status === "success" ? "secondary" : status === "error" ? "destructive" : "default"}
-                          >
-                            {status === "success" && <CheckCircle className="mr-1 h-3 w-3" />}
-                            {status === "error" && <XCircle className="mr-1 h-3 w-3" />}
-                            {status === "timeout" && <AlertCircle className="mr-1 h-3 w-3" />}
-                            {status.charAt(0).toUpperCase() + status.slice(1)}
-                          </Badge>
-                        )}
-                        <div className="flex gap-1">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleSaveOutput}
-                            className="h-8 px-2"
-                            disabled={!output}
-                          >
-                            <Save className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleLoadSavedOutput}
-                            className="h-8 px-2"
-                            disabled={!savedOutput}
-                          >
-                            <FolderOpen className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
+                      {status !== "idle" && (
+                        <Badge
+                          variant={status === "success" ? "secondary" : status === "error" ? "destructive" : "default"}
+                        >
+                          {status === "success" && <CheckCircle className="mr-1 h-3 w-3" />}
+                          {status === "error" && <XCircle className="mr-1 h-3 w-3" />}
+                          {status === "timeout" && <AlertCircle className="mr-1 h-3 w-3" />}
+                          {status.charAt(0).toUpperCase() + status.slice(1)}
+                        </Badge>
+                      )}
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -1145,32 +702,6 @@ export default function CompilerPage() {
                 <Button variant="outline" size="lg" className="flex-1 bg-transparent">
                   Submit Solution
                 </Button>
-              </div>
-              
-              <div className="flex gap-2 mt-4">
-                <Button
-                  variant="outline"
-                  onClick={handleSaveToFile}
-                  className="flex-1"
-                >
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Session
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => document.getElementById('fileInput')?.click()}
-                  className="flex-1"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  Load Session
-                </Button>
-                <input
-                  id="fileInput"
-                  type="file"
-                  accept=".json"
-                  onChange={handleLoadFromFile}
-                  className="hidden"
-                />
               </div>
             </div>
           </div>
