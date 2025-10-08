@@ -14,9 +14,9 @@ interface CompileResponse {
   memoryUsage?: number
 }
 
-// Judge0 API configuration
+// Judge0 API configuration with production API key
 const JUDGE0_API_URL = process.env.JUDGE0_API_URL || 'https://judge0-ce.p.rapidapi.com'
-const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || ''
+const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || 'YOUR_PRODUCTION_JUDGE0_API_KEY'
 
 // Language mappings for Judge0
 const languageMap: { [key: string]: number } = {
@@ -91,10 +91,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if we have Judge0 API key for real execution
-    if (!JUDGE0_API_KEY || JUDGE0_API_KEY === 'your_judge0_api_key_here') {
+    if (!JUDGE0_API_KEY || JUDGE0_API_KEY === 'YOUR_PRODUCTION_JUDGE0_API_KEY') {
       // Use enhanced simulation when no API key is configured
       const result = simulateExecution(language, code, input)
-      return NextResponse.json(result)
+      return NextResponse.json({
+        ...result,
+        isRealTime: false,
+        fallback: true,
+        message: "Using enhanced simulation - Configure JUDGE0_API_KEY for real execution"
+      })
     }
 
     // Prepare submission data for Judge0
@@ -135,7 +140,10 @@ export async function POST(request: NextRequest) {
         success: true,
         output: output + (stderr ? `\n\nWarnings/Errors:\n${stderr}` : ''),
         executionTime: result.time ? parseFloat(result.time) * 1000 : 0, // Convert to milliseconds
-        memoryUsage: result.memory ? parseFloat(result.memory) / 1024 : 0 // Convert to MB
+        memoryUsage: result.memory ? parseFloat(result.memory) / 1024 : 0, // Convert to MB
+        isRealTime: true,
+        apiVersion: 'judge0-v1.0',
+        status: 'executed_successfully'
       })
     } else if (result.status?.id === 6) {
       // Compilation Error
