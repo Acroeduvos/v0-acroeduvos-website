@@ -17,7 +17,12 @@ import {
   Star,
   CheckCircle,
   XCircle,
-  Circle
+  Circle,
+  Activity,
+  Zap,
+  Eye,
+  Wifi,
+  WifiOff
 } from "lucide-react"
 
 interface Problem {
@@ -31,6 +36,15 @@ interface Problem {
   memoryLimit: number
   acceptanceRate: number
   totalSubmissions: number
+  isLive: boolean
+  liveSubmissions: number
+  lastSubmission?: string
+  realTimeStats: {
+    activeUsers: number
+    submissionsPerMinute: number
+    averageSolveTime: number
+    successRate: number
+  }
 }
 
 const difficultyColors = {
@@ -46,9 +60,20 @@ export default function ProblemsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [difficultyFilter, setDifficultyFilter] = useState("all")
   const [categoryFilter, setCategoryFilter] = useState("all")
+  const [realTimeStats, setRealTimeStats] = useState<any>(null)
+  const [isRealTime, setIsRealTime] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
 
   useEffect(() => {
     fetchProblems()
+    
+    // Set up real-time updates
+    const interval = setInterval(() => {
+      fetchProblems()
+      setLastUpdated(new Date())
+    }, 10000) // Update every 10 seconds
+
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
@@ -60,8 +85,11 @@ export default function ProblemsPage() {
       const response = await fetch('/api/problems')
       const data = await response.json()
       setProblems(data.problems || [])
+      setRealTimeStats(data.realTimeStats || null)
+      setIsRealTime(data.metadata?.isRealTime || false)
     } catch (error) {
       console.error('Error fetching problems:', error)
+      setIsRealTime(false)
     } finally {
       setLoading(false)
     }
@@ -119,12 +147,48 @@ export default function ProblemsPage() {
       <main className="container py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">
-            Problems
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Practice coding problems to improve your skills
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight mb-4">
+                Problems
+                {isRealTime && (
+                  <Badge variant="secondary" className="ml-3 animate-pulse">
+                    <Activity className="h-3 w-3 mr-1" />
+                    LIVE
+                  </Badge>
+                )}
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Practice coding problems to improve your skills
+              </p>
+            </div>
+            {realTimeStats && (
+              <div className="text-right">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                  {isRealTime ? (
+                    <Wifi className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <WifiOff className="h-4 w-4 text-red-500" />
+                  )}
+                  <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
+                </div>
+                <div className="flex gap-4 text-sm">
+                  <div className="flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    {realTimeStats.totalActiveUsers} active
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Zap className="h-4 w-4" />
+                    {realTimeStats.totalSubmissionsPerMinute}/min
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <TrendingUp className="h-4 w-4" />
+                    {realTimeStats.overallSuccessRate}% success
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Filters */}
@@ -221,7 +285,25 @@ export default function ProblemsPage() {
                         <Users className="h-4 w-4" />
                         {problem.totalSubmissions.toLocaleString()} submissions
                       </div>
+                      {problem.isLive && (
+                        <>
+                          <div className="flex items-center gap-1 text-green-600">
+                            <Activity className="h-4 w-4" />
+                            {problem.realTimeStats.activeUsers} solving now
+                          </div>
+                          <div className="flex items-center gap-1 text-blue-600">
+                            <Zap className="h-4 w-4" />
+                            {problem.realTimeStats.submissionsPerMinute}/min
+                          </div>
+                        </>
+                      )}
                     </div>
+                    
+                    {problem.isLive && problem.lastSubmission && (
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        Last submission: {new Date(problem.lastSubmission).toLocaleTimeString()}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2 ml-4">

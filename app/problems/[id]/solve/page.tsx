@@ -9,13 +9,13 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { 
-  Play, 
+import {
+  Play,
   Copy, 
   RotateCcw, 
-  Clock, 
+  Clock,
   MemoryStick, 
-  CheckCircle, 
+  CheckCircle,
   XCircle, 
   AlertCircle,
   Code2,
@@ -54,7 +54,7 @@ const defaultCode = {
         pass`,
   java: `class Solution {
     public int[] twoSum(int[] nums, int target) {
-        // Your code here
+    // Your code here
         return new int[]{};
     }
 }`,
@@ -230,16 +230,16 @@ export default function SolveProblemPage() {
                     problem.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
                   }>
-                    {problem.difficulty}
-                  </Badge>
-                </div>
+              {problem.difficulty}
+            </Badge>
+          </div>
                 <div className="flex flex-wrap gap-2">
                   {problem.tags.map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-96">
@@ -264,7 +264,7 @@ export default function SolveProblemPage() {
                       <div className="bg-muted p-3 rounded-md">
                         <p className="text-sm font-medium mb-1">Input:</p>
                         <code className="text-sm">{example.input}</code>
-                      </div>
+                        </div>
                       <div className="bg-muted p-3 rounded-md">
                         <p className="text-sm font-medium mb-1">Output:</p>
                         <code className="text-sm">{example.output}</code>
@@ -273,9 +273,9 @@ export default function SolveProblemPage() {
                         <div className="bg-muted p-3 rounded-md">
                           <p className="text-sm font-medium mb-1">Explanation:</p>
                           <p className="text-sm">{example.explanation}</p>
-                        </div>
-                      )}
                     </div>
+                  )}
+                </div>
                   ))}
                 </div>
               </CardContent>
@@ -312,34 +312,34 @@ export default function SolveProblemPage() {
                     <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
                       <SelectTrigger className="w-40">
                         <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
+                  </SelectTrigger>
+                  <SelectContent>
                         {languages.map((lang) => (
                           <SelectItem key={lang.value} value={lang.value}>
                             {lang.label}
                           </SelectItem>
                         ))}
-                      </SelectContent>
-                    </Select>
+                  </SelectContent>
+                </Select>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       {getStatusIcon()}
                       <span>Ready to run</span>
-                    </div>
-                  </div>
+                </div>
+              </div>
                   <div className="flex items-center gap-2">
                     <Button size="sm" variant="outline" onClick={() => setCode(defaultCode[selectedLanguage as keyof typeof defaultCode] || "")}>
                       <RotateCcw className="h-4 w-4" />
-                    </Button>
+                </Button>
                     <Button size="sm" variant="outline">
                       <Copy className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
+                </Button>
+              </div>
+            </div>
               </CardHeader>
               <CardContent className="p-0">
-                <Textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
+              <Textarea
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
                   className="min-h-[400px] font-mono text-sm border-0 resize-none focus-visible:ring-0 bg-gray-900 text-green-400"
                   placeholder="Write your solution here..."
                 />
@@ -377,16 +377,16 @@ export default function SolveProblemPage() {
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {executionTime}ms
-                        </div>
+                </div>
                       )}
                       {memoryUsage && (
                         <div className="flex items-center gap-1">
                           <MemoryStick className="h-3 w-3" />
                           {memoryUsage}MB
-                        </div>
+                </div>
                       )}
-                    </div>
-                  </div>
+                </div>
+              </div>
                 </CardHeader>
                 <CardContent>
                   <ScrollArea className="h-36">
@@ -400,7 +400,7 @@ export default function SolveProblemPage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <Button 
+              <Button
                 onClick={handleRunCode} 
                 disabled={isRunning || !code.trim()}
                 className="flex items-center gap-2"
@@ -409,8 +409,8 @@ export default function SolveProblemPage() {
                 {isRunning ? "Running..." : "Run Code"}
               </Button>
               
-              <Button 
-                onClick={handleSubmit} 
+              <Button
+                onClick={handleSubmit}
                 disabled={isSubmitting || !code.trim()}
                 variant="default"
                 className="flex items-center gap-2"
@@ -422,7 +422,7 @@ export default function SolveProblemPage() {
 
             {/* Test Results */}
             {testResults.length > 0 && (
-              <Card>
+            <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TestTube className="h-5 w-5" />
@@ -444,15 +444,15 @@ export default function SolveProblemPage() {
                         <Badge variant={result.status === 'passed' ? 'default' : 'destructive'}>
                           {result.status === 'passed' ? 'Passed' : 'Failed'}
                         </Badge>
-                      </div>
+                  </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+              </CardContent>
+            </Card>
             )}
           </div>
         </div>
       </main>
-    </div>
+      </div>
   )
 }

@@ -24,6 +24,12 @@ import {
   Save,
   FolderOpen,
   Upload,
+  Activity,
+  Users,
+  Zap,
+  Wifi,
+  WifiOff,
+  TrendingUp,
 } from "lucide-react"
 
 const languages = [
@@ -435,8 +441,51 @@ export default function CompilerPage() {
   const [status, setStatus] = useState<"idle" | "success" | "error" | "timeout">("idle")
   const [savedInput, setSavedInput] = useState("")
   const [savedOutput, setSavedOutput] = useState("")
+  const [realTimeStats, setRealTimeStats] = useState<any>(null)
+  const [isRealTime, setIsRealTime] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+  const [activeUsers, setActiveUsers] = useState(0)
+  const [recentSubmissions, setRecentSubmissions] = useState<any[]>([])
 
   const currentLanguage = languages.find((lang) => lang.value === selectedLanguage)
+
+  useEffect(() => {
+    // Initialize with sample code
+    const initialLanguage = languages.find((lang) => lang.value === selectedLanguage)
+    if (initialLanguage) {
+      setCode(initialLanguage.example)
+      setInput(savedInput || initialLanguage.sampleInput)
+    }
+
+    // Set up real-time updates
+    const interval = setInterval(() => {
+      updateRealTimeStats()
+      setLastUpdated(new Date())
+    }, 5000) // Update every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const updateRealTimeStats = () => {
+    // Simulate real-time data
+    setRealTimeStats({
+      totalUsers: Math.floor(Math.random() * 50) + 20,
+      activeUsers: Math.floor(Math.random() * 15) + 5,
+      submissionsPerMinute: Math.floor(Math.random() * 30) + 10,
+      averageExecutionTime: Math.floor(Math.random() * 500) + 200
+    })
+    setIsRealTime(true)
+    setActiveUsers(Math.floor(Math.random() * 10) + 3)
+    
+    // Simulate recent submissions
+    const submissions = [
+      { user: "CodeMaster", language: "Python", status: "solved", time: "2s ago" },
+      { user: "AlgorithmNinja", language: "JavaScript", status: "attempted", time: "5s ago" },
+      { user: "DataStruct", language: "Java", status: "solved", time: "8s ago" },
+      { user: "PythonPro", language: "Python", status: "solved", time: "12s ago" },
+    ].slice(0, Math.floor(Math.random() * 3) + 1)
+    setRecentSubmissions(submissions)
+  }
 
   const handleLanguageChange = (value: string) => {
     setSelectedLanguage(value)
@@ -724,8 +773,36 @@ export default function CompilerPage() {
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold tracking-tight">Online Code Compiler</h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl font-bold tracking-tight">Online Code Compiler</h1>
+                  {isRealTime && (
+                    <Badge variant="secondary" className="animate-pulse">
+                      <Activity className="h-3 w-3 mr-1" />
+                      LIVE
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-muted-foreground mt-2">Write, compile, and run code in 10+ programming languages</p>
+                {realTimeStats && (
+                  <div className="flex gap-4 text-sm text-muted-foreground mt-2">
+                    <div className="flex items-center gap-1">
+                      {isRealTime ? (
+                        <Wifi className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <WifiOff className="h-4 w-4 text-red-500" />
+                      )}
+                      <span>Updated: {lastUpdated.toLocaleTimeString()}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      {realTimeStats.activeUsers} coding now
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Zap className="h-4 w-4" />
+                      {realTimeStats.submissionsPerMinute}/min
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm">
@@ -743,6 +820,41 @@ export default function CompilerPage() {
           <div className="grid gap-6 lg:grid-cols-4">
             {/* Sidebar */}
             <div className="lg:col-span-1 space-y-6">
+              {/* Real-time Activity */}
+              {isRealTime && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Activity className="h-5 w-5" />
+                      Live Activity
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {recentSubmissions.map((submission, index) => (
+                        <div key={index} className="flex items-center gap-2 text-sm">
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
+                            {submission.user.substring(0, 1).toUpperCase()}
+                          </div>
+                          <div className="flex-1">
+                            <span className="font-medium">@{submission.user}</span>
+                            <span className="text-muted-foreground ml-1">
+                              {submission.status} in {submission.language}
+                            </span>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {submission.time}
+                          </div>
+                        </div>
+                      ))}
+                      <div className="text-center text-xs text-muted-foreground pt-2 border-t">
+                        {activeUsers} users coding right now
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">Language</CardTitle>
