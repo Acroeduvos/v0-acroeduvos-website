@@ -6,8 +6,8 @@ import { Progress } from "@/components/ui/progress"
 import { BookOpen, Clock, Users, Star, Trophy } from "lucide-react"
 import Link from "next/link"
 
-const courses = [
-  {
+  const courses = [
+    {
     id: "python",
     title: "Python Programming",
     description: "Master Python from basics to advanced with real-world projects and MNC interview questions",
@@ -56,7 +56,7 @@ const courses = [
     level: "Intermediate",
     duration: "10 weeks",
     students: "7.8k",
-    rating: 4.8,
+      rating: 4.8,
     progress: 0,
     problems: 145,
     topics: ["Components", "Hooks", "State Management", "Router", "Testing", "Performance", "Next.js"],
@@ -67,7 +67,7 @@ const courses = [
     id: "nodejs",
     title: "Node.js Backend",
     description: "Server-side JavaScript with Express, databases, APIs, and microservices",
-    level: "Intermediate",
+      level: "Intermediate",
     duration: "9 weeks",
     students: "5.6k",
     rating: 4.6,
@@ -140,7 +140,7 @@ const courses = [
     level: "Intermediate to Advanced",
     duration: "10 weeks",
     students: "5.8k",
-    rating: 4.7,
+      rating: 4.7,
     progress: 0,
     problems: 201,
     topics: ["OOP", "STL", "Templates", "Memory Management", "Multithreading", "Design Patterns"],
@@ -151,7 +151,7 @@ const courses = [
     id: "html-css",
     title: "HTML & CSS Mastery",
     description: "Modern web design with HTML5, CSS3, responsive design, and animations",
-    level: "Beginner",
+      level: "Beginner",
     duration: "6 weeks",
     students: "15.3k",
     rating: 4.5,
@@ -168,7 +168,7 @@ const courses = [
     level: "Beginner to Advanced",
     duration: "7 weeks",
     students: "8.9k",
-    rating: 4.8,
+      rating: 4.8,
     progress: 0,
     problems: 167,
     topics: ["SQL Queries", "Joins", "Subqueries", "Indexing", "Stored Procedures", "Performance"],
@@ -193,7 +193,7 @@ const courses = [
     id: "mongodb",
     title: "MongoDB NoSQL",
     description: "NoSQL database design, aggregation pipelines, and modern application development",
-    level: "Intermediate",
+      level: "Intermediate",
     duration: "5 weeks",
     students: "3.8k",
     rating: 4.5,
@@ -219,12 +219,12 @@ const courses = [
   },
   {
     id: "ai-ml",
-    title: "AI & Machine Learning",
+      title: "AI & Machine Learning",
     description: "Complete AI/ML with Python, TensorFlow, deep learning, and real-world projects",
     level: "Intermediate to Advanced",
     duration: "12 weeks",
     students: "6.7k",
-    rating: 4.8,
+      rating: 4.8,
     progress: 0,
     problems: 134,
     topics: ["Python", "TensorFlow", "Neural Networks", "NLP", "Computer Vision", "Deep Learning"],
@@ -235,7 +235,7 @@ const courses = [
     id: "dbms",
     title: "Database Management Systems",
     description: "Complete DBMS concepts, normalization, transactions, and database theory",
-    level: "Intermediate",
+      level: "Intermediate",
     duration: "8 weeks",
     students: "4.9k",
     rating: 4.6,
@@ -318,7 +318,7 @@ export default function CoursesPage() {
                     <CardDescription className="text-sm leading-relaxed line-clamp-3">
                       {course.description}
                     </CardDescription>
-                  </div>
+        </div>
 
                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1">
@@ -332,7 +332,7 @@ export default function CoursesPage() {
                     <div className="flex items-center gap-1">
                       <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                       {course.rating}
-                    </div>
+                </div>
                   </div>
                 </CardHeader>
 
@@ -366,8 +366,8 @@ export default function CoursesPage() {
                           +{course.companies.length - 2}
                         </Badge>
                       )}
-                    </div>
-                  </div>
+                </div>
+              </div>
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs">
