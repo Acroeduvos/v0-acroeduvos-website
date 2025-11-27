@@ -4,75 +4,98 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Educational warm theme inspired by design references */
-  --background: oklch(0.98 0.02 85);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.65 0.15 45);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.92 0.05 85);
-  --secondary-foreground: oklch(0.25 0 0);
-  --muted: oklch(0.95 0.02 85);
-  --muted-foreground: oklch(0.55 0 0);
-  --accent: oklch(0.88 0.08 85);
-  --accent-foreground: oklch(0.25 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.9 0.02 85);
-  --input: oklch(0.9 0.02 85);
-  --ring: oklch(0.65 0.15 45);
-  --chart-1: oklch(0.65 0.15 45);
-  --chart-2: oklch(0.55 0.12 200);
-  --chart-3: oklch(0.45 0.1 280);
-  --chart-4: oklch(0.7 0.18 120);
-  --chart-5: oklch(0.6 0.14 320);
+  /* Acroeduvos Brand - Purple & Orange Theme (Unique & Vibrant) */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  
+  /* Primary: Blue - Brand Color (matching live site) */
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Secondary: Purple Accent (matching live site) */
+  --secondary: 262 83% 58%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 25 100% 95%;
+  --accent-foreground: 25 95% 53%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 262 83% 58%;
+  
+  /* Chart colors - Multi-color palette (matching live site) */
+  --chart-1: 217 91% 60%;
+  --chart-2: 262 83% 58%;
+  --chart-3: 142 76% 36%;
+  --chart-4: 25 95% 53%;
+  --chart-5: 280 65% 60%;
+  
   --radius: 0.75rem;
-  --sidebar: oklch(0.98 0.02 85);
-  --sidebar-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.65 0.15 45);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.92 0.05 85);
-  --sidebar-accent-foreground: oklch(0.25 0 0);
-  --sidebar-border: oklch(0.9 0.02 85);
-  --sidebar-ring: oklch(0.65 0.15 45);
+  
+  /* Sidebar */
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 240 10% 3.9%;
+  --sidebar-primary: 262 83% 58%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 25 100% 95%;
+  --sidebar-accent-foreground: 25 95% 53%;
+  --sidebar-border: 240 5.9% 90%;
+  --sidebar-ring: 262 83% 58%;
 }
 
 .dark {
-  --background: oklch(0.08 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.12 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.7 0.15 280);
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.18 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.2 0 0);
-  --accent-foreground: oklch(0.95 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.18 0 0);
-  --input: oklch(0.18 0 0);
-  --ring: oklch(0.7 0.15 280);
-  --chart-1: oklch(0.7 0.15 280);
-  --chart-2: oklch(0.6 0.12 200);
-  --chart-3: oklch(0.5 0.1 120);
-  --chart-4: oklch(0.75 0.18 45);
-  --chart-5: oklch(0.65 0.14 320);
-  --sidebar: oklch(0.1 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.7 0.15 280);
-  --sidebar-primary-foreground: oklch(0.08 0 0);
-  --sidebar-accent: oklch(0.18 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.18 0 0);
-  --sidebar-ring: oklch(0.7 0.15 280);
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 7%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 7%;
+  --popover-foreground: 0 0% 98%;
+  
+  /* Primary: Bright Blue for dark mode */
+  --primary: 217 91% 65%;
+  --primary-foreground: 240 10% 3.9%;
+  
+  /* Secondary: Bright Purple for dark mode */
+  --secondary: 262 83% 65%;
+  --secondary-foreground: 0 0% 98%;
+  
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 25 80% 25%;
+  --accent-foreground: 25 95% 60%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 263 70% 65%;
+  
+  /* Chart colors for dark mode - Multi-color */
+  --chart-1: 217 91% 65%;
+  --chart-2: 262 83% 65%;
+  --chart-3: 142 76% 45%;
+  --chart-4: 25 95% 60%;
+  --chart-5: 280 65% 60%;
+  
+  /* Sidebar dark */
+  --sidebar: 240 10% 7%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 263 70% 65%;
+  --sidebar-primary-foreground: 240 10% 3.9%;
+  --sidebar-accent: 25 80% 25%;
+  --sidebar-accent-foreground: 25 95% 60%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 263 70% 65%;
 }
 
 @theme inline {
@@ -125,16 +148,66 @@
   }
 }
 
-/* Custom styles for code editor and educational content */
+/* Custom styles for Acroeduvos */
 .code-editor {
-  background: oklch(0.08 0 0);
+  background: hsl(240 10% 3.9%);
   border-radius: var(--radius);
 }
 
+/* Multi-color Gradient for Hero (matching live site) */
 .hero-gradient {
-  background: linear-gradient(135deg, oklch(0.88 0.08 85) 0%, oklch(0.92 0.05 85) 100%);
+  background: linear-gradient(135deg, 
+    hsl(217 91% 95%) 0%, 
+    hsl(262 83% 95%) 25%,
+    hsl(142 76% 95%) 50%,
+    hsl(25 95% 95%) 75%,
+    hsl(217 91% 95%) 100%);
 }
 
 .dark .hero-gradient {
-  background: linear-gradient(135deg, oklch(0.12 0 0) 0%, oklch(0.08 0 0) 100%);
+  background: linear-gradient(135deg, 
+    hsl(217 50% 15%) 0%, 
+    hsl(262 50% 15%) 25%,
+    hsl(142 40% 15%) 50%,
+    hsl(25 60% 15%) 75%,
+    hsl(217 50% 15%) 100%);
+}
+
+/* Animated gradient for special sections - Multi-color */
+.gradient-animate {
+  background: linear-gradient(
+    -45deg,
+    hsl(217 91% 60%),
+    hsl(262 83% 58%),
+    hsl(142 76% 36%),
+    hsl(25 95% 53%)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Live indicator pulse */
+.live-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }

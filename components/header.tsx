@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Code2, BookOpen, Trophy, Users, Menu, Terminal, BarChart3 } from "lucide-react"
+import { Code2, BookOpen, Trophy, Users, Menu, Terminal, BarChart3, HelpCircle } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
 
@@ -18,8 +18,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Code2 className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold">Acroeduvos</span>
+          <img src="/logo.png" alt="Acroeduvos Logo" className="h-10 w-10" />
+          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Acroeduvos</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -141,14 +141,28 @@ export function Header() {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/support"
+                  className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                >
+                  Support
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden md:inline-flex">
-            Login
-          </Button>
-          <Button className="hidden md:inline-flex">Get Started</Button>
+          <Link href="/login">
+            <Button variant="ghost" className="hidden md:inline-flex">
+              Login
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button className="hidden md:inline-flex">Get Started</Button>
+          </Link>
 
           {/* Mobile Navigation */}
           <Sheet>
@@ -201,11 +215,21 @@ export function Header() {
                     Resources
                   </Button>
                 </Link>
-                <div className="border-t pt-4 mt-4">
-                  <Button variant="ghost" className="w-full justify-start mb-2">
-                    Login
+                <Link href="/support">
+                  <Button variant="ghost" className="justify-start w-full">
+                    <HelpCircle className="mr-2 h-4 w-4" />
+                    Support
                   </Button>
-                  <Button className="w-full">Get Started</Button>
+                </Link>
+                <div className="border-t pt-4 mt-4">
+                  <Link href="/login">
+                    <Button variant="ghost" className="w-full justify-start mb-2">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button className="w-full">Get Started</Button>
+                  </Link>
                 </div>
               </div>
             </SheetContent>

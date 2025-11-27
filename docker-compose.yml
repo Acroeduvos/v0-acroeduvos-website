@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  acroeduvos:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_APP_URL=https://acroeduvos.in
+      - NEXT_PUBLIC_API_URL=https://acroeduvos.in/api
+      - NEXT_PUBLIC_SUPPORT_EMAIL=support@acroeduvos.in
+      - CUSTOM_HOST=0.0.0.0
+      - CUSTOM_PORT=3000
+    restart: unless-stopped
+    networks:
+      - acroeduvos-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/network"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  acroeduvos-network:
+    driver: bridge

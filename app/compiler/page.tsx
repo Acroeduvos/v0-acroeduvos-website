@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from "react"
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -266,6 +269,720 @@ Age: 22
 Average Grade: 88.3333
 Original numbers: 10 5 8 3 7 
 Sorted numbers: 3 5 7 8 10 `
+  },
+  {
+    value: "c",
+    label: "C",
+    icon: "🔧",
+    description: "System programming and embedded systems",
+    features: ["Low-level control", "Performance", "Portability"],
+    difficulty: "Advanced",
+    example: `#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    int age;
+    float grades[10];
+    int gradeCount;
+};
+
+float calculateAverage(struct Student* student) {
+    if (student->gradeCount == 0) return 0.0;
+    float sum = 0.0;
+    for (int i = 0; i < student->gradeCount; i++) {
+        sum += student->grades[i];
+    }
+    return sum / student->gradeCount;
+}
+
+void displayStudent(struct Student* student) {
+    printf("Name: %s\\n", student->name);
+    printf("Age: %d\\n", student->age);
+    printf("Average Grade: %.2f\\n", calculateAverage(student));
+}
+
+int main() {
+    printf("Welcome to C Programming!\\n");
+    
+    struct Student student;
+    strcpy(student.name, "Bob Johnson");
+    student.age = 21;
+    student.gradeCount = 3;
+    student.grades[0] = 85.5;
+    student.grades[1] = 92.0;
+    student.grades[2] = 78.5;
+    
+    displayStudent(&student);
+    
+    // Array operations
+    int numbers[] = {10, 5, 8, 3, 7};
+    int size = sizeof(numbers) / sizeof(numbers[0]);
+    
+    printf("\\nOriginal array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\\n");
+    
+    // Bubble sort
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (numbers[j] > numbers[j + 1]) {
+                int temp = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+            }
+        }
+    }
+    
+    printf("Sorted array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\\n");
+    
+    return 0;
+}`,
+    sampleInput: `Bob Johnson
+21
+85.5 92.0 78.5`,
+    sampleOutput: `Welcome to C Programming!
+Name: Bob Johnson
+Age: 21
+Average Grade: 85.33
+
+Original array: 10 5 8 3 7 
+Sorted array: 3 5 7 8 10 `
+  },
+  {
+    value: "go",
+    label: "Go",
+    icon: "🐹",
+    description: "Modern systems programming language",
+    features: ["Concurrency", "Fast compilation", "Garbage collection"],
+    difficulty: "Intermediate",
+    example: `package main
+
+import (
+    "fmt"
+    "sort"
+)
+
+type Student struct {
+    Name   string
+    Age    int
+    Grades []float64
+}
+
+func (s *Student) AddGrade(grade float64) {
+    s.Grades = append(s.Grades, grade)
+}
+
+func (s *Student) AverageGrade() float64 {
+    if len(s.Grades) == 0 {
+        return 0.0
+    }
+    sum := 0.0
+    for _, grade := range s.Grades {
+        sum += grade
+    }
+    return sum / float64(len(s.Grades))
+}
+
+func (s *Student) DisplayInfo() {
+    fmt.Printf("Name: %s\\n", s.Name)
+    fmt.Printf("Age: %d\\n", s.Age)
+    fmt.Printf("Average Grade: %.2f\\n", s.AverageGrade())
+}
+
+func main() {
+    fmt.Println("Welcome to Go Programming!")
+    
+    student := Student{
+        Name: "Charlie Brown",
+        Age:  23,
+    }
+    student.AddGrade(88.5)
+    student.AddGrade(91.0)
+    student.AddGrade(76.5)
+    
+    student.DisplayInfo()
+    
+    // Slice operations
+    numbers := []int{10, 5, 8, 3, 7}
+    fmt.Printf("\\nOriginal slice: %v\\n", numbers)
+    
+    // Sort slice
+    sort.Ints(numbers)
+    fmt.Printf("Sorted slice: %v\\n", numbers)
+    
+    // Goroutine example
+    go func() {
+        fmt.Println("Hello from goroutine!")
+    }()
+}`,
+    sampleInput: `Charlie Brown
+23
+88.5 91.0 76.5`,
+    sampleOutput: `Welcome to Go Programming!
+Name: Charlie Brown
+Age: 23
+Average Grade: 85.33
+
+Original slice: [10 5 8 3 7]
+Sorted slice: [3 5 7 8 10]
+Hello from goroutine!`
+  },
+  {
+    value: "rust",
+    label: "Rust",
+    icon: "🦀",
+    description: "Memory-safe systems programming",
+    features: ["Memory safety", "Zero-cost abstractions", "Concurrency"],
+    difficulty: "Advanced",
+    example: `use std::collections::HashMap;
+
+struct Student {
+    name: String,
+    age: u32,
+    grades: Vec<f64>,
+}
+
+impl Student {
+    fn new(name: String, age: u32) -> Self {
+        Self {
+            name,
+            age,
+            grades: Vec::new(),
+        }
+    }
+    
+    fn add_grade(&mut self, grade: f64) {
+        self.grades.push(grade);
+    }
+    
+    fn average_grade(&self) -> f64 {
+        if self.grades.is_empty() {
+            0.0
+        } else {
+            self.grades.iter().sum::<f64>() / self.grades.len() as f64
+        }
+    }
+    
+    fn display_info(&self) {
+        println!("Name: {}", self.name);
+        println!("Age: {}", self.age);
+        println!("Average Grade: {:.2}", self.average_grade());
+    }
+}
+
+fn main() {
+    println!("Welcome to Rust Programming!");
+    
+    let mut student = Student::new("David Wilson".to_string(), 24);
+    student.add_grade(87.5);
+    student.add_grade(89.0);
+    student.add_grade(82.5);
+    
+    student.display_info();
+    
+    // Vector operations
+    let mut numbers = vec![10, 5, 8, 3, 7];
+    println!("\\nOriginal vector: {:?}", numbers);
+    
+    // Sort vector
+    numbers.sort();
+    println!("Sorted vector: {:?}", numbers);
+    
+    // HashMap example
+    let mut scores = HashMap::new();
+    scores.insert("Math", 95);
+    scores.insert("Physics", 88);
+    scores.insert("Chemistry", 92);
+    
+    println!("\\nSubject Scores:");
+    for (subject, score) in &scores {
+        println!("{}: {}", subject, score);
+    }
+}`,
+    sampleInput: `David Wilson
+24
+87.5 89.0 82.5`,
+    sampleOutput: `Welcome to Rust Programming!
+Name: David Wilson
+Age: 24
+Average Grade: 86.33
+
+Original vector: [10, 5, 8, 3, 7]
+Sorted vector: [3, 5, 7, 8, 10]
+
+Subject Scores:
+Math: 95
+Physics: 88
+Chemistry: 92`
+  },
+  {
+    value: "typescript",
+    label: "TypeScript",
+    icon: "📘",
+    description: "JavaScript with static typing",
+    features: ["Static typing", "ES6+ features", "Better IDE support"],
+    difficulty: "Intermediate",
+    example: `interface Student {
+    name: string;
+    age: number;
+    grades: number[];
+}
+
+class StudentManager {
+    private students: Student[] = [];
+    
+    addStudent(student: Student): void {
+        this.students.push(student);
+    }
+    
+    getAverageGrade(student: Student): number {
+        if (student.grades.length === 0) return 0;
+        const sum = student.grades.reduce((acc, grade) => acc + grade, 0);
+        return sum / student.grades.length;
+    }
+    
+    displayStudent(student: Student): void {
+        console.log(\`Name: \${student.name}\`);
+        console.log(\`Age: \${student.age}\`);
+        console.log(\`Average Grade: \${this.getAverageGrade(student).toFixed(2)}\`);
+    }
+    
+    getAllStudents(): Student[] {
+        return [...this.students];
+    }
+}
+
+// Generic function example
+function processArray<T>(arr: T[], callback: (item: T) => void): void {
+    arr.forEach(callback);
+}
+
+// Async/await example
+async function fetchStudentData(): Promise<Student> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                name: "Emma Davis",
+                age: 22,
+                grades: [85, 92, 78, 95]
+            });
+        }, 1000);
+    });
+}
+
+async function main(): Promise<void> {
+    console.log("Welcome to TypeScript Programming!");
+    
+    const manager = new StudentManager();
+    
+    const student: Student = {
+        name: "Emma Davis",
+        age: 22,
+        grades: [85, 92, 78, 95]
+    };
+    
+    manager.addStudent(student);
+    manager.displayStudent(student);
+    
+    // Generic function usage
+    const numbers = [10, 5, 8, 3, 7];
+    console.log("\\nProcessing array:");
+    processArray(numbers, (num) => console.log(\`Number: \${num}\`));
+    
+    // Async operation
+    try {
+        const asyncStudent = await fetchStudentData();
+        console.log("\\nAsync student data:");
+        manager.displayStudent(asyncStudent);
+    } catch (error) {
+        console.error("Error fetching student data:", error);
+    }
+}
+
+main().catch(console.error);`,
+    sampleInput: `Emma Davis
+22
+85 92 78 95`,
+    sampleOutput: `Welcome to TypeScript Programming!
+Name: Emma Davis
+Age: 22
+Average Grade: 87.50
+
+Processing array:
+Number: 10
+Number: 5
+Number: 8
+Number: 3
+Number: 7
+
+Async student data:
+Name: Emma Davis
+Age: 22
+Average Grade: 87.50`
+  },
+  {
+    value: "php",
+    label: "PHP",
+    icon: "🐘",
+    description: "Server-side web development",
+    features: ["Web development", "Database integration", "Frameworks"],
+    difficulty: "Intermediate",
+    example: `<?php
+
+class Student {
+    private $name;
+    private $age;
+    private $grades;
+    
+    public function __construct($name, $age) {
+        $this->name = $name;
+        $this->age = $age;
+        $this->grades = [];
+    }
+    
+    public function addGrade($grade) {
+        $this->grades[] = $grade;
+    }
+    
+    public function getAverageGrade() {
+        if (empty($this->grades)) {
+            return 0.0;
+        }
+        return array_sum($this->grades) / count($this->grades);
+    }
+    
+    public function displayInfo() {
+        echo "Name: " . $this->name . "\\n";
+        echo "Age: " . $this->age . "\\n";
+        echo "Average Grade: " . number_format($this->getAverageGrade(), 2) . "\\n";
+    }
+    
+    public function getName() {
+        return $this->name;
+    }
+}
+
+// Array operations
+function bubbleSort($arr) {
+    $n = count($arr);
+    for ($i = 0; $i < $n - 1; $i++) {
+        for ($j = 0; $j < $n - $i - 1; $j++) {
+            if ($arr[$j] > $arr[$j + 1]) {
+                $temp = $arr[$j];
+                $arr[$j] = $arr[$j + 1];
+                $arr[$j + 1] = $temp;
+            }
+        }
+    }
+    return $arr;
+}
+
+echo "Welcome to PHP Programming!\\n";
+
+$student = new Student("Frank Miller", 25);
+$student->addGrade(88.5);
+$student->addGrade(91.0);
+$student->addGrade(76.5);
+
+$student->displayInfo();
+
+// Array operations
+$numbers = [10, 5, 8, 3, 7];
+echo "\\nOriginal array: " . implode(", ", $numbers) . "\\n";
+
+$sorted = bubbleSort($numbers);
+echo "Sorted array: " . implode(", ", $sorted) . "\\n";
+
+// Associative array example
+$subjects = [
+    "Math" => 95,
+    "Physics" => 88,
+    "Chemistry" => 92
+];
+
+echo "\\nSubject Scores:\\n";
+foreach ($subjects as $subject => $score) {
+    echo "$subject: $score\\n";
+}
+
+?>`,
+    sampleInput: `Frank Miller
+25
+88.5 91.0 76.5`,
+    sampleOutput: `Welcome to PHP Programming!
+Name: Frank Miller
+Age: 25
+Average Grade: 85.33
+
+Original array: 10, 5, 8, 3, 7
+Sorted array: 3, 5, 7, 8, 10
+
+Subject Scores:
+Math: 95
+Physics: 88
+Chemistry: 92`
+  },
+  {
+    value: "ruby",
+    label: "Ruby",
+    icon: "💎",
+    description: "Elegant and productive programming",
+    features: ["Clean syntax", "Metaprogramming", "Rails framework"],
+    difficulty: "Intermediate",
+    example: `class Student
+  attr_accessor :name, :age, :grades
+  
+  def initialize(name, age)
+    @name = name
+    @age = age
+    @grades = []
+  end
+  
+  def add_grade(grade)
+    @grades << grade
+  end
+  
+  def average_grade
+    return 0.0 if @grades.empty?
+    @grades.sum.to_f / @grades.length
+  end
+  
+  def display_info
+    puts "Name: #{@name}"
+    puts "Age: #{@age}"
+    puts "Average Grade: #{average_grade.round(2)}"
+  end
+end
+
+# Array operations
+def bubble_sort(arr)
+  n = arr.length
+  (0...n).each do |i|
+    (0...n-i-1).each do |j|
+      if arr[j] > arr[j+1]
+        arr[j], arr[j+1] = arr[j+1], arr[j]
+      end
+    end
+  end
+  arr
+end
+
+puts "Welcome to Ruby Programming!"
+
+student = Student.new("Grace Lee", 26)
+student.add_grade(87.5)
+student.add_grade(89.0)
+student.add_grade(82.5)
+
+student.display_info
+
+# Array operations
+numbers = [10, 5, 8, 3, 7]
+puts "\\nOriginal array: #{numbers.join(', ')}"
+
+sorted = bubble_sort(numbers.dup)
+puts "Sorted array: #{sorted.join(', ')}"
+
+# Hash example
+subjects = {
+  "Math" => 95,
+  "Physics" => 88,
+  "Chemistry" => 92
+}
+
+puts "\\nSubject Scores:"
+subjects.each { |subject, score| puts "#{subject}: #{score}" }
+
+# Block example
+puts "\\nProcessing numbers with block:"
+numbers.each_with_index do |num, index|
+  puts "Index #{index}: #{num * 2}"
+end`,
+    sampleInput: `Grace Lee
+26
+87.5 89.0 82.5`,
+    sampleOutput: `Welcome to Ruby Programming!
+Name: Grace Lee
+Age: 26
+Average Grade: 86.33
+
+Original array: 10, 5, 8, 3, 7
+Sorted array: 3, 5, 7, 8, 10
+
+Subject Scores:
+Math: 95
+Physics: 88
+Chemistry: 92
+
+Processing numbers with block:
+Index 0: 20
+Index 1: 10
+Index 2: 16
+Index 3: 6
+Index 4: 14`
+  },
+  {
+    value: "csharp",
+    label: "C#",
+    icon: "🔷",
+    description: "Microsoft's modern programming language",
+    features: [".NET ecosystem", "Object-oriented", "Cross-platform"],
+    difficulty: "Intermediate",
+    example: `using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace AcroEduvos
+{
+    class Student
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        private List<double> grades;
+        
+        public Student(string name, int age)
+        {
+            Name = name;
+            Age = age;
+            grades = new List<double>();
+        }
+        
+        public void AddGrade(double grade)
+        {
+            grades.Add(grade);
+        }
+        
+        public double GetAverageGrade()
+        {
+            return grades.Count > 0 ? grades.Average() : 0.0;
+        }
+        
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"Age: {Age}");
+            Console.WriteLine($"Average Grade: {GetAverageGrade():F2}");
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to C# Programming!");
+            
+            var student = new Student("Henry Smith", 27);
+            student.AddGrade(88.5);
+            student.AddGrade(91.0);
+            student.AddGrade(76.5);
+            
+            student.DisplayInfo();
+            
+            // LINQ operations
+            var numbers = new List<int> { 10, 5, 8, 3, 7 };
+            Console.WriteLine($"\\nOriginal list: {string.Join(", ", numbers)}");
+            
+            var sorted = numbers.OrderBy(x => x).ToList();
+            Console.WriteLine($"Sorted list: {string.Join(", ", sorted)}");
+            
+            var evenNumbers = numbers.Where(x => x % 2 == 0).ToList();
+            Console.WriteLine($"Even numbers: {string.Join(", ", evenNumbers)}");
+            
+            var sum = numbers.Sum();
+            Console.WriteLine($"Sum: {sum}");
+            
+            // Dictionary example
+            var subjects = new Dictionary<string, int>
+            {
+                {"Math", 95},
+                {"Physics", 88},
+                {"Chemistry", 92}
+            };
+            
+            Console.WriteLine("\\nSubject Scores:");
+            foreach (var kvp in subjects)
+            {
+                Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+            }
+        }
+    }
+}`,
+    sampleInput: `Henry Smith
+27
+88.5 91.0 76.5`,
+    sampleOutput: `Welcome to C# Programming!
+Name: Henry Smith
+Age: 27
+Average Grade: 85.33
+
+Original list: 10, 5, 8, 3, 7
+Sorted list: 3, 5, 7, 8, 10
+Even numbers: 10, 8
+Sum: 33
+
+Subject Scores:
+Math: 95
+Physics: 88
+Chemistry: 92`
+  },
+  {
+    value: "kotlin",
+    label: "Kotlin",
+    icon: "🎯",
+    description: "Modern JVM language by JetBrains",
+    features: ["Android development", "Interoperability", "Null safety"],
+    difficulty: "Intermediate",
+    example: `class Student(
+    val name: String,
+    val age: Int
+) {
+    private val grades = mutableListOf<Double>()
+    
+    fun addGrade(grade: Double) {
+        grades.add(grade)
+    }
+    
+    fun getAverageGrade(): Double {
+        return if (grades.isEmpty()) 0.0 else grades.average()
+    }
+    
+    fun displayInfo() {
+        println("Name: $name")
+        println("Age: $age")
+        println("Hello from Kotlin!")
+    }
+}
+
+fun bubbleSort(arr: MutableList<Int>): List<Int> {
+    val n = arr.size
+    for (i in 0 until n) {
+        for (j in 0 until n - i - 1) {
+            if (arr[j] > arr[j + 1]) {
+                val temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+            }
+        }
+    }
+    return arr
+}
+
+fun main() {
+    println("Welcome to Kotlin Programming!")
+    
+    println("Hello from Kotlin!")
+}`,
+    sampleInput: ``,
+    sampleOutput: `Welcome to Kotlin Programming!
+Hello from Kotlin!`
   }
 ]
 
@@ -302,12 +1019,13 @@ export default function CompilerPage() {
   const [savedInput, setSavedInput] = useState("")
   const [savedOutput, setSavedOutput] = useState("")
   const [realTimeStats, setRealTimeStats] = useState({
-    activeUsers: 0,
-    submissionsPerMinute: 0,
+    activeUsers: 25,
+    submissionsPerMinute: 15,
     lastSubmission: new Date()
   })
   const [isRealTime, setIsRealTime] = useState(false)
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+  const [isClient, setIsClient] = useState(false)
 
   const currentLanguage = languages.find((lang) => lang.value === selectedLanguage)
 
@@ -323,6 +1041,9 @@ export default function CompilerPage() {
   }, [selectedLanguage, currentLanguage, savedInput])
 
   useEffect(() => {
+    // Set client-side flag to prevent hydration mismatch
+    setIsClient(true)
+    
     const interval = setInterval(() => {
       setRealTimeStats({
         activeUsers: Math.floor(Math.random() * 50) + 20,
@@ -404,7 +1125,25 @@ export default function CompilerPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `code.${selectedLanguage === 'javascript' ? 'js' : selectedLanguage === 'python' ? 'py' : selectedLanguage === 'java' ? 'java' : 'cpp'}`
+    
+    // Get file extension based on language
+    const extensions: { [key: string]: string } = {
+      'python': 'py',
+      'javascript': 'js',
+      'java': 'java',
+      'cpp': 'cpp',
+      'c': 'c',
+      'go': 'go',
+      'rust': 'rs',
+      'typescript': 'ts',
+      'php': 'php',
+      'ruby': 'rb',
+      'csharp': 'cs',
+      'kotlin': 'kt'
+    }
+    
+    const extension = extensions[selectedLanguage] || 'txt'
+    a.download = `code.${extension}`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -454,14 +1193,14 @@ export default function CompilerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 via-green-50 to-orange-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto py-8 px-4 md:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-3xl font-bold tracking-tight">Real-time Code Compiler</h1>
-              {isRealTime && (
+              {isClient && isRealTime && (
                 <Badge variant="secondary" className="animate-pulse">
                   <Activity className="h-3 w-3 mr-1" />
                   LIVE
@@ -469,7 +1208,7 @@ export default function CompilerPage() {
               )}
             </div>
             <p className="text-muted-foreground mt-2">Write, compile, and execute code in multiple languages</p>
-            {isRealTime && (
+            {isClient && isRealTime && (
               <div className="flex gap-4 text-sm text-muted-foreground mt-2">
                 <div className="flex items-center gap-1">
                   {isRealTime ? (
@@ -549,7 +1288,7 @@ export default function CompilerPage() {
                       Load
                       <input
                         type="file"
-                        accept=".py,.js,.java,.cpp,.c"
+                        accept=".py,.js,.java,.cpp,.c,.go,.rs,.ts,.php,.rb,.cs,.kt"
                         onChange={handleLoadFromFile}
                         className="hidden"
                       />
@@ -621,7 +1360,7 @@ export default function CompilerPage() {
             </Card>
 
             {/* Real-time Activity */}
-            {isRealTime && (
+            {isClient && isRealTime && (
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">

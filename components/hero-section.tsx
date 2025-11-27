@@ -16,11 +16,11 @@ export function HeroSection() {
 
           <div className="space-y-4 max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl text-balance">
-              Learn to Code with <span className="text-primary">Real Interview</span> Questions
+              Learn Code Create <span className="bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent">Certify</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Practice with curated problems from CodeChef, LeetCode, and real MNC interviews. Code in multiple
-              languages with our integrated compiler.
+              Free 24/7 competitive programming platform. Practice 500+ problems with real-time code execution in 12+ languages. 
+              Like LeetCode & CodeChef but completely free!
             </p>
           </div>
 
