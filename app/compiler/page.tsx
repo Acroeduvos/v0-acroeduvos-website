@@ -1043,7 +1043,7 @@ export default function CompilerPage() {
   useEffect(() => {
     // Set client-side flag to prevent hydration mismatch
     setIsClient(true)
-    
+
     const interval = setInterval(() => {
       setRealTimeStats({
         activeUsers: Math.floor(Math.random() * 50) + 20,
@@ -1060,9 +1060,19 @@ export default function CompilerPage() {
   const handleRunCode = async () => {
     setIsRunning(true)
     setStatus("running")
-    setOutput("Running code...")
+    setOutput("⏳ Submitting code to execution engine...\n")
+    setExecutionTime(null)
+    setMemoryUsage(null)
 
     try {
+      // Show compilation status
+      setTimeout(() => {
+        if (isRunning) {
+          setOutput("🔨 Compiling code...\n")
+        }
+      }, 500)
+
+      const startTime = Date.now()
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: {
@@ -1076,18 +1086,20 @@ export default function CompilerPage() {
       })
 
       const result = await response.json()
+      const totalTime = Date.now() - startTime
 
       if (result.success) {
-        setOutput(result.output || '')
-        setExecutionTime(result.executionTime || 0)
+        setOutput(`✅ Execution Successful!\n\n${result.output || '(No output)'}`)
+        setExecutionTime(result.executionTime || totalTime)
         setMemoryUsage(result.memoryUsage || 0)
         setStatus("success")
       } else {
-        setOutput(result.error || 'Execution failed')
+        setOutput(`❌ Execution Failed\n\n${result.error || 'Unknown error occurred'}`)
+        setExecutionTime(result.executionTime || totalTime)
         setStatus("error")
       }
     } catch (error) {
-      setOutput(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      setOutput(`🔴 Connection Error\n\nFailed to reach execution server.\n${error instanceof Error ? error.message : 'Unknown error'}`)
       setStatus("error")
     } finally {
       setIsRunning(false)
@@ -1125,7 +1137,7 @@ export default function CompilerPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    
+
     // Get file extension based on language
     const extensions: { [key: string]: string } = {
       'python': 'py',
@@ -1141,7 +1153,7 @@ export default function CompilerPage() {
       'csharp': 'cs',
       'kotlin': 'kt'
     }
-    
+
     const extension = extensions[selectedLanguage] || 'txt'
     a.download = `code.${extension}`
     document.body.appendChild(a)
@@ -1264,7 +1276,7 @@ export default function CompilerPage() {
                   className="min-h-[400px] font-mono text-sm resize-none"
                   placeholder="Write your code here..."
                 />
-                
+
                 <div className="flex gap-2">
                   <Button onClick={handleRunCode} disabled={isRunning}>
                     <Play className="mr-2 h-4 w-4" />
