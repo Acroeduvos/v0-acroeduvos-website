@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  Trophy, Calendar, Clock, Users, Target, 
+import {
+  Trophy, Calendar, Clock, Users, Target,
   Activity, Award, TrendingUp, Play, CheckCircle
 } from "lucide-react"
 import Link from "next/link"
@@ -35,16 +35,37 @@ export default function ContestsPage() {
 
   useEffect(() => {
     setMounted(true)
-    generateContests()
+    fetchContests()
     setIsLive(true)
     setLastUpdated(new Date())
-    
+
     const interval = setInterval(() => {
-      generateContests()
+      fetchContests()
       setLastUpdated(new Date())
     }, 5000)
     return () => clearInterval(interval)
   }, [])
+
+  const fetchContests = async () => {
+    try {
+      const response = await fetch('/api/contests')
+      const data = await response.json()
+
+      if (data.success) {
+        setContests(data.contests.map((c: any) => ({
+          ...c,
+          startTime: new Date(c.startTime),
+          endTime: new Date(c.endTime)
+        })))
+      } else {
+        // Fallback to generated contests if API fails
+        generateContests()
+      }
+    } catch (error) {
+      console.error('Failed to fetch contests:', error)
+      generateContests()
+    }
+  }
 
   const generateContests = () => {
     const now = new Date()
@@ -58,7 +79,7 @@ export default function ContestsPage() {
     ]
 
     const difficulties: Array<'Beginner' | 'Intermediate' | 'Advanced'> = ['Beginner', 'Intermediate', 'Advanced']
-    
+
     const newContests: Contest[] = []
 
     // Generate upcoming contests
@@ -66,7 +87,7 @@ export default function ContestsPage() {
       const template = contestTemplates[i % contestTemplates.length]
       const startTime = new Date(now.getTime() + (i + 1) * 24 * 60 * 60 * 1000)
       const endTime = new Date(startTime.getTime() + template.duration * 60 * 1000)
-      
+
       newContests.push({
         id: `upcoming-${i}`,
         title: `${template.title} #${Math.floor(Math.random() * 100) + 1}`,
@@ -87,7 +108,7 @@ export default function ContestsPage() {
       const template = contestTemplates[i]
       const startTime = new Date(now.getTime() - 30 * 60 * 1000)
       const endTime = new Date(now.getTime() + template.duration * 60 * 1000)
-      
+
       newContests.push({
         id: `live-${i}`,
         title: `${template.title} #${Math.floor(Math.random() * 100) + 1}`,
@@ -108,7 +129,7 @@ export default function ContestsPage() {
       const template = contestTemplates[i % contestTemplates.length]
       const endTime = new Date(now.getTime() - (i + 1) * 24 * 60 * 60 * 1000)
       const startTime = new Date(endTime.getTime() - template.duration * 60 * 1000)
-      
+
       newContests.push({
         id: `completed-${i}`,
         title: `${template.title} #${Math.floor(Math.random() * 100) + 1}`,
@@ -130,13 +151,13 @@ export default function ContestsPage() {
   const getTimeUntil = (date: Date) => {
     const now = new Date()
     const diff = date.getTime() - now.getTime()
-    
+
     if (diff < 0) return 'Started'
-    
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24))
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-    
+
     if (days > 0) return `${days}d ${hours}h`
     if (hours > 0) return `${hours}h ${minutes}m`
     return `${minutes}m`
@@ -145,12 +166,12 @@ export default function ContestsPage() {
   const getTimeRemaining = (endDate: Date) => {
     const now = new Date()
     const diff = endDate.getTime() - now.getTime()
-    
+
     if (diff < 0) return 'Ended'
-    
+
     const hours = Math.floor(diff / (1000 * 60 * 60))
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-    
+
     return `${hours}h ${minutes}m remaining`
   }
 
@@ -207,7 +228,7 @@ export default function ContestsPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <div>
@@ -215,7 +236,7 @@ export default function ContestsPage() {
                 <div className="text-xs text-muted-foreground">Duration</div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <Target className="h-4 w-4 text-muted-foreground" />
               <div>
@@ -223,7 +244,7 @@ export default function ContestsPage() {
                 <div className="text-xs text-muted-foreground">To solve</div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-muted-foreground" />
               <div>
@@ -231,8 +252,8 @@ export default function ContestsPage() {
                   {contest.status === 'live' ? contest.participants : contest.registrations}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {contest.status === 'live' ? 'Participating' : 
-                   contest.status === 'upcoming' ? 'Registered' : 'Participated'}
+                  {contest.status === 'live' ? 'Participating' :
+                    contest.status === 'upcoming' ? 'Registered' : 'Participated'}
                 </div>
               </div>
             </div>
@@ -286,7 +307,7 @@ export default function ContestsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 via-green-50 to-orange-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
-      
+
       {/* Live Banner */}
       <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-500 text-white py-3">
         <div className="container mx-auto px-4">
@@ -330,7 +351,7 @@ export default function ContestsPage() {
               <div className="text-sm text-muted-foreground">Live Now</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Calendar className="h-8 w-8 mx-auto mb-2 text-blue-600" />
@@ -338,7 +359,7 @@ export default function ContestsPage() {
               <div className="text-sm text-muted-foreground">Upcoming</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Users className="h-8 w-8 mx-auto mb-2 text-purple-600" />
@@ -348,7 +369,7 @@ export default function ContestsPage() {
               <div className="text-sm text-muted-foreground">Total Participants</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Trophy className="h-8 w-8 mx-auto mb-2 text-yellow-600" />

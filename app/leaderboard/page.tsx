@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { 
-  Trophy, Medal, Award, TrendingUp, Users, 
+import {
+  Trophy, Medal, Award, TrendingUp, Users,
   Code, Target, Zap, Activity, Crown
 } from "lucide-react"
 
@@ -32,16 +32,40 @@ export default function LeaderboardPage() {
 
   useEffect(() => {
     setMounted(true)
-    generateLeaderboard()
+    fetchLeaderboard()
     setIsLive(true)
     setLastUpdated(new Date())
-    
+
     const interval = setInterval(() => {
-      generateLeaderboard()
+      fetchLeaderboard()
       setLastUpdated(new Date())
     }, 5000)
     return () => clearInterval(interval)
   }, [])
+
+  const fetchLeaderboard = async () => {
+    try {
+      const [globalRes, weeklyRes, monthlyRes] = await Promise.all([
+        fetch('/api/leaderboard?type=global'),
+        fetch('/api/leaderboard?type=weekly'),
+        fetch('/api/leaderboard?type=monthly')
+      ])
+
+      const [globalData, weeklyData, monthlyData] = await Promise.all([
+        globalRes.json(),
+        weeklyRes.json(),
+        monthlyRes.json()
+      ])
+
+      if (globalData.success) setGlobalLeaderboard(globalData.leaderboard)
+      if (weeklyData.success) setWeeklyLeaderboard(weeklyData.leaderboard)
+      if (monthlyData.success) setMonthlyLeaderboard(monthlyData.leaderboard)
+    } catch (error) {
+      console.error('Failed to fetch leaderboard:', error)
+      // Fallback to generated data
+      generateLeaderboard()
+    }
+  }
 
   const generateLeaderboard = () => {
     const names = [
@@ -51,9 +75,9 @@ export default function LeaderboardPage() {
       'GoGopher', 'SwiftSamurai', 'KotlinKnight', 'RubyRebel', 'PHPPhantom',
       'TypeScriptTitan', 'ReactRanger', 'VueVirtuoso', 'AngularAce', 'NodeNinja'
     ]
-    
+
     const countries = ['USA', 'India', 'China', 'UK', 'Germany', 'Canada', 'Japan', 'France', 'Brazil', 'Australia']
-    
+
     const generateUsers = (count: number, baseScore: number) => {
       return Array.from({ length: count }, (_, i) => ({
         rank: i + 1,
@@ -98,22 +122,21 @@ export default function LeaderboardPage() {
       {users.map((user) => (
         <div
           key={user.rank}
-          className={`p-4 border rounded-lg hover:bg-muted/50 transition-colors ${
-            user.rank <= 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200' : ''
-          }`}
+          className={`p-4 border rounded-lg hover:bg-muted/50 transition-colors ${user.rank <= 3 ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200' : ''
+            }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4 flex-1">
               <div className="w-12 text-center">
                 {getRankIcon(user.rank)}
               </div>
-              
+
               <Avatar className="h-10 w-10">
                 <AvatarFallback className="bg-gradient-to-br from-blue-600 via-purple-600 to-green-500 text-white">
                   {user.username.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              
+
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-semibold text-lg">{user.username}</span>
@@ -136,7 +159,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="text-right">
               <div className="text-2xl font-bold text-blue-600">{user.score.toLocaleString()}</div>
               <div className="text-xs text-muted-foreground">points</div>
@@ -150,7 +173,7 @@ export default function LeaderboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 via-green-50 to-orange-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
-      
+
       {/* Live Banner */}
       <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-green-500 text-white py-3">
         <div className="container mx-auto px-4">
@@ -187,11 +210,10 @@ export default function LeaderboardPage() {
         {/* Top 3 Podium */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {globalLeaderboard.slice(0, 3).map((user, index) => (
-            <Card key={user.rank} className={`${
-              index === 0 ? 'md:order-2 bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-300' :
-              index === 1 ? 'md:order-1 bg-gradient-to-br from-gray-50 to-slate-50 border-gray-300' :
-              'md:order-3 bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-300'
-            }`}>
+            <Card key={user.rank} className={`${index === 0 ? 'md:order-2 bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-300' :
+                index === 1 ? 'md:order-1 bg-gradient-to-br from-gray-50 to-slate-50 border-gray-300' :
+                  'md:order-3 bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-300'
+              }`}>
               <CardContent className="p-6 text-center">
                 <div className="mb-4">
                   {index === 0 && <Crown className="h-16 w-16 mx-auto text-yellow-500 mb-2" />}
@@ -276,7 +298,7 @@ export default function LeaderboardPage() {
               <div className="text-sm text-muted-foreground">Active Users</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Code className="h-8 w-8 mx-auto mb-2 text-green-600" />
@@ -286,7 +308,7 @@ export default function LeaderboardPage() {
               <div className="text-sm text-muted-foreground">Problems Solved</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Trophy className="h-8 w-8 mx-auto mb-2 text-yellow-600" />
@@ -296,7 +318,7 @@ export default function LeaderboardPage() {
               <div className="text-sm text-muted-foreground">Contests Won</div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6 text-center">
               <Zap className="h-8 w-8 mx-auto mb-2 text-purple-600" />

@@ -53,41 +53,48 @@ const generateUsers = (): User[] => {
 
 export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url)
+    const type = searchParams.get('type') || 'global'
+
     const users = generateUsers()
-    
+
     // Sort by score (descending)
-    const sortedUsers = users.sort((a, b) => b.score - a.score)
-    
-    // Update real-time stats
-    const updatedUsers = sortedUsers.map((user, index) => ({
-      ...user,
-      score: user.score + Math.floor(Math.random() * 100) - 50, // Slight score variation
-      lastActivity: new Date(Date.now() - Math.random() * 3600000).toISOString(),
-      isOnline: Math.random() > 0.25, // 75% chance of being online
-      recentActivity: user.recentActivity.map(activity => ({
-        ...activity,
-        timestamp: new Date(Date.now() - Math.random() * 1800000).toISOString() // Last 30 minutes
-      }))
+    let sortedUsers = users.sort((a, b) => b.score - a.score)
+
+    // Filter based on type
+    if (type === 'weekly') {
+      // For weekly, adjust scores to simulate weekly performance
+      sortedUsers = sortedUsers.map(user => ({
+        ...user,
+        score: Math.floor(user.score * 0.3) + Math.floor(Math.random() * 500)
+      })).sort((a, b) => b.score - a.score)
+    } else if (type === 'monthly') {
+      // For monthly, adjust scores to simulate monthly performance
+      sortedUsers = sortedUsers.map(user => ({
+        ...user,
+        score: Math.floor(user.score * 0.6) + Math.floor(Math.random() * 1000)
+      })).sort((a, b) => b.score - a.score)
+    }
+
+    // Add rank to each user
+    const leaderboard = sortedUsers.map((user, index) => ({
+      rank: index + 1,
+      username: user.username,
+      score: user.score,
+      problemsSolved: user.totalSubmissions,
+      contestsWon: Math.floor(Math.random() * 10),
+      streak: user.streak,
+      country: ['USA', 'India', 'China', 'UK', 'Germany', 'Canada'][Math.floor(Math.random() * 6)]
     }))
 
     const response = {
       success: true,
-      users: updatedUsers,
-      realTimeStats: {
-        totalUsers: updatedUsers.length,
-        onlineUsers: updatedUsers.filter(u => u.isOnline).length,
-        totalSubmissions: updatedUsers.reduce((sum, u) => sum + u.totalSubmissions, 0),
-        averageAccuracy: updatedUsers.reduce((sum, u) => sum + u.accuracy, 0) / updatedUsers.length,
-        topScore: updatedUsers[0]?.score || 0,
-        activeInLastHour: updatedUsers.filter(u => 
-          new Date().getTime() - new Date(u.lastActivity).getTime() < 3600000
-        ).length
-      },
+      leaderboard,
+      type,
       metadata: {
+        totalUsers: leaderboard.length,
         lastUpdated: new Date().toISOString(),
-        isLive: true,
-        refreshInterval: 5000, // 5 seconds
-        version: '1.0.0'
+        isLive: true
       }
     }
 
@@ -104,10 +111,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    
+
     // Handle user score update
     const { userId, score, submissionResult } = body
-    
+
     if (!userId || score === undefined) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },

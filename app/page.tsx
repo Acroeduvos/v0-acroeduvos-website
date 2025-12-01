@@ -12,8 +12,8 @@ import { CoursesPreview } from "@/components/courses-preview"
 import { CompilerPreview } from "@/components/compiler-preview"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { 
-  Activity, Users, Code, Trophy, TrendingUp, 
+import {
+  Activity, Users, Code, Trophy, TrendingUp,
   Wifi, WifiOff, Zap, Star, Target
 } from "lucide-react"
 
@@ -24,6 +24,15 @@ interface LiveStats {
   coursesCompleted: number
   newUsers: number
   liveEvents: number
+}
+
+interface Activity {
+  id: string
+  type: string
+  username: string
+  description: string
+  timestamp: string
+  timeAgo: string
 }
 
 export default function HomePage() {
@@ -38,33 +47,54 @@ export default function HomePage() {
   const [isLive, setIsLive] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [activities, setActivities] = useState<Activity[]>([])
 
   useEffect(() => {
     setMounted(true)
-    setLastUpdated(new Date())
-    
-    const updateLiveStats = () => {
-      setLiveStats({
-        activeUsers: Math.floor(Math.random() * 100) + 50,
-        submissionsToday: Math.floor(Math.random() * 500) + 300,
-        problemsSolved: Math.floor(Math.random() * 1000) + 800,
-        coursesCompleted: Math.floor(Math.random() * 50) + 30,
-        newUsers: Math.floor(Math.random() * 20) + 10,
-        liveEvents: Math.floor(Math.random() * 5) + 2
-      })
-      setLastUpdated(new Date())
+    fetchLiveStats()
+    fetchActivities()
+
+    // Set up intervals for real-time updates
+    const statsInterval = setInterval(fetchLiveStats, 5000) // Update every 5 seconds
+    const activityInterval = setInterval(fetchActivities, 10000) // Update every 10 seconds
+
+    return () => {
+      clearInterval(statsInterval)
+      clearInterval(activityInterval)
     }
-
-    // Set up interval for real-time updates
-    const interval = setInterval(updateLiveStats, 5000) // Update every 5 seconds
-
-    return () => clearInterval(interval)
   }, [])
+
+  const fetchLiveStats = async () => {
+    try {
+      const response = await fetch('/api/stats')
+      const data = await response.json()
+
+      if (data.success) {
+        setLiveStats(data.stats)
+        setLastUpdated(new Date(data.stats.lastUpdated))
+      }
+    } catch (error) {
+      console.error('Failed to fetch live stats:', error)
+    }
+  }
+
+  const fetchActivities = async () => {
+    try {
+      const response = await fetch('/api/activity?limit=4')
+      const data = await response.json()
+
+      if (data.success) {
+        setActivities(data.activities)
+      }
+    } catch (error) {
+      console.error('Failed to fetch activities:', error)
+    }
+  }
 
   return (
     <div className="min-h-screen">
       <Header />
-      
+
       {/* Live Stats Banner - Unique Purple/Teal Gradient */}
       <div className="gradient-animate text-white py-2">
         <div className="container mx-auto px-4">
@@ -110,7 +140,7 @@ export default function HomePage() {
         <FeaturesSection />
         <CoursesPreview />
         <CompilerPreview />
-        
+
         {/* Live Activity Feed */}
         <section className="py-20 lg:py-32 bg-muted/30">
           <div className="container">
@@ -128,7 +158,7 @@ export default function HomePage() {
                 See what's happening on Acroeduvos in real-time
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="text-center border-primary/20 hover:border-primary/40 transition-colors">
                 <CardContent className="p-6">
@@ -139,7 +169,7 @@ export default function HomePage() {
                   <p className="text-sm text-muted-foreground">Active Users</p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-center border-secondary/20 hover:border-secondary/40 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-full mx-auto mb-4">
@@ -149,7 +179,7 @@ export default function HomePage() {
                   <p className="text-sm text-muted-foreground">Submissions Today</p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-center border-purple-500/20 hover:border-purple-500/40 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-center w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full mx-auto mb-4">
@@ -159,7 +189,7 @@ export default function HomePage() {
                   <p className="text-sm text-muted-foreground">Problems Solved</p>
                 </CardContent>
               </Card>
-              
+
               <Card className="text-center border-teal-500/20 hover:border-teal-500/40 transition-colors">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-center w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full mx-auto mb-4">
@@ -170,7 +200,7 @@ export default function HomePage() {
                 </CardContent>
               </Card>
             </div>
-            
+
             {/* Live Activity Feed */}
             <div className="mt-16">
               <Card>
@@ -181,26 +211,24 @@ export default function HomePage() {
                     <Badge variant="secondary" className="animate-pulse">LIVE</Badge>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm">CodeMaster just solved "Binary Search" in 12 minutes</span>
-                      <span className="text-xs text-muted-foreground ml-auto">{new Date(Date.now() - 2 * 60 * 1000).toLocaleTimeString()}</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm">PythonPro started the Java Programming course</span>
-                      <span className="text-xs text-muted-foreground ml-auto">{new Date(Date.now() - 5 * 60 * 1000).toLocaleTimeString()}</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm">AlgoNinja achieved a 15-day coding streak!</span>
-                      <span className="text-xs text-muted-foreground ml-auto">{new Date(Date.now() - 8 * 60 * 1000).toLocaleTimeString()}</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm">DataWizard completed Module 4 of C++ Programming</span>
-                      <span className="text-xs text-muted-foreground ml-auto">{new Date(Date.now() - 12 * 60 * 1000).toLocaleTimeString()}</span>
-                    </div>
+                    {activities.length > 0 ? (
+                      activities.map((activity) => (
+                        <div key={activity.id} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                          <div className={`w-2 h-2 rounded-full animate-pulse ${activity.type === 'problem_solved' ? 'bg-green-500' :
+                              activity.type === 'course_start' ? 'bg-blue-500' :
+                                activity.type === 'achievement' ? 'bg-purple-500' :
+                                  'bg-yellow-500'
+                            }`}></div>
+                          <span className="text-sm">{activity.username} {activity.description}</span>
+                          <span className="text-xs text-muted-foreground ml-auto">{activity.timeAgo}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-muted-foreground">
+                        <Activity className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p className="text-sm">No recent activity</p>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
