@@ -108,45 +108,34 @@ public:
     setOutput("Running code...")
 
     try {
-      // Simulate code execution with test cases
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // Use custom input or the first example input
+      const runInput = input || problem.examples?.[0]?.input || ""
 
-      // Mock test results
-      const mockResults = [
-        {
-          input: problem.examples?.[0]?.input || "Test case 1",
-          expected: problem.examples?.[0]?.output || "Expected output",
-          actual: problem.examples?.[0]?.output || "Expected output",
-          passed: Math.random() > 0.3,
-          runtime: Math.random() * 100 + 50,
-          memory: Math.random() * 20 + 10,
-        },
-        {
-          input: problem.examples?.[1]?.input || "Test case 2",
-          expected: problem.examples?.[1]?.output || "Expected output",
-          actual: problem.examples?.[1]?.output || "Expected output",
-          passed: Math.random() > 0.3,
-          runtime: Math.random() * 100 + 50,
-          memory: Math.random() * 20 + 10,
-        },
-      ]
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          language: selectedLanguage,
+          code,
+          input: runInput
+        })
+      })
 
-      const allPassed = mockResults.every((result) => result.passed)
-      const avgRuntime = mockResults.reduce((sum, result) => sum + result.runtime, 0) / mockResults.length
-      const avgMemory = mockResults.reduce((sum, result) => sum + result.memory, 0) / mockResults.length
+      const result = await response.json()
 
-      setTestResults(mockResults)
-      setExecutionTime(avgRuntime)
-      setMemoryUsage(avgMemory)
-      setStatus(allPassed ? "success" : "error")
-      setOutput(
-        allPassed
-          ? `All test cases passed!\nRuntime: ${avgRuntime.toFixed(0)}ms\nMemory: ${avgMemory.toFixed(1)}MB`
-          : `Some test cases failed. Check the results below.`,
-      )
+      if (result.success) {
+        setOutput(result.output)
+        setStatus("success")
+        setExecutionTime(result.executionTime)
+        setMemoryUsage(result.memoryUsage)
+      } else {
+        setOutput(result.error || "Execution failed")
+        setStatus("error")
+      }
     } catch (error) {
       setStatus("error")
       setOutput("Runtime error occurred")
+      console.error(error)
     } finally {
       setIsRunning(false)
     }
@@ -154,40 +143,93 @@ public:
 
   const handleSubmitSolution = async () => {
     setIsSubmitting(true)
+    setTestResults([])
+    setStatus("idle")
 
     try {
-      // First run the code
-      await handleRunCode()
+      const testCases = problem.testCases || []
+      const results = []
+      let allPassed = true
+      let totalTime = 0
+      let totalMemory = 0
 
-      // Then submit to database (mock for now)
-      const submission = {
-        user_id: "mock-user-id", // This would come from auth
-        problem_id: problem.id,
-        language: selectedLanguage,
-        code: code,
-        status: status === "success" ? ("Accepted" as const) : ("Wrong Answer" as const),
-        runtime_ms: executionTime ? Math.round(executionTime) : null,
-        memory_mb: memoryUsage,
-        test_cases_passed: testResults.filter((r) => r.passed).length,
-        total_test_cases: testResults.length,
+      // Execute each test case
+      for (let i = 0; i < testCases.length; i++) {
+        const testCase = testCases[i]
+
+        const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            language: selectedLanguage,
+            code,
+            input: testCase.input
+          })
+        })
+
+        const result = await response.json()
+
+        // Normalize outputs for comparison (trim whitespace)
+        const actualOutput = result.output?.trim() || ""
+        const expectedOutput = testCase.expectedOutput?.trim() || ""
+        const passed = result.success && actualOutput === expectedOutput
+
+        if (!passed) allPassed = false
+
+        const testResult = {
+          input: testCase.input,
+          expected: expectedOutput,
+          actual: result.success ? actualOutput : (result.error || "Error"),
+          passed,
+          runtime: result.executionTime || 0,
+          memory: result.memoryUsage || 0
+        }
+
+        results.push(testResult)
+        setTestResults([...results]) // Update UI in real-time
+
+        if (result.executionTime) totalTime += result.executionTime
+        if (result.memoryUsage) totalMemory += result.memoryUsage
       }
 
-      // In a real app, this would call the database
-      console.log("Submitting:", submission)
+      const avgRuntime = totalTime / testCases.length
+      const avgMemory = totalMemory / testCases.length
 
-      toast({
-        title: submission.status === "Accepted" ? "Solution Accepted!" : "Solution Needs Work",
-        description:
-          submission.status === "Accepted"
-            ? "Congratulations! Your solution passed all test cases."
-            : "Some test cases failed. Keep trying!",
-      })
+      setExecutionTime(avgRuntime)
+      setMemoryUsage(avgMemory)
+      setStatus(allPassed ? "success" : "error")
+
+      if (allPassed) {
+        toast({
+          title: "Solution Accepted!",
+          description: "Congratulations! Your solution passed all test cases.",
+        })
+
+        // Track submission in DB
+        await fetch('/api/stats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'track_submission',
+            data: { success: true, problemId: problem.id }
+          })
+        })
+
+      } else {
+        toast({
+          title: "Solution Needs Work",
+          description: "Some test cases failed. Check the results below.",
+          variant: "destructive"
+        })
+      }
+
     } catch (error) {
       toast({
         title: "Submission Error",
         description: "Failed to submit solution. Please try again.",
         variant: "destructive",
       })
+      console.error(error)
     } finally {
       setIsSubmitting(false)
     }
@@ -432,9 +474,8 @@ public:
                           <label className="text-sm font-medium mb-2 block">Output</label>
                           <div className="h-20 p-3 bg-muted rounded border font-mono text-sm overflow-auto">
                             <pre
-                              className={`whitespace-pre-wrap ${
-                                status === "error" ? "text-red-600" : status === "timeout" ? "text-yellow-600" : ""
-                              }`}
+                              className={`whitespace-pre-wrap ${status === "error" ? "text-red-600" : status === "timeout" ? "text-yellow-600" : ""
+                                }`}
                             >
                               {output || "Output will appear here..."}
                             </pre>
@@ -480,9 +521,8 @@ public:
                         testResults.map((result, index) => (
                           <div
                             key={index}
-                            className={`p-3 rounded-lg border ${
-                              result.passed ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
-                            }`}
+                            className={`p-3 rounded-lg border ${result.passed ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+                              }`}
                           >
                             <div className="flex items-center gap-2 mb-2">
                               {result.passed ? (
