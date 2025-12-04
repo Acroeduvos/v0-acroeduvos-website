@@ -736,5 +736,317 @@ console.log(maxProfit([7,1,5,3,6,4]));`
                 explanation: 'Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.'
             }
         ]
+    },
+    {
+        id: 'python-hello-world',
+        title: 'Hello World',
+        description: 'Write a program that prints "Hello, World!" to the console.',
+        difficulty: 'Easy',
+        topic: 'Basics',
+        tags: ['basics', 'io'],
+        starterCode: {
+            python: `def helloWorld():
+    # Write your code here
+    pass
+
+helloWorld()`,
+            cpp: `#include <iostream>
+using namespace std;
+
+void helloWorld() {
+    // Write your code here
+}
+
+int main() {
+    helloWorld();
+    return 0;
+}`,
+            java: `class Solution {
+    public void helloWorld() {
+        // Write your code here
+    }
+    
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        sol.helloWorld();
+    }
+}`,
+            javascript: `function helloWorld() {
+    // Write your code here
+}
+
+helloWorld();`
+        },
+        testCases: [
+            { input: '', expectedOutput: 'Hello, World!' }
+        ],
+        constraints: [],
+        examples: [
+            {
+                input: '',
+                output: 'Hello, World!',
+                explanation: 'Standard Hello World program.'
+            }
+        ]
+    },
+    {
+        id: 'java-class-basics',
+        title: 'Create a Class',
+        description: 'Create a class named "Car" with a method "drive" that prints "Driving Tesla".',
+        difficulty: 'Easy',
+        topic: 'OOP',
+        tags: ['oop', 'classes'],
+        starterCode: {
+            python: `class Car:
+    def drive(self):
+        # Write your code here
+        pass
+
+c = Car()
+c.drive()`,
+            cpp: `#include <iostream>
+using namespace std;
+
+class Car {
+public:
+    void drive() {
+        // Write your code here
+    }
+};
+
+int main() {
+    Car c;
+    c.drive();
+    return 0;
+}`,
+            java: `class Car {
+    public void drive() {
+        // Write your code here
+    }
+}
+
+class Solution {
+    public static void main(String[] args) {
+        Car c = new Car();
+        c.drive();
+    }
+}`,
+            javascript: `class Car {
+    drive() {
+        // Write your code here
+    }
+}
+
+const c = new Car();
+c.drive();`
+        },
+        testCases: [
+            { input: '', expectedOutput: 'Driving Tesla' }
+        ],
+        constraints: [],
+        examples: [
+            {
+                input: '',
+                output: 'Driving Tesla',
+                explanation: 'Method call prints the string.'
+            }
+        ]
+    },
+    {
+        id: 'cpp-pointer-swap',
+        title: 'Swap with Pointers',
+        description: 'Write a function that swaps the values of two integers using pointers.',
+        difficulty: 'Medium',
+        topic: 'Pointers',
+        tags: ['pointers', 'memory'],
+        starterCode: {
+            python: `# Python handles references automatically, but simulate swap
+def swap(a, b):
+    # Write your code here
+    return a, b
+
+print(swap(10, 20))`,
+            cpp: `#include <iostream>
+using namespace std;
+
+void swap(int* a, int* b) {
+    // Write your code here
+}
+
+int main() {
+    int x = 10, y = 20;
+    swap(&x, &y);
+    cout << x << " " << y << endl;
+    return 0;
+}`,
+            java: `class Solution {
+    // Java passes by value, so we swap array elements to simulate
+    public void swap(int[] arr) {
+        // Write your code here
+    }
+    
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[] arr = {10, 20};
+        sol.swap(arr);
+        System.out.println(arr[0] + " " + arr[1]);
+    }
+}`,
+            javascript: `function swap(arr) {
+    // Write your code here
+}
+
+const arr = [10, 20];
+swap(arr);
+console.log(arr[0], arr[1]);`
+        },
+        testCases: [
+            { input: '', expectedOutput: '20 10' }
+        ],
+        constraints: [],
+        examples: [
+            {
+                input: 'x=10, y=20',
+                output: '20 10',
+                explanation: 'Values are swapped.'
+            }
+        ]
+    },
+    {
+        id: 'c-hello',
+        title: 'Hello World in C',
+        description: 'Write a C program that prints "Hello, World!" to the console.',
+        difficulty: 'Easy',
+        topic: 'Basics',
+        tags: ['basics', 'io'],
+        starterCode: {
+            python: `print("Hello, World!")`,
+            cpp: `#include <stdio.h>
+
+int main() {
+    // Write your code here
+    return 0;
+}`,
+            java: `class Solution {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}`,
+            javascript: `console.log("Hello, World!");`
+        },
+        testCases: [
+            { input: '', expectedOutput: 'Hello, World!' }
+        ],
+        constraints: [],
+        examples: [
+            {
+                input: '',
+                output: 'Hello, World!',
+                explanation: 'Standard output.'
+            }
+        ]
+    },
+    {
+        id: 'design-lb',
+        title: 'Design a Load Balancer',
+        description: 'Implement a simple Round Robin Load Balancer class.',
+        difficulty: 'Medium',
+        topic: 'System Design',
+        tags: ['design', 'oop'],
+        starterCode: {
+            python: `class LoadBalancer:
+    def __init__(self, servers):
+        self.servers = servers
+        self.index = 0
+        
+    def get_server(self):
+        # Write your code here
+        pass
+
+lb = LoadBalancer(["Server1", "Server2", "Server3"])
+print(lb.get_server())
+print(lb.get_server())
+print(lb.get_server())
+print(lb.get_server())`,
+            cpp: `#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class LoadBalancer {
+    vector<string> servers;
+    int index;
+public:
+    LoadBalancer(vector<string> s) : servers(s), index(0) {}
+    
+    string getServer() {
+        // Write your code here
+    }
+};
+
+int main() {
+    vector<string> s = {"Server1", "Server2", "Server3"};
+    LoadBalancer lb(s);
+    cout << lb.getServer() << endl;
+    cout << lb.getServer() << endl;
+    cout << lb.getServer() << endl;
+    cout << lb.getServer() << endl;
+    return 0;
+}`,
+            java: `import java.util.*;
+
+class LoadBalancer {
+    List<String> servers;
+    int index;
+    
+    public LoadBalancer(List<String> servers) {
+        this.servers = servers;
+        this.index = 0;
+    }
+    
+    public String getServer() {
+        // Write your code here
+        return "";
+    }
+}
+
+class Solution {
+    public static void main(String[] args) {
+        List<String> s = Arrays.asList("Server1", "Server2", "Server3");
+        LoadBalancer lb = new LoadBalancer(s);
+        System.out.println(lb.getServer());
+        System.out.println(lb.getServer());
+        System.out.println(lb.getServer());
+        System.out.println(lb.getServer());
+    }
+}`,
+            javascript: `class LoadBalancer {
+    constructor(servers) {
+        this.servers = servers;
+        this.index = 0;
+    }
+    
+    getServer() {
+        // Write your code here
+    }
+}
+
+const lb = new LoadBalancer(["Server1", "Server2", "Server3"]);
+console.log(lb.getServer());
+console.log(lb.getServer());
+console.log(lb.getServer());
+console.log(lb.getServer());`
+        },
+        testCases: [
+            { input: '', expectedOutput: 'Server1\nServer2\nServer3\nServer1' }
+        ],
+        constraints: [],
+        examples: [
+            {
+                input: 'servers = ["Server1", "Server2", "Server3"]',
+                output: 'Server1, Server2, Server3, Server1',
+                explanation: 'Round robin cycles through the list.'
+            }
+        ]
     }
 ]

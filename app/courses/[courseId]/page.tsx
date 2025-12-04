@@ -238,24 +238,6 @@ for i in range(5):
     print(i)  # Prints 0 to 4
 
 # While Loop
-count = 0
-while count < 3:
-    print(count)
-    count += 1`,
-            problems: [
-              {
-                id: "python-fizzbuzz",
-                title: "FizzBuzz",
-                difficulty: "Easy",
-                companies: ["Amazon"],
-                description: "Print numbers 1 to n, replacing multiples of 3 with Fizz and 5 with Buzz",
-                completed: false
-              }
-            ]
-          }
-        ],
-      },
-    ],
   },
   "java": {
     title: "Java Programming",
@@ -279,23 +261,23 @@ while count < 3:
         topics: [
           {
             title: "Classes & Objects",
-            theory: `Java is an Object-Oriented Programming (OOP) language. Everything in Java is associated with classes and objects, along with its attributes and methods.
+            theory: `Java is an Object- Oriented Programming(OOP) language.Everything in Java is associated with classes and objects, along with its attributes and methods.
             
-- **Class**: A blueprint for creating objects.
-- **Object**: An instance of a class.`,
+- ** Class **: A blueprint for creating objects.
+- ** Object **: An instance of a class.`,
             code: `public class Car {
-    String color;
-    String model;
+        String color;
+        String model;
 
-    public void drive() {
+        public void drive() {
         System.out.println("Driving " + model);
-    }
+      }
 
     public static void main(String[] args) {
         Car myCar = new Car();
         myCar.model = "Tesla";
         myCar.drive();
-    }
+      }
 }`,
             problems: [
               {
@@ -334,23 +316,23 @@ while count < 3:
         topics: [
           {
             title: "Pointers & References",
-            theory: `Pointers are variables that store the memory address of another variable. They are a powerful feature in C++ allowing for direct memory manipulation.
+            theory: `Pointers are variables that store the memory address of another variable.They are a powerful feature in C++ allowing for direct memory manipulation.
                     
-- **& Operator**: The address-of operator.
-- *** Operator**: The dereference operator.`,
+- **& Operator **: The address - of operator.
+- *** Operator **: The dereference operator.`,
             code: `#include <iostream>
 using namespace std;
 
 int main() {
     int var = 20;
-    int* ptr = &var;  // ptr holds the address of var
+  int * ptr = &var ;  // ptr holds the address of var
 
-    cout << "Value of var: " << var << endl;
-    cout << "Address of var: " << ptr << endl;
-    cout << "Value pointed to by ptr: " << *ptr << endl;
+  cout << "Value of var: " << var << endl;
+  cout << "Address of var: " << ptr << endl;
+  cout << "Value pointed to by ptr: " << * ptr << endl;
 
-    return 0;
-}`,
+  return 0;
+} `,
             problems: [
               {
                 id: "cpp-pointer-swap",
@@ -392,9 +374,9 @@ int main() {
             code: `#include <stdio.h>
 
 int main() {
-    printf("Hello, World!\\n");
-    return 0;
-}`,
+  printf("Hello, World!\\n");
+  return 0;
+} `,
             problems: [
               {
                 id: "c-hello",
@@ -432,22 +414,22 @@ int main() {
         topics: [
           {
             title: "Load Balancing",
-            theory: `Load balancing refers to the process of distributing network traffic across multiple servers. This ensures no single server bears too much demand.
-                    
-Algorithms:
+            theory: `Load balancing refers to the process of distributing network traffic across multiple servers.This ensures no single server bears too much demand.
+
+  Algorithms:
 - Round Robin
-- Least Connections
-- IP Hash`,
+  - Least Connections
+    - IP Hash`,
             code: `# Pseudocode for Round Robin Load Balancer
 class LoadBalancer:
     def __init__(self, servers):
-        self.servers = servers
-        self.current_index = 0
+self.servers = servers
+self.current_index = 0
 
     def get_server(self):
-        server = self.servers[self.current_index]
-        self.current_index = (self.current_index + 1) % len(self.servers)
-        return server`,
+server = self.servers[self.current_index]
+self.current_index = (self.current_index + 1) % len(self.servers)
+return server`,
             problems: [
               {
                 id: "design-lb",
@@ -556,7 +538,7 @@ export default function CoursePage({ params }: CoursePageProps) {
                     <div className="text-sm text-muted-foreground">{course.instructorBio}</div>
                   </div>
                   <Button className="w-full" asChild>
-                    <a href={`/practice/${course.modules[0]?.topics[0]?.problems[0]?.id || "two-sum"}`}>
+                    <a href={`/ practice / ${ course.modules[0]?.topics[0]?.problems[0]?.id || "two-sum" } `}>
                       <Play className="mr-2 h-4 w-4" />
                       Start Learning Free
                     </a>
@@ -608,7 +590,7 @@ export default function CoursePage({ params }: CoursePageProps) {
                     <CardContent>
                       <Accordion type="single" collapsible className="w-full">
                         {module.topics.map((topic, topicIndex) => (
-                          <AccordionItem key={topicIndex} value={`topic-${topicIndex}`}>
+                          <AccordionItem key={topicIndex} value={`topic - ${ topicIndex } `}>
                             <AccordionTrigger className="text-left hover:no-underline hover:bg-muted/50 px-4 rounded-lg">
                               <div className="flex items-center gap-2">
                                 <BookOpen className="h-4 w-4 text-blue-500" />
@@ -691,7 +673,7 @@ export default function CoursePage({ params }: CoursePageProps) {
                                         </div>
                                       </div>
                                     </div>
-                                    <Link href={`/practice/${problem.id}`}>
+                                    <Link href={`/ practice / ${ problem.id } `}>
                                       <Button size="sm" variant="outline">
                                         <Play className="mr-1 h-3 w-3" />
                                         Solve
@@ -758,7 +740,7 @@ export default function CoursePage({ params }: CoursePageProps) {
                               </div>
                             </div>
                           </div>
-                          <Link href={`/practice/${problem.id}`}>
+                          <Link href={`/ practice / ${ problem.id } `}>
                             <Button>
                               <Code className="mr-2 h-4 w-4" />
                               Solve Problem
