@@ -47,7 +47,7 @@ interface Submission {
 }
 
 export default function HackathonPage() {
-    const [view, setView] = useState<'list' | 'hackathon'>('list')
+    const [view, setView] = useState<'list' | 'hackathon' | 'team-setup'>('list')
     const [hackathons, setHackathons] = useState<Hackathon[]>([])
     const [selectedHackathon, setSelectedHackathon] = useState<Hackathon | null>(null)
     const [problems, setProblems] = useState<Problem[]>([])
@@ -577,9 +577,9 @@ export default function HackathonPage() {
                                             <div key={entry.teamId} className={`flex items-center justify-between p-4 rounded-lg border ${entry.teamId === team?.id ? 'bg-blue-50 border-blue-200' : 'bg-white'}`}>
                                                 <div className="flex items-center gap-4">
                                                     <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                                                            index === 1 ? 'bg-gray-100 text-gray-700' :
-                                                                index === 2 ? 'bg-orange-100 text-orange-700' :
-                                                                    'bg-slate-100 text-slate-700'
+                                                        index === 1 ? 'bg-gray-100 text-gray-700' :
+                                                            index === 2 ? 'bg-orange-100 text-orange-700' :
+                                                                'bg-slate-100 text-slate-700'
                                                         }`}>
                                                         {index + 1}
                                                     </div>

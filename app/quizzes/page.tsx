@@ -1,9 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-"use client"
-
-import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"

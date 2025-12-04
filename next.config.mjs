@@ -10,15 +10,14 @@ const nextConfig = {
     unoptimized: true,
   },
   // Production build configuration
-  output: 'standalone', // Enabled for production deployment
   trailingSlash: false,
-  
+
   // Experimental features for better performance
   experimental: {
     missingSuspenseWithCSRBailout: false,
     serverComponentsExternalPackages: ['child_process'],
   },
-  
+
   // Configure for network access
   env: {
     CUSTOM_HOST: process.env.CUSTOM_HOST || '0.0.0.0',
