@@ -62,9 +62,22 @@ export default function HackathonPage() {
     const [isLoading, setIsLoading] = useState(true)
     const { toast } = useToast()
 
+    const [team, setTeam] = useState<any>(null)
+    const [teamName, setTeamName] = useState('')
+    const [leaderboard, setLeaderboard] = useState<any[]>([])
+    const [activeTab, setActiveTab] = useState('problems')
+
     useEffect(() => {
         fetchHackathons()
     }, [])
+
+    useEffect(() => {
+        if (selectedHackathon && team) {
+            fetchLeaderboard()
+            const interval = setInterval(fetchLeaderboard, 30000) // Refresh every 30s
+            return () => clearInterval(interval)
+        }
+    }, [selectedHackathon, team])
 
     const fetchHackathons = async () => {
         try {
@@ -85,7 +98,6 @@ export default function HackathonPage() {
             const response = await fetch('/api/problems')
             const data = await response.json()
             if (data.success) {
-                // Transform API problems to Hackathon problems format
                 const hackathonProblems = data.problems.slice(0, 5).map((p: any) => ({
                     id: p.id,
                     title: p.title,
@@ -101,16 +113,57 @@ export default function HackathonPage() {
         }
     }
 
+    const fetchLeaderboard = async () => {
+        if (!selectedHackathon) return
+        try {
+            const response = await fetch(`/api/leaderboard?contestId=${selectedHackathon.id}`)
+            const data = await response.json()
+            if (data.success) {
+                setLeaderboard(data.leaderboard)
+                // Update own team score if found
+                const myTeam = data.leaderboard.find((t: any) => t.teamId === team?.id)
+                if (myTeam) {
+                    setTeamScore(myTeam.score)
+                }
+            }
+        } catch (error) {
+            console.error('Failed to fetch leaderboard:', error)
+        }
+    }
+
+    const createTeam = async () => {
+        if (!teamName.trim() || !selectedHackathon) return
+        try {
+            const response = await fetch('/api/teams', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'create',
+                    name: teamName,
+                    contestId: selectedHackathon.id,
+                    username: 'CurrentUser' // Mock user
+                })
+            })
+            const data = await response.json()
+            if (data.success) {
+                setTeam(data.team)
+                setView('hackathon')
+                fetchProblems()
+            } else {
+                toast({ title: "Error", description: data.error, variant: "destructive" })
+            }
+        } catch (error) {
+            toast({ title: "Error", description: "Failed to create team", variant: "destructive" })
+        }
+    }
+
     useEffect(() => {
         if (selectedHackathon && selectedHackathon.status === 'live') {
-            fetchProblems()
             const endTime = new Date(selectedHackathon.endTime).getTime()
-
             const timer = setInterval(() => {
                 const remaining = Math.floor((endTime - Date.now()) / 1000)
                 setTimeLeft(remaining > 0 ? remaining : 0)
             }, 1000)
-
             return () => clearInterval(timer)
         }
     }, [selectedHackathon])
@@ -123,15 +176,13 @@ export default function HackathonPage() {
     }
 
     const executeCode = async () => {
-        if (!code.trim() || !selectedProblem) return
+        if (!code.trim() || !selectedProblem || !team) return
 
         setIsExecuting(true)
         setOutput('Executing code against test cases...')
 
         try {
-            // Run against the first test case for quick feedback
             const testCase = selectedProblem.testCases[0]
-
             const response = await fetch('/api/execute', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -151,24 +202,37 @@ export default function HackathonPage() {
                 if (actualOutput === expectedOutput) {
                     setOutput(`Test Case 1 Passed!\nOutput: ${actualOutput}\n\nSubmitting full solution...`)
 
-                    // If first case passes, simulate full submission (in real app, run all cases)
-                    // For demo speed, we'll assume success if first case passes, but mark as accepted
-                    const newSubmission: Submission = {
-                        problemId: selectedProblem.id,
-                        code,
-                        language,
-                        status: 'Accepted',
-                        score: selectedProblem.points,
-                        timestamp: new Date()
-                    }
-
-                    setSubmissions([newSubmission, ...submissions])
-                    setTeamScore(prev => prev + selectedProblem.points)
-
-                    toast({
-                        title: "Problem Solved!",
-                        description: `You earned ${selectedProblem.points} points.`,
+                    // Submit solution
+                    const submitResponse = await fetch('/api/submissions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            problemId: selectedProblem.id,
+                            code,
+                            language,
+                            status: 'Accepted',
+                            teamId: team.id,
+                            userId: 'CurrentUser'
+                        })
                     })
+
+                    if (submitResponse.ok) {
+                        const newSubmission: Submission = {
+                            problemId: selectedProblem.id,
+                            code,
+                            language,
+                            status: 'Accepted',
+                            score: selectedProblem.points,
+                            timestamp: new Date()
+                        }
+                        setSubmissions([newSubmission, ...submissions])
+                        fetchLeaderboard() // Refresh leaderboard
+
+                        toast({
+                            title: "Problem Solved!",
+                            description: `You earned ${selectedProblem.points} points.`,
+                        })
+                    }
                 } else {
                     setOutput(`Test Case 1 Failed.\nExpected: ${expectedOutput}\nActual: ${actualOutput}`)
                     toast({
@@ -281,7 +345,11 @@ export default function HackathonPage() {
                                             <Button
                                                 onClick={() => {
                                                     setSelectedHackathon(hackathon)
-                                                    setView('hackathon')
+                                                    if (hackathon.status === 'live') {
+                                                        setView('team-setup')
+                                                    } else {
+                                                        setView('hackathon') // View only
+                                                    }
                                                 }}
                                                 disabled={hackathon.status === 'completed'}
                                                 className="w-full"
@@ -293,10 +361,39 @@ export default function HackathonPage() {
                                 </Card>
                             ))}
                         </TabsContent>
-
-                        {/* Other tabs can reuse the same mapping logic filtered by status */}
                     </Tabs>
                 </div>
+            </div>
+        )
+    }
+
+    // Team Setup View
+    if (view === 'team-setup' && selectedHackathon) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+                <Card className="w-full max-w-md">
+                    <CardHeader>
+                        <CardTitle>Join {selectedHackathon.title}</CardTitle>
+                        <CardDescription>Create a team to start competing</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Team Name</label>
+                            <Textarea
+                                value={teamName}
+                                onChange={(e) => setTeamName(e.target.value)}
+                                placeholder="Enter your team name..."
+                                className="min-h-[40px]"
+                            />
+                        </div>
+                        <Button onClick={createTeam} className="w-full">
+                            Create Team & Start
+                        </Button>
+                        <Button variant="ghost" onClick={() => setView('list')} className="w-full">
+                            Cancel
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
         )
     }
@@ -323,6 +420,12 @@ export default function HackathonPage() {
                                 <Trophy className="h-5 w-5" />
                                 <span className="font-bold">{teamScore} pts</span>
                             </div>
+                            {team && (
+                                <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-lg">
+                                    <Users className="h-5 w-5" />
+                                    <span className="font-bold">{team.name}</span>
+                                </div>
+                            )}
                             <Button variant="outline" size="sm" className="bg-white/20 border-white/30" onClick={() => setView('list')}>
                                 Exit
                             </Button>
@@ -331,130 +434,182 @@ export default function HackathonPage() {
                 </div>
 
                 <div className="container mx-auto py-6 px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Problems List */}
-                        <Card className="lg:col-span-1">
-                            <CardHeader>
-                                <CardTitle>Problems</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-3">
-                                {problems.map((problem) => (
-                                    <Card
-                                        key={problem.id}
-                                        className={`cursor-pointer hover:shadow-md transition-all ${selectedProblem?.id === problem.id ? 'ring-2 ring-blue-500' : ''
-                                            }`}
-                                        onClick={() => setSelectedProblem(problem)}
-                                    >
-                                        <CardContent className="p-4">
-                                            <div className="flex items-start justify-between mb-2">
-                                                <h4 className="font-semibold">{problem.title}</h4>
-                                                <Badge className={`${getDifficultyColor(problem.difficulty)} border text-xs`}>
-                                                    {problem.difficulty}
-                                                </Badge>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{problem.description}</p>
-                                            <div className="flex items-center justify-between text-xs">
-                                                <span className="text-blue-600 font-semibold">{problem.points} points</span>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                                {problems.length === 0 && (
-                                    <div className="text-center text-muted-foreground py-4">
-                                        No problems available for this hackathon.
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Card>
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                        <TabsList>
+                            <TabsTrigger value="problems">Problems</TabsTrigger>
+                            <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
+                        </TabsList>
 
-                        {/* Code Editor */}
-                        <div className="lg:col-span-2 space-y-4">
-                            {selectedProblem ? (
-                                <>
-                                    <Card>
-                                        <CardHeader>
-                                            <div className="flex items-center justify-between">
-                                                <CardTitle>{selectedProblem.title}</CardTitle>
-                                                <div className="flex items-center gap-2">
-                                                    <Select value={language} onValueChange={setLanguage}>
-                                                        <SelectTrigger className="w-40">
-                                                            <SelectValue />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectItem value="python">Python</SelectItem>
-                                                            <SelectItem value="javascript">JavaScript</SelectItem>
-                                                            <SelectItem value="cpp">C++</SelectItem>
-                                                            <SelectItem value="java">Java</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <Button onClick={executeCode} disabled={isExecuting}>
-                                                        {isExecuting ? 'Running...' : <><Play className="h-4 w-4 mr-2" />Run Code</>}
-                                                    </Button>
+                        <TabsContent value="problems" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Problems List */}
+                            <Card className="lg:col-span-1 h-fit">
+                                <CardHeader>
+                                    <CardTitle>Problems</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-3">
+                                    {problems.map((problem) => (
+                                        <Card
+                                            key={problem.id}
+                                            className={`cursor-pointer hover:shadow-md transition-all ${selectedProblem?.id === problem.id ? 'ring-2 ring-blue-500' : ''
+                                                }`}
+                                            onClick={() => setSelectedProblem(problem)}
+                                        >
+                                            <CardContent className="p-4">
+                                                <div className="flex items-start justify-between mb-2">
+                                                    <h4 className="font-semibold">{problem.title}</h4>
+                                                    <Badge className={`${getDifficultyColor(problem.difficulty)} border text-xs`}>
+                                                        {problem.difficulty}
+                                                    </Badge>
                                                 </div>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <Textarea
-                                                value={code}
-                                                onChange={(e) => setCode(e.target.value)}
-                                                placeholder="Write your code here..."
-                                                className="font-mono min-h-[400px]"
-                                            />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle className="text-sm">Output</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <pre className="bg-gray-900 text-green-400 p-4 rounded-lg min-h-[150px] font-mono text-sm overflow-auto">
-                                                {output || 'Run your code to see output...'}
-                                            </pre>
-                                        </CardContent>
-                                    </Card>
-
-                                    {submissions.length > 0 && (
-                                        <Card>
-                                            <CardHeader>
-                                                <CardTitle className="text-sm">Submissions</CardTitle>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <div className="space-y-2">
-                                                    {submissions.map((sub, idx) => (
-                                                        <div key={idx} className="flex items-center justify-between p-2 bg-muted rounded">
-                                                            <div className="flex items-center gap-2">
-                                                                {sub.status === 'Accepted' ? (
-                                                                    <CheckCircle className="h-4 w-4 text-green-600" />
-                                                                ) : (
-                                                                    <XCircle className="h-4 w-4 text-red-600" />
-                                                                )}
-                                                                <span className="text-sm">{sub.language}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-4">
-                                                                <span className="text-sm font-semibold">{sub.score} pts</span>
-                                                                <span className="text-xs text-muted-foreground">
-                                                                    {sub.timestamp.toLocaleTimeString()}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                                <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{problem.description}</p>
+                                                <div className="flex items-center justify-between text-xs">
+                                                    <span className="text-blue-600 font-semibold">{problem.points} points</span>
                                                 </div>
                                             </CardContent>
                                         </Card>
+                                    ))}
+                                    {problems.length === 0 && (
+                                        <div className="text-center text-muted-foreground py-4">
+                                            No problems available for this hackathon.
+                                        </div>
                                     )}
-                                </>
-                            ) : (
-                                <Card>
-                                    <CardContent className="p-12 text-center">
-                                        <Code className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                                        <h3 className="text-xl font-semibold mb-2">Select a Problem</h3>
-                                        <p className="text-muted-foreground">Choose a problem from the list to start coding</p>
-                                    </CardContent>
-                                </Card>
-                            )}
-                        </div>
-                    </div>
+                                </CardContent>
+                            </Card>
+
+                            {/* Code Editor */}
+                            <div className="lg:col-span-2 space-y-4">
+                                {selectedProblem ? (
+                                    <>
+                                        <Card>
+                                            <CardHeader>
+                                                <div className="flex items-center justify-between">
+                                                    <CardTitle>{selectedProblem.title}</CardTitle>
+                                                    <div className="flex items-center gap-2">
+                                                        <Select value={language} onValueChange={setLanguage}>
+                                                            <SelectTrigger className="w-40">
+                                                                <SelectValue />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="python">Python</SelectItem>
+                                                                <SelectItem value="javascript">JavaScript</SelectItem>
+                                                                <SelectItem value="cpp">C++</SelectItem>
+                                                                <SelectItem value="java">Java</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                        <Button onClick={executeCode} disabled={isExecuting}>
+                                                            {isExecuting ? 'Running...' : <><Play className="h-4 w-4 mr-2" />Run Code</>}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <Textarea
+                                                    value={code}
+                                                    onChange={(e) => setCode(e.target.value)}
+                                                    placeholder="Write your code here..."
+                                                    className="font-mono min-h-[400px]"
+                                                />
+                                            </CardContent>
+                                        </Card>
+
+                                        <Card>
+                                            <CardHeader>
+                                                <CardTitle className="text-sm">Output</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <pre className="bg-gray-900 text-green-400 p-4 rounded-lg min-h-[150px] font-mono text-sm overflow-auto">
+                                                    {output || 'Run your code to see output...'}
+                                                </pre>
+                                            </CardContent>
+                                        </Card>
+
+                                        {submissions.length > 0 && (
+                                            <Card>
+                                                <CardHeader>
+                                                    <CardTitle className="text-sm">Submissions</CardTitle>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <div className="space-y-2">
+                                                        {submissions.map((sub, idx) => (
+                                                            <div key={idx} className="flex items-center justify-between p-2 bg-muted rounded">
+                                                                <div className="flex items-center gap-2">
+                                                                    {sub.status === 'Accepted' ? (
+                                                                        <CheckCircle className="h-4 w-4 text-green-600" />
+                                                                    ) : (
+                                                                        <XCircle className="h-4 w-4 text-red-600" />
+                                                                    )}
+                                                                    <span className="text-sm">{sub.language}</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-4">
+                                                                    <span className="text-sm font-semibold">{sub.score} pts</span>
+                                                                    <span className="text-xs text-muted-foreground">
+                                                                        {sub.timestamp.toLocaleTimeString()}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        )}
+                                    </>
+                                ) : (
+                                    <Card>
+                                        <CardContent className="p-12 text-center">
+                                            <Code className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                                            <h3 className="text-xl font-semibold mb-2">Select a Problem</h3>
+                                            <p className="text-muted-foreground">Choose a problem from the list to start coding</p>
+                                        </CardContent>
+                                    </Card>
+                                )}
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="leaderboard">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Live Leaderboard</CardTitle>
+                                    <CardDescription>Real-time rankings for {selectedHackathon.title}</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="space-y-4">
+                                        {leaderboard.map((entry, index) => (
+                                            <div key={entry.teamId} className={`flex items-center justify-between p-4 rounded-lg border ${entry.teamId === team?.id ? 'bg-blue-50 border-blue-200' : 'bg-white'}`}>
+                                                <div className="flex items-center gap-4">
+                                                    <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold ${index === 0 ? 'bg-yellow-100 text-yellow-700' :
+                                                            index === 1 ? 'bg-gray-100 text-gray-700' :
+                                                                index === 2 ? 'bg-orange-100 text-orange-700' :
+                                                                    'bg-slate-100 text-slate-700'
+                                                        }`}>
+                                                        {index + 1}
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-semibold">{entry.teamName}</div>
+                                                        <div className="text-sm text-muted-foreground">{entry.members.join(', ')}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-8">
+                                                    <div className="text-right">
+                                                        <div className="text-sm text-muted-foreground">Solved</div>
+                                                        <div className="font-medium">{entry.solved}</div>
+                                                    </div>
+                                                    <div className="text-right w-20">
+                                                        <div className="text-sm text-muted-foreground">Score</div>
+                                                        <div className="font-bold text-lg text-blue-600">{entry.score}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {leaderboard.length === 0 && (
+                                            <div className="text-center py-8 text-muted-foreground">
+                                                No teams on the leaderboard yet. Be the first!
+                                            </div>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </Tabs>
                 </div>
             </div>
         )

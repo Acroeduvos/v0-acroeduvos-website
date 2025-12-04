@@ -8,6 +8,7 @@ interface Store {
     submissions: Submission[]
     activities: Activity[]
     contests: Contest[]
+    teams: Team[]
     users: User[]
     stats: {
         activeUsers: number
@@ -71,6 +72,16 @@ export interface User {
         timestamp: string
         result: string
     }[]
+}
+
+export interface Team {
+    id: string
+    name: string
+    contestId: string
+    members: string[]
+    score: number
+    rank: number
+    submissions: Submission[]
 }
 
 // Initialize with sample data
@@ -146,6 +157,36 @@ const generateUsers = (): User[] => {
     }))
 }
 
+const initialTeams: Team[] = [
+    {
+        id: 'team_1',
+        name: 'Binary Bandits',
+        contestId: 'live-1',
+        members: ['CodeMaster', 'AlgoNinja'],
+        score: 1250,
+        rank: 1,
+        submissions: []
+    },
+    {
+        id: 'team_2',
+        name: 'Null Pointers',
+        contestId: 'live-1',
+        members: ['PythonPro', 'JavaGuru'],
+        score: 980,
+        rank: 2,
+        submissions: []
+    },
+    {
+        id: 'team_3',
+        name: 'Syntax Errors',
+        contestId: 'live-1',
+        members: ['CppExpert', 'DataWizard'],
+        score: 850,
+        rank: 3,
+        submissions: []
+    }
+]
+
 // Singleton store instance
 let store: Store = {
     problems: codingProblems,
@@ -153,6 +194,7 @@ let store: Store = {
     submissions: [],
     activities: initialActivities,
     contests: initialContests,
+    teams: initialTeams,
     users: generateUsers(),
     stats: {
         activeUsers: 124,
@@ -229,6 +271,41 @@ export const db = {
             return true
         }
         return false
+    },
+
+    // Teams
+    getTeamsByContest: (contestId: string) => store.teams.filter(t => t.contestId === contestId).sort((a, b) => b.score - a.score),
+    createTeam: (name: string, contestId: string, creator: string) => {
+        const newTeam: Team = {
+            id: `team_${Date.now()}`,
+            name,
+            contestId,
+            members: [creator],
+            score: 0,
+            rank: store.teams.filter(t => t.contestId === contestId).length + 1,
+            submissions: []
+        }
+        store.teams.push(newTeam)
+        return newTeam
+    },
+    joinTeam: (teamId: string, username: string) => {
+        const team = store.teams.find(t => t.id === teamId)
+        if (team && !team.members.includes(username)) {
+            team.members.push(username)
+            return true
+        }
+        return false
+    },
+    updateTeamScore: (teamId: string, points: number) => {
+        const team = store.teams.find(t => t.id === teamId)
+        if (team) {
+            team.score += points
+            // Re-rank teams
+            const contestTeams = store.teams.filter(t => t.contestId === team.contestId).sort((a, b) => b.score - a.score)
+            contestTeams.forEach((t, index) => t.rank = index + 1)
+            return team
+        }
+        return null
     },
 
     // Users / Leaderboard
