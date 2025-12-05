@@ -18,12 +18,14 @@ import {
   Code,
   FileText,
   Award,
+  Lightbulb,
+  Terminal
 } from "lucide-react"
 import Link from "next/link"
 
-// This would typically come from a database or API
+// Expanded Course Data with Theory and Code
 const courseData = {
-  dsa: {
+  "data-structures-and-algorithms": {
     title: "Data Structures & Algorithms",
     description: "Master DSA with 200+ problems from Google, Microsoft, Amazon interviews",
     level: "Beginner to Advanced",
@@ -45,6 +47,23 @@ const courseData = {
         topics: [
           {
             title: "Two Pointer Technique",
+            theory: `The Two Pointer technique is an algorithmic pattern where two pointers iterate through the data structure in tandem until one or both of the pointers hit a certain condition.
+            
+### Common scenarios:
+1. **Shrinking Window**: One pointer starts at the beginning, one at the end. They move towards each other. Used for "Two Sum" (sorted), reversing arrays, etc.
+2. **Sliding Window**: Both pointers start at the beginning. One expands the window, the other contracts it. Used for tracking subarrays.`,
+            code: `// Python Example: Two Sum (Sorted Array)
+def two_sum(numbers, target):
+    left, right = 0, len(numbers) - 1
+    while left < right:
+        curr_sum = numbers[left] + numbers[right]
+        if curr_sum == target:
+            return [left + 1, right + 1]
+        elif curr_sum < target:
+            left += 1
+        else:
+            right -= 1
+    return []`,
             problems: [
               {
                 id: "two-sum",
@@ -74,93 +93,319 @@ const courseData = {
           },
           {
             title: "Sliding Window",
+            theory: `Sliding Window is a technique used to perform an operation on a specific window size of an array or linked list.
+            
+It reduces nested loops (O(N²)) to a single loop (O(N)).`,
+            code: `// Java Example: Max Sum Subarray of size K
+public int maxSum(int[] arr, int k) {
+    int maxSum = 0, windowSum = 0;
+    for (int i = 0; i < k; i++) windowSum += arr[i];
+    maxSum = windowSum;
+    for (int i = k; i < arr.length; i++) {
+        windowSum += arr[i] - arr[i - k];
+        maxSum = Math.max(maxSum, windowSum);
+    }
+    return maxSum;
+}`,
             problems: [
               {
                 id: "longest-substring",
-                title: "Longest Substring Without Repeating Characters",
+                title: "Longest Substring Without Repeating",
                 difficulty: "Medium",
-                companies: ["Amazon", "Adobe", "Bloomberg"],
+                companies: ["Amazon", "Adobe"],
                 description: "Find length of longest substring without repeating characters",
                 completed: false,
-              },
-              {
-                id: "min-window",
-                title: "Minimum Window Substring",
-                difficulty: "Hard",
-                companies: ["Facebook", "Uber"],
-                description: "Find minimum window substring containing all characters",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "Linked Lists",
-        description: "Master linked list operations and algorithms",
-        lessons: 8,
-        problems: 22,
-        duration: "1.5 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Basic Operations",
-            problems: [
-              {
-                id: "reverse-linked-list",
-                title: "Reverse Linked List",
-                difficulty: "Easy",
-                companies: ["Microsoft", "Apple", "Facebook"],
-                description: "Reverse a singly linked list",
-                completed: false,
-              },
-              {
-                id: "merge-sorted-lists",
-                title: "Merge Two Sorted Lists",
-                difficulty: "Easy",
-                companies: ["Amazon", "LinkedIn"],
-                description: "Merge two sorted linked lists",
-                completed: false,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 3,
-        title: "Trees & Graphs",
-        description: "Explore tree traversals and graph algorithms",
-        lessons: 15,
-        problems: 45,
-        duration: "3 weeks",
-        completed: false,
-        topics: [
-          {
-            title: "Binary Trees",
-            problems: [
-              {
-                id: "max-depth",
-                title: "Maximum Depth of Binary Tree",
-                difficulty: "Easy",
-                companies: ["LinkedIn", "Uber"],
-                description: "Find the maximum depth of a binary tree",
-                completed: false,
-              },
-              {
-                id: "validate-bst",
-                title: "Validate Binary Search Tree",
-                difficulty: "Medium",
-                companies: ["Amazon", "Microsoft", "Facebook"],
-                description: "Determine if a binary tree is a valid BST",
-                completed: false,
-              },
+              }
             ],
           },
         ],
       },
     ],
   },
+  python: {
+    title: "Python Programming",
+    description: "Master Python from basics to advanced concepts. Learn from W3Schools and TutorialsPoint content.",
+    level: "Beginner to Advanced",
+    duration: "31 hours",
+    students: "8.5k",
+    rating: 4.9,
+    progress: 0,
+    instructor: "Dr. Sarah Chen",
+    instructorBio: "Python Expert & Data Scientist",
+    modules: [
+      {
+        id: 1,
+        title: "Python Basics",
+        description: "Introduction to Python syntax, variables, and data types",
+        lessons: 10,
+        problems: 15,
+        duration: "1 week",
+        completed: false,
+        topics: [
+          {
+            title: "Variables and Data Types",
+            theory: `Variables are containers for storing data values. Python has no command for declaring a variable. A variable is created the moment you first assign a value to it.
+
+### Standard Data Types:
+*   Numbers (int, float, complex)
+*   String (str)
+*   List
+*   Tuple
+*   Dictionary`,
+            code: `# Python Variables
+x = 5           # int
+y = "John"      # str
+print(x)
+print(y)
+
+# Casting
+x = str(3)    # x will be '3'
+y = int(3)    # y will be 3
+z = float(3)  # z will be 3.0`,
+            problems: [
+              {
+                id: "py-variables",
+                title: "Variable Swap",
+                difficulty: "Easy",
+                companies: ["Basic"],
+                description: "Swap two variables without a temp variable",
+                completed: false,
+              }
+            ]
+          },
+          {
+            title: "Control Flow",
+            theory: `Python uses indentation to indicate a block of code.
+            
+*   **if...elif...else**: Conditional execution.
+*   **while loops**: Execute as long as a condition is true.
+*   **for loops**: Iterate over a sequence.`,
+            code: `# If statement
+if 5 > 2:
+    print("Five is greater than two!")
+
+# For loop
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+    print(x)`,
+            problems: [
+              {
+                id: "py-loops",
+                title: "Fibonacci Sequence",
+                difficulty: "Easy",
+                companies: ["Basic"],
+                description: "Print first N numbers of Fibonacci sequence",
+                completed: false,
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  java: {
+    title: "Java Programming",
+    description: "Comprehensive Java course covering OOP, Collections, and Streams.",
+    level: "Beginner to Advanced",
+    duration: "30 hours",
+    students: "6.2k",
+    rating: 4.9,
+    progress: 0,
+    instructor: "Alex Rodriguez",
+    instructorBio: "Senior Java Developer",
+    modules: [
+      {
+        id: 1,
+        title: "Java Fundamentals",
+        description: "Core syntax and Object-Oriented Programming",
+        lessons: 15,
+        problems: 20,
+        duration: "2 weeks",
+        completed: false,
+        topics: [
+          {
+            title: "Classes and Objects",
+            theory: `Java is an Object-Oriented Language. Everything differs to valid classes and objects.
+            
+*   **Class**: A blueprint for creating objects.
+*   **Object**: An instance of a class.`,
+            code: `public class Main {
+  int x = 5;
+
+  public static void main(String[] args) {
+    Main myObj = new Main();
+    System.out.println(myObj.x);
+  }
+}`,
+            problems: [
+              {
+                id: "java-class",
+                title: "Create a Car Class",
+                difficulty: "Easy",
+                companies: ["Basic"],
+                description: "Define a Car class with attributes and methods",
+                completed: false,
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  cpp: {
+    title: "C++ Programming",
+    description: "High-performance programming with C++.",
+    level: "Intermediate",
+    duration: "32 hours",
+    students: "4.1k",
+    rating: 4.9,
+    progress: 0,
+    instructor: "Emily Watson",
+    instructorBio: "Systems Engineer",
+    modules: [
+      {
+        id: 1,
+        title: "C++ Basics & Pointers",
+        description: "Memory management and core features",
+        lessons: 12,
+        problems: 18,
+        duration: "2 weeks",
+        completed: false,
+        topics: [
+          {
+            title: "Pointers and References",
+            theory: `A pointer is a variable that stores the memory address of another variable.
+            
+*   \`&\` Operator: The address-of operator.
+*   \`*\` Operator: The dereference operator.`,
+            code: `string food = "Pizza";
+string* ptr = &food;
+
+// Output the value of food (Pizza)
+cout << food << "\\n";
+
+// Output the memory address of food (0x6dfed4)
+cout << &food << "\\n";
+
+// Output the memory address of food with the pointer (0x6dfed4)
+cout << ptr << "\\n";`,
+            problems: [
+              {
+                id: "cpp-pointer",
+                title: "Swap with Pointers",
+                difficulty: "Medium",
+                companies: ["Basic"],
+                description: "Swap two numbers using pointers",
+                completed: false,
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  c: {
+    title: "C Programming",
+    description: "The mother of all languages. System level programming.",
+    level: "Beginner",
+    duration: "24 hours",
+    students: "3.2k",
+    rating: 4.8,
+    progress: 0,
+    instructor: "Dr. Michael Kim",
+    instructorBio: "OS Developer",
+    modules: [
+      {
+        id: 1,
+        title: "C Fundamentals",
+        description: "Syntax, Loops, and Functions",
+        lessons: 8,
+        problems: 10,
+        duration: "1 week",
+        completed: false,
+        topics: [
+          {
+            title: "Structure of C Program",
+            theory: `A C program consists of the following parts:
+*   Preprocessor Commands
+*   Functions
+*   Variables
+*   Statements & Expressions
+*   Comments`,
+            code: `#include <stdio.h>
+
+int main() {
+   /* my first program in C */
+   printf("Hello, World! \\n");
+   return 0;
+}`,
+            problems: [
+              {
+                id: "c-hello",
+                title: "Hello World",
+                difficulty: "Easy",
+                companies: ["Basic"],
+                description: "Print Hello World in C",
+                completed: false,
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "system-design-mastery": {
+    title: "System Design Mastery",
+    description: "Design scalable distributed systems.",
+    level: "Advanced",
+    duration: "8 weeks",
+    students: "3.1k",
+    rating: 4.9,
+    progress: 0,
+    instructor: "Alex Rodriguez",
+    instructorBio: "Principal Architect",
+    modules: [
+      {
+        id: 1,
+        title: "Load Balancing",
+        description: "Distributing traffic across servers",
+        lessons: 5,
+        problems: 5,
+        duration: "1 week",
+        completed: false,
+        topics: [
+          {
+            title: "Load Balancers Basics",
+            theory: `A load balancer sits between the client and the server farm accepting incoming network and application traffic and distributing the traffic across multiple backend servers using various algorithms.`,
+            code: `// Nginx Configuration Example
+http {
+    upstream backend {
+        server backend1.example.com;
+        server backend2.example.com;
+        server backend3.example.com;
+    }
+
+    server {
+        location / {
+            proxy_pass http://backend;
+        }
+    }
+}`,
+            problems: [
+              {
+                id: "design-lb",
+                title: "Design a Load Balancer",
+                difficulty: "Hard",
+                companies: ["Google", "Amazon"],
+                description: "Design a scalable load balancer",
+                completed: false,
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
 
 interface CoursePageProps {
@@ -173,7 +418,15 @@ export default function CoursePage({ params }: CoursePageProps) {
   const course = courseData[params.courseId as keyof typeof courseData]
 
   if (!course) {
-    return <div>Course not found</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center flex-col gap-4">
+        <h1 className="text-2xl font-bold">Course Not Found</h1>
+        <p className="text-muted-foreground">The course you are looking for does not exist.</p>
+        <Button asChild>
+          <Link href="/courses">Browse Courses</Link>
+        </Button>
+      </div>
+    )
   }
 
   const completedProblems = course.modules
@@ -302,52 +555,81 @@ export default function CoursePage({ params }: CoursePageProps) {
                               </div>
                             </AccordionTrigger>
                             <AccordionContent>
-                              <div className="space-y-3 pt-2">
-                                {topic.problems.map((problem) => (
-                                  <div
-                                    key={problem.id}
-                                    className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors"
-                                  >
-                                    <div className="flex items-center gap-3">
-                                      {problem.completed ? (
-                                        <CheckCircle className="h-4 w-4 text-green-500" />
-                                      ) : (
-                                        <Circle className="h-4 w-4 text-muted-foreground" />
-                                      )}
-                                      <div>
-                                        <div className="font-medium">{problem.title}</div>
-                                        <div className="text-sm text-muted-foreground">{problem.description}</div>
-                                        <div className="flex items-center gap-2 mt-1">
-                                          <Badge
-                                            variant={
-                                              problem.difficulty === "Easy"
-                                                ? "secondary"
-                                                : problem.difficulty === "Medium"
-                                                  ? "default"
-                                                  : "destructive"
-                                            }
-                                            className="text-xs"
-                                          >
-                                            {problem.difficulty}
-                                          </Badge>
-                                          <div className="flex gap-1">
-                                            {problem.companies.slice(0, 2).map((company) => (
-                                              <Badge key={company} variant="outline" className="text-xs">
-                                                {company}
-                                              </Badge>
-                                            ))}
+                              <div className="space-y-6 pt-4">
+                                {/* Theory Section */}
+                                <div className="space-y-2">
+                                  <h4 className="flex items-center gap-2 font-semibold text-primary">
+                                    <Lightbulb className="h-4 w-4" />
+                                    Concept & Theory
+                                  </h4>
+                                  <div className="bg-muted/30 p-4 rounded-lg text-sm leading-relaxed whitespace-pre-line border">
+                                    {topic.theory}
+                                  </div>
+                                </div>
+
+                                {/* Code Example Section */}
+                                <div className="space-y-2">
+                                  <h4 className="flex items-center gap-2 font-semibold text-primary">
+                                    <Terminal className="h-4 w-4" />
+                                    Code Example
+                                  </h4>
+                                  <div className="bg-slate-950 text-slate-50 p-4 rounded-lg font-mono text-sm overflow-x-auto relative">
+                                    <pre>{topic.code}</pre>
+                                  </div>
+                                </div>
+
+                                {/* Problems Section */}
+                                <div className="space-y-3">
+                                  <h4 className="flex items-center gap-2 font-semibold text-primary">
+                                    <Target className="h-4 w-4" />
+                                    Practice Problems
+                                  </h4>
+                                  {topic.problems.map((problem) => (
+                                    <div
+                                      key={problem.id}
+                                      className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors"
+                                    >
+                                      <div className="flex items-center gap-3">
+                                        {problem.completed ? (
+                                          <CheckCircle className="h-4 w-4 text-green-500" />
+                                        ) : (
+                                          <Circle className="h-4 w-4 text-muted-foreground" />
+                                        )}
+                                        <div>
+                                          <div className="font-medium">{problem.title}</div>
+                                          <div className="text-sm text-muted-foreground">{problem.description}</div>
+                                          <div className="flex items-center gap-2 mt-1">
+                                            <Badge
+                                              variant={
+                                                problem.difficulty === "Easy"
+                                                  ? "secondary"
+                                                  : problem.difficulty === "Medium"
+                                                    ? "default"
+                                                    : "destructive"
+                                              }
+                                              className="text-xs"
+                                            >
+                                              {problem.difficulty}
+                                            </Badge>
+                                            <div className="flex gap-1">
+                                              {problem.companies.slice(0, 2).map((company) => (
+                                                <Badge key={company} variant="outline" className="text-xs">
+                                                  {company}
+                                                </Badge>
+                                              ))}
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
+                                      <Link href={`/practice/${problem.id}`}>
+                                        <Button size="sm" variant="outline">
+                                          <Code className="mr-1 h-3 w-3" />
+                                          Solve
+                                        </Button>
+                                      </Link>
                                     </div>
-                                    <Link href={`/practice/${problem.id}`}>
-                                      <Button size="sm" variant="outline">
-                                        <Code className="mr-1 h-3 w-3" />
-                                        Solve
-                                      </Button>
-                                    </Link>
-                                  </div>
-                                ))}
+                                  ))}
+                                </div>
                               </div>
                             </AccordionContent>
                           </AccordionItem>
