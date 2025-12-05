@@ -1,0 +1,67 @@
+.next/types/app/api/quizzes/[id]/route.ts(49,7): error TS2344: Type '{ __tag__: "GET"; __param_position__: "second"; __param_type__: { params: { id: string; }; }; }' does not satisfy the constraint 'ParamCheck<RouteContext>'.
+  The types of '__param_type__.params' are incompatible between these types.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/api/quizzes/[id]/route.ts(244,7): error TS2344: Type '{ __tag__: "DELETE"; __param_position__: "second"; __param_type__: { params: { id: string; }; }; }' does not satisfy the constraint 'ParamCheck<RouteContext>'.
+  The types of '__param_type__.params' are incompatible between these types.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/api/quizzes/[id]/submissions/route.ts(49,7): error TS2344: Type '{ __tag__: "GET"; __param_position__: "second"; __param_type__: { params: { id: string; }; }; }' does not satisfy the constraint 'ParamCheck<RouteContext>'.
+  The types of '__param_type__.params' are incompatible between these types.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/api/quizzes/[id]/submissions/route.ts(166,7): error TS2344: Type '{ __tag__: "POST"; __param_position__: "second"; __param_type__: { params: { id: string; }; }; }' does not satisfy the constraint 'ParamCheck<RouteContext>'.
+  The types of '__param_type__.params' are incompatible between these types.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/certificates/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/contests/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/courses/[id]/complete/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/courses/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/courses/[id]/test-lab/page.ts(2,24): error TS2307: Cannot find module '../../../../../../app/courses/[id]/test-lab/page.js' or its corresponding type declarations.
+.next/types/app/courses/[id]/test-lab/page.ts(5,29): error TS2307: Cannot find module '../../../../../../app/courses/[id]/test-lab/page.js' or its corresponding type declarations.
+.next/types/app/learn/[courseId]/page.ts(34,29): error TS2344: Type '{ params: { courseId: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ courseId: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/mncs/[company]/page.ts(34,29): error TS2344: Type '{ params: { company: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ company: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/mncs/[company]/questions/page.ts(34,29): error TS2344: Type '{ params: { company: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ company: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/problems/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/search/page.ts(34,29): error TS2344: Type '{ searchParams: { q?: string | undefined; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'searchParams' are incompatible.
+    Type '{ q?: string | undefined; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/submissions/[id]/page.ts(34,29): error TS2344: Type '{ params: { id: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ id: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+app/quizzes/[id]/page.tsx(44,5): error TS1308: 'await' expressions are only allowed within async functions and at the top levels of modules.
+components/practice-overview.tsx(274,32): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(282,37): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(285,41): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(289,26): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(289,59): error TS7006: Parameter 'problem' implicitly has an 'any' type.
+components/practice-overview.tsx(306,26): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(308,31): error TS18046: 'companyProblems' is of type 'unknown'.
+components/practice-overview.tsx(325,32): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/practice-overview.tsx(333,37): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/practice-overview.tsx(336,41): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/practice-overview.tsx(340,26): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/practice-overview.tsx(340,60): error TS7006: Parameter 'problem' implicitly has an 'any' type.
+components/practice-overview.tsx(357,26): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/practice-overview.tsx(359,31): error TS18046: 'categoryProblems' is of type 'unknown'.
+components/ui/calendar.tsx(57,9): error TS2353: Object literal may only specify known properties, and 'IconLeft' does not exist in type 'Partial<CustomComponents>'.
+components/ui/pagination.tsx(5,10): error TS2305: Module '"@/components/ui/button"' has no exported member 'ButtonProps'.
+components/ui/pagination.tsx(68,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+components/ui/pagination.tsx(84,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+lib/server/db.ts(1,21): error TS2307: Cannot find module '@vercel/postgres' or its corresponding type declarations.
+tailwind.config.ts(4,3): error TS2322: Type '["class"]' is not assignable to type 'DarkModeStrategy | undefined'.
+  Type '["class"]' is not assignable to type '["class", string]'.
+    Source has 1 element(s) but target requires 2.

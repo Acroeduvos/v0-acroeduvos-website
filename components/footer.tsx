@@ -1,127 +1,104 @@
 import Link from "next/link"
-import { Mail, Phone, MapPin, Code2, Github, Twitter, Linkedin } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Code2 className="h-8 w-8 text-blue-400" />
-              <span className="text-2xl font-bold">AcroEduvos</span>
-            </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Master programming and crack MNC interviews with our comprehensive learning platform. 
-              Practice coding, learn from experts, and advance your career.
+    <footer className="border-t border-gray-200 bg-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid gap-8 md:grid-cols-4">
+          <div>
+            <Link href="/" className="flex items-center">
+              <div className="relative h-10 w-10 mr-2">
+                <Image src="/logo.png" alt="Acroeduvos Logo" fill className="object-contain" />
+              </div>
+              <span className="text-xl font-bold">Acroeduvos</span>
+            </Link>
+            <p className="mt-2 text-gray-600">
+              A competitive programming platform to enhance your coding skills through challenges and contests.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Quick Links</h3>
-            <div className="space-y-2">
-              <Link href="/courses" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Courses
-              </Link>
-              <Link href="/practice" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Practice
-              </Link>
-              <Link href="/compiler" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Code Compiler
-              </Link>
-              <Link href="/dashboard" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Dashboard
-              </Link>
-              <Link href="/leaderboard" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Leaderboard
-              </Link>
-            </div>
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase text-gray-900">Platform</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/problems" className="text-sm text-gray-600 hover:text-black">
+                  Problems
+                </Link>
+              </li>
+              <li>
+                <Link href="/contests" className="text-sm text-gray-600 hover:text-black">
+                  Contests
+                </Link>
+              </li>
+              <li>
+                <Link href="/leaderboard" className="text-sm text-gray-600 hover:text-black">
+                  Leaderboard
+                </Link>
+              </li>
+              <li>
+                <Link href="/learn" className="text-sm text-gray-600 hover:text-black">
+                  Learning Resources
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Support */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Support</h3>
-            <div className="space-y-2">
-              <Link href="/support" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Help Center
-              </Link>
-              <Link href="/support" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                FAQ
-              </Link>
-              <Link href="/support" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Contact Us
-              </Link>
-              <a href="mailto:support@acroeduvos.in" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                support@acroeduvos.in
-              </a>
-            </div>
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase text-gray-900">Community</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/discuss" className="text-sm text-gray-600 hover:text-black">
+                  Discussion Forum
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-sm text-gray-600 hover:text-black">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/events" className="text-sm text-gray-600 hover:text-black">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/contribute" className="text-sm text-gray-600 hover:text-black">
+                  Contribute
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Info</h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-blue-400" />
-                <div>
-                  <p className="text-sm text-gray-400">Email</p>
-                  <a href="mailto:support@acroeduvos.in" className="text-sm text-white hover:text-blue-400 transition-colors">
-                    support@acroeduvos.in
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-blue-400" />
-                <div>
-                  <p className="text-sm text-gray-400">Website</p>
-                  <a href="https://acroeduvos.in" className="text-sm text-white hover:text-blue-400 transition-colors">
-                    acroeduvos.in
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Code2 className="w-4 h-4 text-blue-400" />
-                <div>
-                  <p className="text-sm text-gray-400">Network Access</p>
-                  <p className="text-sm text-white">
-                    172.16.20.0 - 172.16.20.255
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase text-gray-900">Support</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/help" className="text-sm text-gray-600 hover:text-black">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-sm text-gray-600 hover:text-black">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-gray-600 hover:text-black">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-sm text-gray-600 hover:text-black">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © 2024 AcroEduvos. All rights reserved.
-            </p>
-            <div className="flex gap-6">
-              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Terms of Service
-              </Link>
-              <Link href="/support" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Support
-              </Link>
-            </div>
-          </div>
+        <div className="mt-8 border-t border-gray-200 pt-8 text-center">
+          <p className="text-sm text-gray-600">© {new Date().getFullYear()} Acroeduvos.in. All rights reserved.</p>
         </div>
       </div>
     </footer>
