@@ -3,14 +3,14 @@ import { deleteQuiz, getQuiz, migrate } from "@/lib/server/db"
 
 const FILE = "quizzes.json"
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, { params }: { params: any }) {
   await migrate()
   const quiz = await getQuiz(params.id)
   if (!quiz) return new NextResponse("Not found", { status: 404 })
   return NextResponse.json(quiz)
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: any }) {
   if (req.headers.get("x-role") !== "teacher") {
     return new NextResponse("Forbidden", { status: 403 })
   }

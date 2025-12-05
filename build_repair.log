@@ -1,0 +1,22 @@
+
+> my-v0-project@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.16
+  - Environments: .env
+  - Experiments (use with caution):
+    ┬╖ missingSuspenseWithCSRBailout
+
+
+> Build error occurred
+Error: You cannot use different slug names for the same dynamic path ('courseId' !== 'id').
+    at handleSlug (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:94:31)
+    at UrlNode._insert (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:131:17)
+    at UrlNode._insert (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:142:40)
+    at UrlNode.insert (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:13:14)
+    at C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:165:46
+    at Array.forEach (<anonymous>)
+    at getSortedRoutes (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\shared\lib\router\utils\sorted-routes.js:165:21)
+    at C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\build\index.js:621:65
+    at Span.traceFn (C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\trace\trace.js:147:20)
+    at C:\Users\Lenovo\OneDrive\Documents\AcroEduvos\node_modules\next\dist\build\index.js:620:89
