@@ -1049,4 +1049,79 @@ console.log(lb.getServer());`
             }
         ]
     }
+    },
+{
+    id: 'py-variables',
+        title: 'Variable Swap',
+            description: 'Swap the values of two variables a and b without using a temporary variable/additional space (Pythonic way).',
+                difficulty: 'Easy',
+                    topic: 'Basics',
+                        tags: ['basics', 'variables'],
+                            starterCode: {
+        python: `def swap_variables(a, b):
+    # Write your code here
+    pass
+
+# Test
+print(swap_variables(5, 10))`,
+            cpp: `// Not applicable for Python specific task but included for consistency
+#include <iostream>
+using namespace std;
+void swap(int &a, int &b) {
+    // Write your code here
+}`,
+                java: `// Not applicable directly
+class Solution {
+    public void swap(int a, int b) {
+        // Write your code here
+    }
+}`,
+                    javascript: `// JS
+function swap(a, b) {
+    // Write your code here
+}`
+    },
+    testCases: [
+        { input: '5\n10', expectedOutput: '10\n5' }
+    ],
+        constraints: [],
+            examples: [
+                {
+                    input: 'a=5, b=10',
+                    output: 'a=10, b=5',
+                    explanation: 'Values are swapped.'
+                }
+            ]
+},
+{
+    id: 'py-loops',
+        title: 'Fibonacci Sequence',
+            description: 'Generate the first n numbers of the Fibonacci sequence.',
+                difficulty: 'Easy',
+                    topic: 'Loops',
+                        tags: ['basics', 'loops'],
+                            starterCode: {
+        python: `def fibonacci(n):
+    # Write your code here
+    pass
+
+# Test
+print(fibonacci(5))`,
+            cpp: `// Cpp
+`,
+                java: `// Java`,
+                    javascript: `// JS`
+    },
+    testCases: [
+        { input: '5', expectedOutput: '[0, 1, 1, 2, 3]' }
+    ],
+        constraints: [],
+            examples: [
+                {
+                    input: 'n=5',
+                    output: '[0, 1, 1, 2, 3]',
+                    explanation: 'First 5 numbers.'
+                }
+            ]
+}
 ]

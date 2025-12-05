@@ -239,7 +239,7 @@ for x in fruits:
 }`,
             problems: [
               {
-                id: "java-class",
+                id: "java-class-basics",
                 title: "Create a Car Class",
                 difficulty: "Easy",
                 companies: ["Basic"],
@@ -291,7 +291,7 @@ cout << &food << "\\n";
 cout << ptr << "\\n";`,
             problems: [
               {
-                id: "cpp-pointer",
+                id: "cpp-pointer-swap",
                 title: "Swap with Pointers",
                 difficulty: "Medium",
                 companies: ["Basic"],
